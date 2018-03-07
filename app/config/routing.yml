@@ -1,6 +1,6 @@
 planilla:
     resource: "@PlanillaBundle/Resources/config/routing.yml"
-    prefix:   /planilla
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'
