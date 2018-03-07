@@ -1,0 +1,4 @@
+services:
+#    planilla.example:
+#        class: PlanillaBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

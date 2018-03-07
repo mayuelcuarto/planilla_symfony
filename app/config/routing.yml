@@ -1,3 +1,7 @@
+planilla:
+    resource: "@PlanillaBundle/Resources/config/routing.yml"
+    prefix:   /planilla
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
