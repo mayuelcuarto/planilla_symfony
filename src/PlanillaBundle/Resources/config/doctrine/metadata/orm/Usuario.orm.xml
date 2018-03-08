@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Usuario" table="usuario">
-    <indexes>
-      <index name="fk_usuario_nivel1_idx" columns="nivel_id"/>
-    </indexes>
     <id name="dni" type="string" column="dni" length="8">
       <generator strategy="IDENTITY"/>
     </id>
@@ -27,7 +24,7 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="clave" type="string" column="clave" length="255" nullable="false">
+    <field name="password" type="string" column="password" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
@@ -42,10 +39,10 @@
         <option name="fixed"/>
       </options>
     </field>
-    <many-to-one field="nivel" target-entity="Nivel" fetch="LAZY">
-      <join-columns>
-        <join-column name="nivel_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
+    <field name="role" type="string" column="role" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
   </entity>
 </doctrine-mapping>

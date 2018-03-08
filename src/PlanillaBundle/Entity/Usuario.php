@@ -1,11 +1,12 @@
 <?php
 
 namespace PlanillaBundle\Entity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var string
@@ -254,4 +255,79 @@ class Usuario
     {
         return $this->nivel;
     }
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @var string
+     */
+    private $role;
+
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return Usuario
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function eraseCredentials() {
+        
+    }
+
+    public function getRoles() {
+        return array($this->getRole());
+    }
+
+    public function getSalt() {
+        return null;
+    }
+
+    public function getUsername() {
+        return $this->nick;
+    }
+
 }
