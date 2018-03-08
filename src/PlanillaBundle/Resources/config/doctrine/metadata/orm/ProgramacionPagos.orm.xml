@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ProgramacionPagos" table="programacion_pagos">
+    <id name="anoEje" type="integer" column="ano_eje"/>
+    <id name="mesEje" type="integer" column="mes_eje"/>
+    <id name="secEjec" type="string" column="sec_ejec" length="6"/>
+    <field name="fechaPension" type="datetime" column="fecha_pension" nullable="true"/>
+    <field name="fechaActivo" type="string" column="fecha_activo" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

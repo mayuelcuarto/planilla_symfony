@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Concepto" table="concepto">
+    <id name="tipoConcepto" type="string" column="tipo_concepto" length="1"/>
+    <id name="secConcepto" type="integer" column="sec_concepto"/>
+    <field name="concepto" type="string" column="concepto" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="abreviatura" type="string" column="abreviatura" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="formaMonto" type="string" column="forma_monto" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="esActivo" type="string" column="es_activo" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="esPension" type="string" column="es_pension" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="esPatronal" type="string" column="es_patronal" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="esAsegurada" type="string" column="es_asegurada" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="esAfp" type="string" column="es_afp" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="mcppConcepto" type="string" column="mcpp_concepto" length="4" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

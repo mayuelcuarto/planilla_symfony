@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Afp" table="afp">
+    <id name="id" type="string" column="id" length="2">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="regimenPensionario" type="string" column="regimen_pensionario" length="2" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="nombre" type="string" column="nombre" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="snp" type="float" column="snp" precision="10" scale="0" nullable="true"/>
+    <field name="jubilacion" type="float" column="jubilacion" precision="10" scale="0" nullable="true"/>
+    <field name="seguros" type="float" column="seguros" precision="10" scale="0" nullable="true"/>
+    <field name="ra" type="float" column="ra" precision="10" scale="0" nullable="true"/>
+    <field name="pension" type="float" column="pension" precision="10" scale="0" nullable="true"/>
+    <field name="raMixta" type="float" column="ra_mixta" precision="10" scale="0" nullable="true"/>
+  </entity>
+</doctrine-mapping>

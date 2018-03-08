@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="FuenteFinanc" table="fuente_financ">
+    <id name="anoEje" type="integer" column="ano_eje"/>
+    <id name="fuenteFinanc" type="string" column="fuente_financ" length="2"/>
+    <field name="nombre" type="string" column="nombre" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="origen" type="string" column="origen" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
