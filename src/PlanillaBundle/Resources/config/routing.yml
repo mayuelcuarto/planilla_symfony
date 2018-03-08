@@ -1,3 +1,13 @@
+login:
+    path:   /login
+    defaults: { _controller: PlanillaBundle:User:login }
+    
+login_check:
+    path:   /login_check
+    
+logout:
+    path:   /login
+
 planilla_homepage:
     path:     /
     defaults: { _controller: PlanillaBundle:Default:index }
