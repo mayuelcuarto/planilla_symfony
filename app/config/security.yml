@@ -5,9 +5,9 @@ security:
         PlanillaBundle\Entity\Usuario:
             algorithm: bcrypt
             cost: 4
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+            
     providers:
-        our_db_provider:
+        db_provider:
             entity:
                 class: PlanillaBundle:Usuario
                 property: nick
@@ -20,13 +20,10 @@ security:
 
         main:
             anonymous: ~
-            provider: our_db_provider
             form_login:
-                login_path: /login
-                check_path: /login_check
-            logout:
-                path: /logout
-                target: /
+                login_path: login
+                check_path: login           
+            
             # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate

@@ -49,11 +49,19 @@ class Usuario implements UserInterface
     private $claveapi;
 
     /**
-     * @var \PlanillaBundle\Entity\Nivel
+     * Set dni
+     *
+     * @param string $dni
+     *
+     * @return Usuario
      */
-    private $nivel;
+    public function setDni($dni)
+    {
+        $this->dni = $dni;
 
-
+        return $this;
+    }
+    
     /**
      * Get dni
      *
@@ -230,30 +238,6 @@ class Usuario implements UserInterface
     public function getClaveapi()
     {
         return $this->claveapi;
-    }
-
-    /**
-     * Set nivel
-     *
-     * @param \PlanillaBundle\Entity\Nivel $nivel
-     *
-     * @return Usuario
-     */
-    public function setNivel(\PlanillaBundle\Entity\Nivel $nivel = null)
-    {
-        $this->nivel = $nivel;
-
-        return $this;
-    }
-
-    /**
-     * Get nivel
-     *
-     * @return \PlanillaBundle\Entity\Nivel
-     */
-    public function getNivel()
-    {
-        return $this->nivel;
     }
     /**
      * @var string

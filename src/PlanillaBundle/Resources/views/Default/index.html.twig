@@ -1,1 +1,17 @@
-Hello World, hi finally I over to configure the routes in symfony 3.4!
+{% if is_granted('ROLE_USER') %}
+        <strong>
+            Estas logueado como usuario normal
+        </strong>
+    {% endif %}
+    
+    {% if is_granted('ROLE_ADMIN') %}
+        <strong>
+            Estas logueado como usuario ADMINISTRADOR TODOPODEROSO
+        </strong>
+    {% endif %}
+    
+    {% if is_granted('ROLE_USER') == false and is_granted('ROLE_ADMIN') == false %}
+        <strong>
+            Usted no se encuentra logeado en el sistema de planillas
+        </strong>
+     {% endif %}
