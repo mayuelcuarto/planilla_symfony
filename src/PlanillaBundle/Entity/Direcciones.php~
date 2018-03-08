@@ -81,4 +81,3 @@ class Direcciones
         return $this->estado;
     }
 }
-

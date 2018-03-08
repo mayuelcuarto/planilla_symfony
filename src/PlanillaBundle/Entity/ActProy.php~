@@ -211,4 +211,3 @@ class ActProy
         return $this->esPresupu;
     }
 }
-
