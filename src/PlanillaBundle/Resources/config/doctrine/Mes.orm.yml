@@ -1,0 +1,21 @@
+PlanillaBundle\Entity\Mes:
+    type: entity
+    table: mes
+    id:
+        mesEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: mes_eje
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

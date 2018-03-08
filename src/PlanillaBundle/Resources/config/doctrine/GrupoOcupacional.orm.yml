@@ -1,0 +1,28 @@
+PlanillaBundle\Entity\GrupoOcupacional:
+    type: entity
+    table: grupo_ocupacional
+    id:
+        grupoOcupacional:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: grupo_ocupacional
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

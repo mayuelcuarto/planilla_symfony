@@ -1,0 +1,21 @@
+PlanillaBundle\Entity\ModoIngreso:
+    type: entity
+    table: modo_ingreso
+    id:
+        id:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,56 @@
+PlanillaBundle\Entity\Plaza:
+    type: entity
+    table: plaza
+    id:
+        tipoPlanilla:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: tipo_planilla
+        numPlaza:
+            type: string
+            nullable: false
+            length: 6
+            options:
+                fixed: true
+            id: true
+            column: num_plaza
+    fields:
+        grupoOcupacional:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+            column: grupo_ocupacional
+        categoriaOcupacional:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+            column: categoria_ocupacional
+        secFunc:
+            type: string
+            nullable: true
+            length: 4
+            options:
+                fixed: true
+            column: sec_func
+        estado:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+                default: A
+        especifica:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: true
+    lifecycleCallbacks: {  }

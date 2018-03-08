@@ -1,0 +1,40 @@
+PlanillaBundle\Entity\MaestroDetalle:
+    type: entity
+    table: maestro_detalle
+    id:
+        codMaestro:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: true
+            id: true
+            column: cod_maestro
+        codDetalle:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: cod_detalle
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        descripcio:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

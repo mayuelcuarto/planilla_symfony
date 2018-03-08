@@ -1,0 +1,45 @@
+PlanillaBundle\Entity\Producto:
+    type: entity
+    table: producto
+    id:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ano_eje
+        producto:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: true
+            id: true
+    fields:
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        ambito:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        esPresupu:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_presupu
+    lifecycleCallbacks: {  }

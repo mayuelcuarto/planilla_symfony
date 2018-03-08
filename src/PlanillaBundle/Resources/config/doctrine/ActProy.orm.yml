@@ -1,0 +1,53 @@
+PlanillaBundle\Entity\ActProy:
+    type: entity
+    table: act_proy
+    id:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: ano_eje
+        actProy:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: true
+            id: true
+            column: act_proy
+    fields:
+        tipoActProy:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: tipo_act_proy
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        ambito:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        esPresupu:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_presupu
+    lifecycleCallbacks: {  }

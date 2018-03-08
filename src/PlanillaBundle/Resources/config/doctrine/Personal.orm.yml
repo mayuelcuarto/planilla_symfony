@@ -1,0 +1,84 @@
+PlanillaBundle\Entity\Personal:
+    type: entity
+    table: personal
+    id:
+        codPersonal:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: cod_personal
+            generator:
+                strategy: IDENTITY
+    fields:
+        apellidoPaterno:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: apellido_paterno
+        apellidoMaterno:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: apellido_materno
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        anexo:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        fechaNacimiento:
+            type: date
+            nullable: true
+            column: fecha_nacimiento
+        tipoDoc:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+            column: tipo_doc
+        numeroDocumento:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: numero_documento
+        sexo:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+        cuspp:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        numAutogenerado:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: num_autogenerado
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+    lifecycleCallbacks: {  }

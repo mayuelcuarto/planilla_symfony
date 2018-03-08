@@ -1,0 +1,88 @@
+PlanillaBundle\Entity\Concepto:
+    type: entity
+    table: concepto
+    id:
+        tipoConcepto:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+            id: true
+            column: tipo_concepto
+        secConcepto:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: sec_concepto
+    fields:
+        concepto:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        abreviatura:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        formaMonto:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: forma_monto
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        esActivo:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_activo
+        esPension:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_pension
+        esPatronal:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_patronal
+        esAsegurada:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_asegurada
+        esAfp:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_afp
+        mcppConcepto:
+            type: string
+            nullable: true
+            length: 4
+            options:
+                fixed: true
+            column: mcpp_concepto
+    lifecycleCallbacks: {  }
