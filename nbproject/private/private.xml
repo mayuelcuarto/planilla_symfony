@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp64/www/planilla_symfony/app/config/config.yml</file>
+            <file>file:/C:/wamp64/www/planilla_symfony/src/PlanillaBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp64/www/planilla_symfony/src/PlanillaBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/C:/wamp64/www/planilla_symfony/src/PlanillaBundle/Resources/views/layout.html.twig</file>
+            <file>file:/C:/wamp64/www/planilla_symfony/src/PlanillaBundle/Resources/views/User/login.html.twig</file>
+        </group>
+    </open-files>
+</project-private>
