@@ -1,0 +1,54 @@
+PlanillaBundle\Entity\CategoriaOcupacional:
+    type: entity
+    table: categoria_ocupacional
+    indexes:
+        IDX_B5356E87BB73C202:
+            columns:
+                - grupo_ocupacional
+    id:
+        categoriaOcupacional:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: categoria_ocupacional
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        sinCatego:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+            column: sin_catego
+        estado:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+        abreviatura:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+    oneToOne:
+        grupoOcupacional:
+            targetEntity: GrupoOcupacional
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grupo_ocupacional:
+                    referencedColumnName: grupo_ocupacional
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

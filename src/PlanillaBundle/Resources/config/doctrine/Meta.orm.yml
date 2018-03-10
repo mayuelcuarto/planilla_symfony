@@ -1,0 +1,98 @@
+PlanillaBundle\Entity\Meta:
+    type: entity
+    table: meta
+    indexes:
+        fk_meta_ejecutora1_idx:
+            columns:
+                - ejecutora_id
+    id:
+        secFunc:
+            type: string
+            nullable: false
+            length: 4
+            options:
+                fixed: true
+            id: true
+            column: sec_func
+            generator:
+                strategy: IDENTITY
+    fields:
+        programa:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: true
+        producto:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: true
+        actProy:
+            type: string
+            nullable: false
+            length: 10
+            options:
+                fixed: true
+            column: act_proy
+        funcion:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+        divfunc:
+            type: string
+            nullable: false
+            length: 3
+            options:
+                fixed: true
+        grpf:
+            type: string
+            nullable: false
+            length: 4
+            options:
+                fixed: true
+        meta:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        finalidad:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        direccion:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+    manyToOne:
+        ejecutora:
+            targetEntity: Ejecutora
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                ejecutora_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

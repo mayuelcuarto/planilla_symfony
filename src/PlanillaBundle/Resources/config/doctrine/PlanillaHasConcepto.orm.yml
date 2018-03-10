@@ -1,0 +1,59 @@
+PlanillaBundle\Entity\PlanillaHasConcepto:
+    type: entity
+    table: planilla_has_concepto
+    indexes:
+        fk_planilla_idx:
+            columns:
+                - planilla_id
+        fk_planilla_has_concepto_concepto1_idx:
+            columns:
+                - concepto_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        monto:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+        fechaIng:
+            type: datetime
+            nullable: true
+            column: fecha_ing
+        usuarioDni:
+            type: string
+            nullable: true
+            length: 8
+            options:
+                fixed: true
+            column: usuario_dni
+    manyToOne:
+        planilla:
+            targetEntity: Planilla
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                planilla_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        concepto:
+            targetEntity: Concepto
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                concepto_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

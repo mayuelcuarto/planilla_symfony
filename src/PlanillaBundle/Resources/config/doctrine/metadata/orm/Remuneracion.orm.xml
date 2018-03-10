@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Remuneracion" table="remuneracion">
+    <indexes>
+      <index name="fk_remuneracion_concepto1_idx" columns="concepto_id"/>
+    </indexes>
+    <id name="grupoOcupacional" type="string" column="grupo_ocupacional" length="2"/>
+    <id name="categoriaOcupacional" type="string" column="categoria_ocupacional" length="2"/>
+    <id name="tipoConcepto" type="string" column="tipo_concepto" length="1"/>
+    <id name="secConcepto" type="integer" column="sec_concepto"/>
+    <id name="secuencia" type="string" column="secuencia" length="2"/>
+    <field name="montoActivo" type="float" column="monto_activo" precision="15" scale="5" nullable="true"/>
+    <field name="montoPension" type="float" column="monto_pension" precision="15" scale="5" nullable="true"/>
+    <field name="montoPatronal" type="float" column="monto_patronal" precision="15" scale="5" nullable="true"/>
+    <field name="esEspecial" type="string" column="es_especial" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <many-to-one field="concepto" target-entity="Concepto" fetch="LAZY">
+      <join-columns>
+        <join-column name="concepto_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

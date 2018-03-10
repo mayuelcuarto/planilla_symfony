@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Plaza" table="plaza">
+    <indexes>
+      <index name="fk_plaza_categoria_ocupacional1_idx" columns="grupo_ocupacional,categoria_ocupacional"/>
+      <index name="fk_plaza_meta1_idx" columns="sec_func"/>
+    </indexes>
     <id name="tipoPlanilla" type="string" column="tipo_planilla" length="2"/>
     <id name="numPlaza" type="string" column="num_plaza" length="6"/>
-    <field name="grupoOcupacional" type="string" column="grupo_ocupacional" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="categoriaOcupacional" type="string" column="categoria_ocupacional" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="secFunc" type="string" column="sec_func" length="4" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <field name="estado" type="string" column="estado" length="1" nullable="false">
       <options>
         <option name="fixed">1</option>
@@ -29,5 +18,16 @@
         <option name="fixed">1</option>
       </options>
     </field>
+    <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">
+      <join-columns>
+        <join-column name="sec_func" referenced-column-name="sec_func"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="grupoOcupacional" target-entity="CategoriaOcupacional" fetch="LAZY">
+      <join-columns>
+        <join-column name="grupo_ocupacional" referenced-column-name="grupo_ocupacional"/>
+        <join-column name="categoria_ocupacional" referenced-column-name="categoria_ocupacional"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PlazaHistorial" table="plaza_historial">
+    <indexes>
+      <index name="fk_plaza_historial_personal1_idx" columns="cod_personal"/>
+      <index name="fk_plaza_historial_plaza1_idx" columns="tipo_planilla,num_plaza"/>
+      <index name="fk_plaza_historial_afp1_idx" columns="afp"/>
+      <index name="fk_plaza_historial_modo_ingreso1_idx" columns="modo_ingreso_id"/>
+      <index name="fk_plaza_historial_unidad1_idx" columns="unidad_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="secPersonal" type="integer" column="sec_personal" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fechaIngreso" type="date" column="fecha_ingreso" nullable="true"/>
+    <field name="situacionLaboral" type="string" column="situacion_laboral" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="regimenPensionario" type="string" column="regimen_pensionario" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="regimenLaboral" type="string" column="regimen_laboral" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="condicionLaboral" type="string" column="condicion_laboral" length="2" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="fechaCese" type="date" column="fecha_cese" nullable="true"/>
+    <field name="resolucion" type="string" column="resolucion" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechaAnulacion" type="date" column="fecha_anulacion" nullable="true"/>
+    <field name="numPlaza2" type="string" column="num_plaza2" length="3" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="cargo" type="string" column="cargo" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechaAfp" type="date" column="fecha_afp" nullable="true"/>
+    <field name="anulacion" type="string" column="anulacion" length="2" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="estado" type="string" column="estado" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="docAnulacion" type="string" column="doc_anulacion" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="afpMix" type="string" column="afp_mix" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <many-to-one field="unidad" target-entity="Unidad" fetch="LAZY">
+      <join-columns>
+        <join-column name="unidad_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="tipoPlanilla" target-entity="Plaza" fetch="LAZY">
+      <join-columns>
+        <join-column name="tipo_planilla" referenced-column-name="tipo_planilla"/>
+        <join-column name="num_plaza" referenced-column-name="num_plaza"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="codPersonal" target-entity="Personal" fetch="LAZY">
+      <join-columns>
+        <join-column name="cod_personal" referenced-column-name="cod_personal"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="modoIngreso" target-entity="ModoIngreso" fetch="LAZY">
+      <join-columns>
+        <join-column name="modo_ingreso_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="afp" target-entity="Afp" fetch="LAZY">
+      <join-columns>
+        <join-column name="afp" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

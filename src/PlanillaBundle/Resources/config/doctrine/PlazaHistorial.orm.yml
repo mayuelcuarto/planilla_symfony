@@ -1,0 +1,179 @@
+PlanillaBundle\Entity\PlazaHistorial:
+    type: entity
+    table: plaza_historial
+    indexes:
+        fk_plaza_historial_personal1_idx:
+            columns:
+                - cod_personal
+        fk_plaza_historial_plaza1_idx:
+            columns:
+                - tipo_planilla
+                - num_plaza
+        fk_plaza_historial_afp1_idx:
+            columns:
+                - afp
+        fk_plaza_historial_modo_ingreso1_idx:
+            columns:
+                - modo_ingreso_id
+        fk_plaza_historial_unidad1_idx:
+            columns:
+                - unidad_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        secPersonal:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: sec_personal
+        fechaIngreso:
+            type: date
+            nullable: true
+            column: fecha_ingreso
+        situacionLaboral:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: situacion_laboral
+        regimenPensionario:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: regimen_pensionario
+        regimenLaboral:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: regimen_laboral
+        condicionLaboral:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+            column: condicion_laboral
+        fechaCese:
+            type: date
+            nullable: true
+            column: fecha_cese
+        resolucion:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        fechaAnulacion:
+            type: date
+            nullable: true
+            column: fecha_anulacion
+        numPlaza2:
+            type: string
+            nullable: true
+            length: 3
+            options:
+                fixed: true
+            column: num_plaza2
+        cargo:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        fechaAfp:
+            type: date
+            nullable: true
+            column: fecha_afp
+        anulacion:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        docAnulacion:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+            column: doc_anulacion
+        afpMix:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: afp_mix
+    manyToOne:
+        afp:
+            targetEntity: Afp
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                afp:
+                    referencedColumnName: id
+            orphanRemoval: false
+        modoIngreso:
+            targetEntity: ModoIngreso
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                modo_ingreso_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        codPersonal:
+            targetEntity: Personal
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                cod_personal:
+                    referencedColumnName: cod_personal
+            orphanRemoval: false
+        tipoPlanilla:
+            targetEntity: Plaza
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_planilla:
+                    referencedColumnName: tipo_planilla
+                num_plaza:
+                    referencedColumnName: num_plaza
+            orphanRemoval: false
+        unidad:
+            targetEntity: Unidad
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                unidad_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

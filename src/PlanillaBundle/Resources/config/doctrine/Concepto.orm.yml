@@ -2,22 +2,28 @@ PlanillaBundle\Entity\Concepto:
     type: entity
     table: concepto
     id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
         tipoConcepto:
             type: string
             nullable: false
             length: 1
             options:
                 fixed: true
-            id: true
             column: tipo_concepto
         secConcepto:
             type: integer
             nullable: false
             options:
                 unsigned: false
-            id: true
             column: sec_concepto
-    fields:
         concepto:
             type: string
             nullable: true

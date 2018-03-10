@@ -20,27 +20,22 @@ class Plaza
     /**
      * @var string
      */
-    private $grupoOcupacional;
-
-    /**
-     * @var string
-     */
-    private $categoriaOcupacional;
-
-    /**
-     * @var string
-     */
-    private $secFunc;
-
-    /**
-     * @var string
-     */
     private $estado = 'A';
 
     /**
      * @var string
      */
     private $especifica;
+
+    /**
+     * @var \PlanillaBundle\Entity\CategoriaOcupacional
+     */
+    private $grupoOcupacional;
+
+    /**
+     * @var \PlanillaBundle\Entity\Meta
+     */
+    private $secFunc;
 
 
     /**
@@ -92,78 +87,6 @@ class Plaza
     }
 
     /**
-     * Set grupoOcupacional
-     *
-     * @param string $grupoOcupacional
-     *
-     * @return Plaza
-     */
-    public function setGrupoOcupacional($grupoOcupacional)
-    {
-        $this->grupoOcupacional = $grupoOcupacional;
-
-        return $this;
-    }
-
-    /**
-     * Get grupoOcupacional
-     *
-     * @return string
-     */
-    public function getGrupoOcupacional()
-    {
-        return $this->grupoOcupacional;
-    }
-
-    /**
-     * Set categoriaOcupacional
-     *
-     * @param string $categoriaOcupacional
-     *
-     * @return Plaza
-     */
-    public function setCategoriaOcupacional($categoriaOcupacional)
-    {
-        $this->categoriaOcupacional = $categoriaOcupacional;
-
-        return $this;
-    }
-
-    /**
-     * Get categoriaOcupacional
-     *
-     * @return string
-     */
-    public function getCategoriaOcupacional()
-    {
-        return $this->categoriaOcupacional;
-    }
-
-    /**
-     * Set secFunc
-     *
-     * @param string $secFunc
-     *
-     * @return Plaza
-     */
-    public function setSecFunc($secFunc)
-    {
-        $this->secFunc = $secFunc;
-
-        return $this;
-    }
-
-    /**
-     * Get secFunc
-     *
-     * @return string
-     */
-    public function getSecFunc()
-    {
-        return $this->secFunc;
-    }
-
-    /**
      * Set estado
      *
      * @param string $estado
@@ -210,4 +133,53 @@ class Plaza
     {
         return $this->especifica;
     }
+
+    /**
+     * Set grupoOcupacional
+     *
+     * @param \PlanillaBundle\Entity\CategoriaOcupacional $grupoOcupacional
+     *
+     * @return Plaza
+     */
+    public function setGrupoOcupacional(\PlanillaBundle\Entity\CategoriaOcupacional $grupoOcupacional = null)
+    {
+        $this->grupoOcupacional = $grupoOcupacional;
+
+        return $this;
+    }
+
+    /**
+     * Get grupoOcupacional
+     *
+     * @return \PlanillaBundle\Entity\CategoriaOcupacional
+     */
+    public function getGrupoOcupacional()
+    {
+        return $this->grupoOcupacional;
+    }
+
+    /**
+     * Set secFunc
+     *
+     * @param \PlanillaBundle\Entity\Meta $secFunc
+     *
+     * @return Plaza
+     */
+    public function setSecFunc(\PlanillaBundle\Entity\Meta $secFunc = null)
+    {
+        $this->secFunc = $secFunc;
+
+        return $this;
+    }
+
+    /**
+     * Get secFunc
+     *
+     * @return \PlanillaBundle\Entity\Meta
+     */
+    public function getSecFunc()
+    {
+        return $this->secFunc;
+    }
 }
+

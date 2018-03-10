@@ -124,3 +124,4 @@ class Especifica
         return $this->estado;
     }
 }
+

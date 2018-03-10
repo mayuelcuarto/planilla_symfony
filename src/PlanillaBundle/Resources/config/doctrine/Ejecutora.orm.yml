@@ -1,0 +1,60 @@
+PlanillaBundle\Entity\Ejecutora:
+    type: entity
+    table: ejecutora
+    indexes:
+        fk_ejecutora_pliego1_idx:
+            columns:
+                - pliego_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        secEjec:
+            type: string
+            nullable: false
+            length: 6
+            options:
+                fixed: true
+            column: sec_ejec
+        nombre:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        direccion:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        ruc:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+    manyToOne:
+        pliego:
+            targetEntity: Pliego
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pliego_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

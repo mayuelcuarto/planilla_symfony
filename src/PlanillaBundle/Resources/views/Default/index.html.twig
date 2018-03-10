@@ -1,3 +1,5 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
 {% if is_granted('ROLE_USER') %}
         <strong>
             Estas logueado como usuario normal
@@ -15,3 +17,4 @@
             Usted no se encuentra logeado en el sistema de planillas
         </strong>
      {% endif %}
+{% endblock %}     

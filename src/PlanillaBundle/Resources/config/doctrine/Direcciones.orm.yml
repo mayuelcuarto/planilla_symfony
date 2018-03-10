@@ -8,6 +8,7 @@ PlanillaBundle\Entity\Direcciones:
             length: 255
             options:
                 fixed: false
+                default: DIR
             id: true
             generator:
                 strategy: IDENTITY

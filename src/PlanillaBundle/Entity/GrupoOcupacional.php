@@ -81,3 +81,4 @@ class GrupoOcupacional
         return $this->estado;
     }
 }
+

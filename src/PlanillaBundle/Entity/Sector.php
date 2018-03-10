@@ -124,3 +124,4 @@ class Sector
         return $this->estado;
     }
 }
+

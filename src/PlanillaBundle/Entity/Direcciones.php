@@ -10,7 +10,7 @@ class Direcciones
     /**
      * @var string
      */
-    private $codigo;
+    private $codigo = 'DIR';
 
     /**
      * @var string
@@ -81,3 +81,4 @@ class Direcciones
         return $this->estado;
     }
 }
+

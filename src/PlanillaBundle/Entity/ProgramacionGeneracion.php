@@ -153,3 +153,4 @@ class ProgramacionGeneracion
         return $this->fechaActivo;
     }
 }
+

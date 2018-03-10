@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Concepto" table="concepto">
-    <id name="tipoConcepto" type="string" column="tipo_concepto" length="1"/>
-    <id name="secConcepto" type="integer" column="sec_concepto"/>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="tipoConcepto" type="string" column="tipo_concepto" length="1" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="secConcepto" type="integer" column="sec_concepto" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
     <field name="concepto" type="string" column="concepto" length="255" nullable="true">
       <options>
         <option name="fixed"/>

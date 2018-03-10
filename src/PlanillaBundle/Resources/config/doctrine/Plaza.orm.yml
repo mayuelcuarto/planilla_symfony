@@ -1,6 +1,14 @@
 PlanillaBundle\Entity\Plaza:
     type: entity
     table: plaza
+    indexes:
+        fk_plaza_categoria_ocupacional1_idx:
+            columns:
+                - grupo_ocupacional
+                - categoria_ocupacional
+        fk_plaza_meta1_idx:
+            columns:
+                - sec_func
     id:
         tipoPlanilla:
             type: string
@@ -19,27 +27,6 @@ PlanillaBundle\Entity\Plaza:
             id: true
             column: num_plaza
     fields:
-        grupoOcupacional:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
-            column: grupo_ocupacional
-        categoriaOcupacional:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
-            column: categoria_ocupacional
-        secFunc:
-            type: string
-            nullable: true
-            length: 4
-            options:
-                fixed: true
-            column: sec_func
         estado:
             type: string
             nullable: false
@@ -53,4 +40,27 @@ PlanillaBundle\Entity\Plaza:
             length: 10
             options:
                 fixed: true
+    manyToOne:
+        grupoOcupacional:
+            targetEntity: CategoriaOcupacional
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grupo_ocupacional:
+                    referencedColumnName: grupo_ocupacional
+                categoria_ocupacional:
+                    referencedColumnName: categoria_ocupacional
+            orphanRemoval: false
+        secFunc:
+            targetEntity: Meta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sec_func:
+                    referencedColumnName: sec_func
+            orphanRemoval: false
     lifecycleCallbacks: {  }

@@ -1,0 +1,158 @@
+PlanillaBundle\Entity\Planilla:
+    type: entity
+    table: planilla
+    indexes:
+        fk_planilla_fuente_financ1_idx:
+            columns:
+                - ano_eje
+                - fuente_financ
+        fk_planilla_meta1_idx:
+            columns:
+                - sec_func
+        fk_planilla_especifica1_idx:
+            columns:
+                - ano_eje
+                - especifica
+        fk_planilla_plaza_historial1_idx1:
+            columns:
+                - plaza_historial_id
+        fk_planilla_usuario1_idx:
+            columns:
+                - usuario_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+                default: '0'
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: ano_eje
+        mesEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: mes_eje
+        fechaPago:
+            type: date
+            nullable: true
+            column: fecha_pago
+        fechaGeneracion:
+            type: date
+            nullable: true
+            column: fecha_generacion
+        nota:
+            type: string
+            nullable: true
+            length: 255
+            options:
+                fixed: false
+        remAseg:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 2
+            column: rem_aseg
+        remNoaseg:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 2
+            column: rem_noaseg
+        totalEgreso:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 2
+            column: total_egreso
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+        fuenteFinanc:
+            type: string
+            nullable: true
+            length: 2
+            options:
+                fixed: true
+            column: fuente_financ
+        especifica:
+            type: string
+            nullable: true
+            length: 10
+            options:
+                fixed: true
+        patronal:
+            type: float
+            nullable: true
+            precision: 10
+            scale: 0
+            options:
+                default: '0'
+        fechaIng:
+            type: datetime
+            nullable: true
+            column: fecha_ing
+        tardanzas:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        particulares:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        lsgh:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        faltas:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+    manyToOne:
+        secFunc:
+            targetEntity: Meta
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sec_func:
+                    referencedColumnName: sec_func
+            orphanRemoval: false
+        plazaHistorial:
+            targetEntity: PlazaHistorial
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                plaza_historial_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

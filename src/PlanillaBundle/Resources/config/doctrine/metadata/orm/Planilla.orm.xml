@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Planilla" table="planilla">
+    <indexes>
+      <index name="fk_planilla_fuente_financ1_idx" columns="ano_eje,fuente_financ"/>
+      <index name="fk_planilla_meta1_idx" columns="sec_func"/>
+      <index name="fk_planilla_especifica1_idx" columns="ano_eje,especifica"/>
+      <index name="fk_planilla_plaza_historial1_idx1" columns="plaza_historial_id"/>
+      <index name="fk_planilla_usuario1_idx" columns="usuario_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="anoEje" type="integer" column="ano_eje" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="mesEje" type="integer" column="mes_eje" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fechaPago" type="date" column="fecha_pago" nullable="true"/>
+    <field name="fechaGeneracion" type="date" column="fecha_generacion" nullable="true"/>
+    <field name="nota" type="string" column="nota" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="remAseg" type="float" column="rem_aseg" precision="15" scale="2" nullable="true"/>
+    <field name="remNoaseg" type="float" column="rem_noaseg" precision="15" scale="2" nullable="true"/>
+    <field name="totalEgreso" type="float" column="total_egreso" precision="15" scale="2" nullable="true"/>
+    <field name="estado" type="string" column="estado" length="1" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="fuenteFinanc" type="string" column="fuente_financ" length="2" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="especifica" type="string" column="especifica" length="10" nullable="true">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
+    <field name="patronal" type="float" column="patronal" precision="10" scale="0" nullable="true">
+      <options>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="fechaIng" type="datetime" column="fecha_ing" nullable="true"/>
+    <field name="tardanzas" type="integer" column="tardanzas" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="particulares" type="integer" column="particulares" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="lsgh" type="integer" column="lsgh" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="faltas" type="integer" column="faltas" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="usuario" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="usuario_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="plazaHistorial" target-entity="PlazaHistorial" fetch="LAZY">
+      <join-columns>
+        <join-column name="plaza_historial_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">
+      <join-columns>
+        <join-column name="sec_func" referenced-column-name="sec_func"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

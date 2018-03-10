@@ -2,16 +2,21 @@ PlanillaBundle\Entity\Usuario:
     type: entity
     table: usuario
     id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
         dni:
             type: string
             nullable: false
             length: 8
             options:
                 fixed: true
-            id: true
-            generator:
-                strategy: IDENTITY
-    fields:
         apellidos:
             type: string
             nullable: false
@@ -26,14 +31,14 @@ PlanillaBundle\Entity\Usuario:
                 fixed: false
         cargo:
             type: string
-            nullable: true
+            nullable: false
             length: 255
             options:
                 fixed: false
         nick:
             type: string
             nullable: false
-            length: 100
+            length: 10
             options:
                 fixed: true
         password:
@@ -45,18 +50,16 @@ PlanillaBundle\Entity\Usuario:
         estado:
             type: boolean
             nullable: false
-            options:
-                default: '1'
-        claveapi:
-            type: string
-            nullable: false
-            length: 255
-            options:
-                fixed: false
         role:
             type: string
             nullable: false
             length: 100
+            options:
+                fixed: false
+        claveapi:
+            type: string
+            nullable: false
+            length: 255
             options:
                 fixed: false
     lifecycleCallbacks: {  }

@@ -314,4 +314,19 @@ class Usuario implements UserInterface
         return $this->nick;
     }
 
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

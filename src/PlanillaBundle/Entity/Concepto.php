@@ -8,6 +8,11 @@ namespace PlanillaBundle\Entity;
 class Concepto
 {
     /**
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $tipoConcepto;
@@ -67,6 +72,16 @@ class Concepto
      */
     private $mcppConcepto;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set tipoConcepto
@@ -356,3 +371,4 @@ class Concepto
         return $this->mcppConcepto;
     }
 }
+

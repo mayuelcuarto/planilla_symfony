@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Usuario" table="usuario">
-    <id name="dni" type="string" column="dni" length="8">
+    <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    <field name="dni" type="string" column="dni" length="8" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
     <field name="apellidos" type="string" column="apellidos" length="255" nullable="false">
       <options>
         <option name="fixed"/>
@@ -14,12 +19,12 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="cargo" type="string" column="cargo" length="255" nullable="true">
+    <field name="cargo" type="string" column="cargo" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="nick" type="string" column="nick" length="100" nullable="false">
+    <field name="nick" type="string" column="nick" length="10" nullable="false">
       <options>
         <option name="fixed">1</option>
       </options>
@@ -29,17 +34,13 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="boolean" column="estado" nullable="false">
-      <options>
-        <option name="default">1</option>
-      </options>
-    </field>
-    <field name="claveapi" type="string" column="claveapi" length="255" nullable="false">
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
+    <field name="role" type="string" column="role" length="100" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="role" type="string" column="role" length="100" nullable="false">
+    <field name="claveapi" type="string" column="claveapi" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>

@@ -1,0 +1,90 @@
+PlanillaBundle\Entity\Remuneracion:
+    type: entity
+    table: remuneracion
+    indexes:
+        fk_remuneracion_concepto1_idx:
+            columns:
+                - concepto_id
+    id:
+        grupoOcupacional:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: grupo_ocupacional
+        categoriaOcupacional:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            column: categoria_ocupacional
+        tipoConcepto:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+            id: true
+            column: tipo_concepto
+        secConcepto:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            column: sec_concepto
+        secuencia:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+    fields:
+        montoActivo:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 5
+            column: monto_activo
+        montoPension:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 5
+            column: monto_pension
+        montoPatronal:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 5
+            column: monto_patronal
+        esEspecial:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+            column: es_especial
+        estado:
+            type: string
+            nullable: true
+            length: 1
+            options:
+                fixed: true
+    manyToOne:
+        concepto:
+            targetEntity: Concepto
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                concepto_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
