@@ -1,16 +1,5 @@
 {% extends "@Planilla/login_layout.html.twig" %}
 {% block content %}    
-    {% if is_granted('ROLE_USER') %}
-        <strong>
-            Estas logueado como usuario normal
-        </strong>
-    {% endif %}
-    
-    {% if is_granted('ROLE_ADMIN') %}
-        <strong>
-            Estas logueado como usuario ADMINISTRADOR TODOPODEROSO
-        </strong>
-    {% endif %}
     <div class="col-auto">
         <form action="{{ path("login") }}" class="form-signin" method="post">
             <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">

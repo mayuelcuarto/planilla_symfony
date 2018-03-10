@@ -7,42 +7,16 @@
         <title>
             {% block title %} Sistema de Planilla 3.0 {% endblock %}
         </title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <style>
-            .dropdown-submenu{
-                position: relative;
-            }
-            .dropdown-submenu a::after{
-                transform: rotate(-90deg);
-                position: absolute;
-                right: 3px;
-                top: 40%;
-            }
-            .dropdown-submenu:hover .dropdown-menu, .dropdown-submenu:focus .dropdown-menu{
-                display: flex;
-                flex-direction: column;
-                position: absolute !important;
-                margin-top: -30px;
-                left: 100%;
-            }
-            
-            @media (max-width: 992px) {
-                .dropdown-menu{
-                    width: 50%;
-                }
-                .dropdown-menu .dropdown-submenu{
-                    width: auto;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/submenu.css') }}">
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     </header>
     <body>
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')%}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Sistem de Planillas 3.0</a>
+            <a class="navbar-brand" href="{{ path("planilla_homepage") }}">Sistema de Planillas 3.0</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -57,11 +31,13 @@
                     <li><a class="dropdown-item" href="#">Personal</a></li>
                     <li><a class="dropdown-item" href="#">Plazas</a></li>
                     <li><a class="dropdown-item" href="#">Conceptos</a></li>
-                    <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                    <li><a class="dropdown-item" href="{{path("usuario_index")}}">Usuarios</a></li>
                     <li><a class="dropdown-item" href="#">Maestro</a></li>
+                    
                     <li><a class="dropdown-item" href="#">Fuente de Financiamiento</a></li>
                     <li><a class="dropdown-item" href="#">Específica de Gasto</a></li>
                     <li class="dropdown-divider"></li>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">
                             Ejecutora</a>
                         <ul class="dropdown-menu">
@@ -81,7 +57,8 @@
                           <a class="dropdown-item" href="#">GRPF</a>
                         </ul>
                     </li>
-                    <li class="dropdown-divider"></li>                    
+                    <li class="dropdown-divider"></li>     
+                    {% endif %}
                     <li><a class="dropdown-item" href="#">AFP</a><li>
                   </ul>
                 </li>
@@ -114,10 +91,17 @@
                     Reportes
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Resumen de Planillas</a>
+                    <a class="dropdown-item" href="#">Resumen de Metas</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="#">Reporte de Planillas</a>
+                    <a class="dropdown-item" href="#">Reporte de Totales</a>
+                    <a class="dropdown-item" href="#">Reporte de Patronal</a>
+                    <a class="dropdown-item" href="#">Reporte de AFP</a>
+                    <a class="dropdown-item" href="#">Reporte por Conceptos</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Resumen de Planillas por Específica</a>
+                    <a class="dropdown-item" href="#">Reporte de Totales por Epecífica</a>
                   </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -125,18 +109,34 @@
                     Ayuda
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                      <a class="dropdown-item" href="{{ asset('pdf/manual.pdf') }}">Manual de Usuario</a>
                   </div>
                 </li>
               </ul>
+              <form class="form-inline my-2 my-lg-0">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% block sesion %}
+                                <strong>Usuario:</strong> {{app.user.nombres}} , {{ app.user.apellidos }}
+                            {% endblock %}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path("logout") }}">Salir</a>
+                            </div>
+                        </li>
+                    </ul>
+                  {% endif %}               
+              </form>      
             </div>
         </nav>
+        
         <section id="content" class="container" > 
-            {% block content %} Content default {% endblock %}
+            {% block content %}{% endblock %}
         </section>
+        {% else %}
+            <strong>Usted no está autorizado para entrar al sistema</strong>
         {% endif %}
-    <body>
+    </body>
 </html>

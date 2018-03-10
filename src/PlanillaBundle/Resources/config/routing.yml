@@ -2,6 +2,25 @@ login:
     path: /login
     defaults: { _controller: PlanillaBundle:Usuario:login }
     
+logout:
+    path: /logout
+    
 planilla_homepage:
     path: /
     defaults: { _controller: PlanillaBundle:Default:index }
+    
+usuario_index:
+    path: /usuarios/index
+    defaults: { _controller: PlanillaBundle:Usuario:index }
+    
+usuario_add:
+    path: /usuario/add
+    defaults: { _controller: PlanillaBundle:Usuario:add }
+    
+usuario_edit:
+    path: /usuario/edit/{id}
+    defaults: { _controller: PlanillaBundle:Usuario:edit }
+    
+usuario_delete:
+    path: /usuario/delete/{id}
+    defaults: { _controller: PlanillaBundle:Usuario:delete }
