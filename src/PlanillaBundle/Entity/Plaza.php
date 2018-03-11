@@ -182,4 +182,3 @@ class Plaza
         return $this->secFunc;
     }
 }
-

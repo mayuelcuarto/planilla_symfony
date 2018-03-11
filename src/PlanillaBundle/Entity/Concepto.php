@@ -18,11 +18,6 @@ class Concepto
     private $tipoConcepto;
 
     /**
-     * @var integer
-     */
-    private $secConcepto;
-
-    /**
      * @var string
      */
     private $concepto;
@@ -38,32 +33,32 @@ class Concepto
     private $formaMonto;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $esActivo;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $esPension;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $esPatronal;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $esAsegurada;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $esAfp;
 
@@ -105,30 +100,6 @@ class Concepto
     public function getTipoConcepto()
     {
         return $this->tipoConcepto;
-    }
-
-    /**
-     * Set secConcepto
-     *
-     * @param integer $secConcepto
-     *
-     * @return Concepto
-     */
-    public function setSecConcepto($secConcepto)
-    {
-        $this->secConcepto = $secConcepto;
-
-        return $this;
-    }
-
-    /**
-     * Get secConcepto
-     *
-     * @return integer
-     */
-    public function getSecConcepto()
-    {
-        return $this->secConcepto;
     }
 
     /**
@@ -206,7 +177,7 @@ class Concepto
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Concepto
      */
@@ -220,7 +191,7 @@ class Concepto
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -230,7 +201,7 @@ class Concepto
     /**
      * Set esActivo
      *
-     * @param string $esActivo
+     * @param boolean $esActivo
      *
      * @return Concepto
      */
@@ -244,7 +215,7 @@ class Concepto
     /**
      * Get esActivo
      *
-     * @return string
+     * @return boolean
      */
     public function getEsActivo()
     {
@@ -254,7 +225,7 @@ class Concepto
     /**
      * Set esPension
      *
-     * @param string $esPension
+     * @param boolean $esPension
      *
      * @return Concepto
      */
@@ -268,7 +239,7 @@ class Concepto
     /**
      * Get esPension
      *
-     * @return string
+     * @return boolean
      */
     public function getEsPension()
     {
@@ -278,7 +249,7 @@ class Concepto
     /**
      * Set esPatronal
      *
-     * @param string $esPatronal
+     * @param boolean $esPatronal
      *
      * @return Concepto
      */
@@ -292,7 +263,7 @@ class Concepto
     /**
      * Get esPatronal
      *
-     * @return string
+     * @return boolean
      */
     public function getEsPatronal()
     {
@@ -302,7 +273,7 @@ class Concepto
     /**
      * Set esAsegurada
      *
-     * @param string $esAsegurada
+     * @param boolean $esAsegurada
      *
      * @return Concepto
      */
@@ -316,7 +287,7 @@ class Concepto
     /**
      * Get esAsegurada
      *
-     * @return string
+     * @return boolean
      */
     public function getEsAsegurada()
     {
@@ -326,7 +297,7 @@ class Concepto
     /**
      * Set esAfp
      *
-     * @param string $esAfp
+     * @param boolean $esAfp
      *
      * @return Concepto
      */
@@ -340,7 +311,7 @@ class Concepto
     /**
      * Get esAfp
      *
-     * @return string
+     * @return boolean
      */
     public function getEsAfp()
     {

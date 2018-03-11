@@ -2,6 +2,7 @@
 
 namespace PlanillaBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Usuario
@@ -47,6 +48,12 @@ class Usuario implements UserInterface
      * @var string
      */
     private $claveapi;
+    
+    protected $planilla;
+    
+    public function __construct() {
+        $this->planilla = new ArrayCollection() ;
+    }
 
     /**
      * Set dni
@@ -314,4 +321,53 @@ class Usuario implements UserInterface
         return $this->nick;
     }
 
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add planilla
+     *
+     * @param \PlanillaBundle\Entity\Planilla $planilla
+     *
+     * @return Usuario
+     */
+    public function addPlanilla(\PlanillaBundle\Entity\Planilla $planilla)
+    {
+        $this->planilla[] = $planilla;
+
+        return $this;
+    }
+
+    /**
+     * Remove planilla
+     *
+     * @param \PlanillaBundle\Entity\Planilla $planilla
+     */
+    public function removePlanilla(\PlanillaBundle\Entity\Planilla $planilla)
+    {
+        $this->planilla->removeElement($planilla);
+    }
+
+    /**
+     * Get planilla
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlanilla()
+    {
+        return $this->planilla;
+    }
 }

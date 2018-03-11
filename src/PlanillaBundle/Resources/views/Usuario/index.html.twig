@@ -13,19 +13,25 @@
                 <th>ID</th>
                 <th>Nombres</th>
                 <th>Apellidos</th>
+                <th>Cargo</th>
                 <th>DNI</th>
-                <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
             {% for usuario in usuarios %}
                 <tr>
-                    <td>{{ usuario.id }}</td>
+                    <td><a href="{{path("usuario_edit",{"id":usuario.id})}}" class="btn btn-warning">{{ usuario.id }}</a></td>
                     <td>{{ usuario.nombres }}</td>
                     <td>{{ usuario.apellidos}}</td>
+                    <td>{{ usuario.cargo }}</td>
                     <td>{{ usuario.dni }}</td>
-                    <td><a href="{{path("usuario_edit",{"id":usuario.id})}}" class="btn btn-warning">Editar</a></td>
-                    <td><a href="{{path("usuario_delete",{"id":usuario.id})}}" class="btn btn-danger">Eliminar</a></td>
-                </tr>
+                    <td>
+                    {% if(usuario.planilla|length == 0) %}
+                    <a href="{{path("usuario_delete",{"id":usuario.id})}}" class="btn btn-danger">Eliminar</a>
+                    {% else %}
+                    Imposible borrar
+                    {% endif %}
+                    </td>
+                    </tr>
             {% endfor %}
         </table>
     </div>

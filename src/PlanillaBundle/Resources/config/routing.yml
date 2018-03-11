@@ -10,7 +10,7 @@ planilla_homepage:
     defaults: { _controller: PlanillaBundle:Default:index }
     
 usuario_index:
-    path: /usuarios/index
+    path: /usuario/index
     defaults: { _controller: PlanillaBundle:Usuario:index }
     
 usuario_add:
@@ -24,3 +24,15 @@ usuario_edit:
 usuario_delete:
     path: /usuario/delete/{id}
     defaults: { _controller: PlanillaBundle:Usuario:delete }
+    
+concepto_index:
+    path: /concepto/index
+    defaults: { _controller: PlanillaBundle:Concepto:index }
+    
+concepto_add:
+    path: /concepto/add
+    defaults: { _controller: PlanillaBundle:Concepto:add }
+    
+concepto_edit:
+    path: /concepto/edit/{id}
+    defaults: { _controller: PlanillaBundle:Concepto:edit }

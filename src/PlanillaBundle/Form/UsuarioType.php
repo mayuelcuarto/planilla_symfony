@@ -20,22 +20,22 @@ class UsuarioType extends AbstractType
     {
         $builder                 
             ->add('nombres', TextType::class, array("label"=>"Nombres", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('apellidos', TextType::class, array("label"=>"Apellidos", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('dni', TextType::class, array("label"=>"DNI", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('cargo', TextType::class, array("label"=>"Cargo", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('nick', TextType::class, array("label"=>"Nick", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('password', PasswordType::class, array("label"=>"Contraseña", "required"=>"required", "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('role', ChoiceType::class, array("label"=>"Rol", "required"=>"required", 
                 'choices'  => array(
@@ -43,10 +43,10 @@ class UsuarioType extends AbstractType
                     'USUARIO' => "ROLE_USER",
                 ),      
                 "attr"=>array(
-                "class" => "form-control"
+                "class" => "form-control form-control-sm"
             )))
             ->add('Guardar', SubmitType::class, array("attr"=>array(
-                "class" => "form-submit btn btn-success"
+                "class" => "form-submit btn btn-success form-control-sm"
             )))
         ;
     }

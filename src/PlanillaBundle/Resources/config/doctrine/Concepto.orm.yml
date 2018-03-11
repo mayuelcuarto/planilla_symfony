@@ -18,12 +18,6 @@ PlanillaBundle\Entity\Concepto:
             options:
                 fixed: true
             column: tipo_concepto
-        secConcepto:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: sec_concepto
         concepto:
             type: string
             nullable: true
@@ -44,45 +38,27 @@ PlanillaBundle\Entity\Concepto:
                 fixed: true
             column: forma_monto
         estado:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
         esActivo:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_activo
         esPension:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_pension
         esPatronal:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_patronal
         esAsegurada:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_asegurada
         esAfp:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_afp
         mcppConcepto:
             type: string

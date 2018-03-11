@@ -1,0 +1,42 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Conceptos</h2>
+        <hr/>
+        <a href="{{ path("concepto_add") }}" class="btn btn-success">Añadir concepto</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table table-sm table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Concepto</th>
+                <th>Abreviatura</th>
+                <th>MCPP</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for concepto in conceptos %}
+                <tr>
+                    {% if concepto.tipoConcepto == 1 %}
+                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-warning ">{{ concepto.id }}</a></td>
+                        <td>INGRESOS</td>
+                    {% else%}
+                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-danger">{{ concepto.id }}</a></td>
+                        <td>EGRESOS</td>
+                    {% endif %}
+                    <td>{{ concepto.concepto }}</td>
+                    <td>{{ concepto.abreviatura }}</td>
+                    <td>{{ concepto.mcppConcepto }}</td>
+                    <td>{{ concepto.estado }}</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

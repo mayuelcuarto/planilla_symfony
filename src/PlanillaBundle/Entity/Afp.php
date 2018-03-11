@@ -284,4 +284,3 @@ class Afp
         return $this->raMixta;
     }
 }
-
