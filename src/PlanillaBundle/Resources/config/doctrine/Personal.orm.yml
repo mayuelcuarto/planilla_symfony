@@ -76,9 +76,6 @@ PlanillaBundle\Entity\Personal:
                 fixed: false
             column: num_autogenerado
         estado:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
+            type: boolean
+            nullable: false
     lifecycleCallbacks: {  }

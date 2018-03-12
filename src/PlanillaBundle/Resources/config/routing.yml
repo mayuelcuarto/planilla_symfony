@@ -36,3 +36,15 @@ concepto_add:
 concepto_edit:
     path: /concepto/edit/{id}
     defaults: { _controller: PlanillaBundle:Concepto:edit }
+    
+personal_index:
+    path: /personal/index
+    defaults: { _controller: PlanillaBundle:Personal:index }
+    
+personal_add:
+    path: /personal/add
+    defaults: { _controller: PlanillaBundle:Personal:add }
+    
+personal_edit:
+    path: /personal/edit/{codPersonal}
+    defaults: { _controller: PlanillaBundle:Personal:edit }

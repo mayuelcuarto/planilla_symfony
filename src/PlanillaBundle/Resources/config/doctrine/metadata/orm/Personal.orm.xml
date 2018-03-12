@@ -50,10 +50,6 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
   </entity>
 </doctrine-mapping>

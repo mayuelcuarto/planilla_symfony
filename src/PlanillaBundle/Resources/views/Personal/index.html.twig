@@ -1,0 +1,31 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Listado de Personal</h2>
+        <hr/>
+        <a href="{{ path("personal_add") }}" class="btn btn-success">Añadir personal</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for personal in personales %}
+                <tr {% if personal.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("personal_edit",{"codPersonal":personal.codPersonal})}}" class="btn btn-warning ">{{ personal.codPersonal }}</a></td>
+                        <td>{{ personal.apellidoPaterno }} {{ personal.apellidoMaterno }}</td>
+                        <td>{{ personal.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

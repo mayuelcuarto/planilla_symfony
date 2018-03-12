@@ -63,7 +63,7 @@ class Personal
     private $numAutogenerado;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -321,7 +321,7 @@ class Personal
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Personal
      */
@@ -335,7 +335,7 @@ class Personal
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

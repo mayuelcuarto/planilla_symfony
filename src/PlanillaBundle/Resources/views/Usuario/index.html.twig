@@ -8,7 +8,7 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive" height="430px">
             <tr>
                 <th>ID</th>
                 <th>Nombres</th>
@@ -28,7 +28,7 @@
                     {% if(usuario.planilla|length == 0) %}
                     <a href="{{path("usuario_delete",{"id":usuario.id})}}" class="btn btn-danger">Eliminar</a>
                     {% else %}
-                    Imposible borrar
+                    Imposible eliminar
                     {% endif %}
                     </td>
                     </tr>

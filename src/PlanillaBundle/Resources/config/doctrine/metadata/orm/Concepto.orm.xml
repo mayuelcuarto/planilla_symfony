@@ -9,11 +9,6 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="secConcepto" type="integer" column="sec_concepto" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
     <field name="concepto" type="string" column="concepto" length="255" nullable="true">
       <options>
         <option name="fixed"/>
@@ -29,36 +24,12 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esActivo" type="string" column="es_activo" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esPension" type="string" column="es_pension" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esPatronal" type="string" column="es_patronal" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esAsegurada" type="string" column="es_asegurada" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esAfp" type="string" column="es_afp" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="true"/>
+    <field name="esActivo" type="boolean" column="es_activo" nullable="true"/>
+    <field name="esPension" type="boolean" column="es_pension" nullable="true"/>
+    <field name="esPatronal" type="boolean" column="es_patronal" nullable="true"/>
+    <field name="esAsegurada" type="boolean" column="es_asegurada" nullable="true"/>
+    <field name="esAfp" type="boolean" column="es_afp" nullable="true"/>
     <field name="mcppConcepto" type="string" column="mcpp_concepto" length="4" nullable="true">
       <options>
         <option name="fixed">1</option>
