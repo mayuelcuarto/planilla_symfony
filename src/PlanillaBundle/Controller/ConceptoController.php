@@ -19,7 +19,7 @@ class ConceptoController extends Controller
     public function indexAction(){
         $em = $this->getDoctrine()->getManager();
         $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
-        $conceptos = $concepto_repo->findBy(array(), array('tipoConcepto' => 'ASC'));
+        $conceptos = $concepto_repo->findBy(array(), array('estado' => 'DESC','tipoConcepto' => 'ASC'));
         
         return $this->render("@Planilla/concepto/index.html.twig", array(
             "conceptos" => $conceptos
@@ -112,7 +112,7 @@ class ConceptoController extends Controller
             $this->session->getFlashBag()->add("status", $status);
             return $this->redirectToRoute("concepto_index");
         }
-        return $this->render('@Planilla/concepto/add.html.twig',
+        return $this->render('@Planilla/concepto/edit.html.twig',
                 array(
                     "form" => $form->createView()
                 )
