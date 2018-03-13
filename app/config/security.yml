@@ -19,6 +19,7 @@ security:
             security: false
 
         main:
+            logout_on_user_change: true
             anonymous: ~
             form_login:
                 login_path: login

@@ -3,7 +3,9 @@
     <div class="col-lg-6">
         <h2>Listado de Personal</h2>
         <hr/>
-        <a href="{{ path("personal_add") }}" class="btn btn-success">Añadir personal</a>
+            {{form_start(form)}}
+            {{form_end(form,{'action':'personal_index', 'method':'POST'})}}
+            <a href="{{ path("personal_add") }}" class="btn btn-success">Añadir personal</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>

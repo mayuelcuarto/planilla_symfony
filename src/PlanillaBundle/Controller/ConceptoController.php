@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Concepto;
 use PlanillaBundle\Form\ConceptoType;
+use PlanillaBundle\Form\ConceptoSearchType;
 
 class ConceptoController extends Controller
 {
@@ -16,13 +17,56 @@ class ConceptoController extends Controller
         $this->session = new Session();
     }
     
-    public function indexAction(){
+    public function indexAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
         $conceptos = $concepto_repo->findBy(array(), array('estado' => 'DESC','tipoConcepto' => 'ASC'));
         
+        $concepto = new Concepto();
+        $form = $this->createForm(ConceptoSearchType::class, $concepto);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoConcepto = $form->get("tipoConcepto")->getData();
+                $conceptoCampo = $form->get("concepto")->getData();
+                $abreviatura = $form->get("abreviatura")->getData();
+                $mcppConcepto = $form->get("mcppConcepto")->getData();
+                
+                $em = $this->getDoctrine()->getManager();
+                $concepto_repo = $em->getRepository("PlanillaBundle:Concepto")->createQueryBuilder('c')
+                        ->where('c.tipoConcepto = :tipoConcepto')
+                        ->andWhere('c.concepto LIKE :concepto')
+                        ->andWhere('c.abreviatura LIKE :abreviatura')
+                        ->andWhere('c.mcppConcepto LIKE :mcppConcepto')
+                        ->setParameter('tipoConcepto', $tipoConcepto)
+                        ->setParameter('concepto', '%'.$conceptoCampo.'%')
+                        ->setParameter('abreviatura', '%'.$abreviatura.'%')
+                        ->setParameter('mcppConcepto', '%'.$mcppConcepto.'%')
+                        ->addOrderBy('c.estado', 'DESC')
+                        ->addOrderBy('c.tipoConcepto', 'ASC')  
+                        ->getQuery()
+                        ->getResult();
+                $conceptos = $concepto_repo;
+                if(count($conceptos)==0){
+                    $status = "La búsqueda no encontró coincidencias";
+                }else{
+                    $status = "Resultados de la búsqueda, listando ".count($conceptos)." concepto(s)";
+                }
+            } else {
+            $status = "No te has registrado correctamente";
+        }
+
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->render("@Planilla/concepto/index.html.twig", array(
+                "conceptos" => $conceptos,
+                "form" => $form->createView()
+            ));
+        }
+        
         return $this->render("@Planilla/concepto/index.html.twig", array(
-            "conceptos" => $conceptos
+            "conceptos" => $conceptos,
+            "form" => $form->createView()
         ));
     }
     

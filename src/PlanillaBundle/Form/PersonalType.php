@@ -27,7 +27,7 @@ class PersonalType extends AbstractType
                 ->add('nombre', TextType::class, array("label"=>"Nombres", "required"=>"required", "attr"=>array(
                 "class" => "form-control form-control-sm"
                 )))
-                ->add('anexo', TextType::class, array("label"=>"Anexo", "attr"=>array(
+                ->add('anexo', TextType::class, array("label"=>"Anexo", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
                 )))
                 ->add('fechaNacimiento', BirthdayType::class, array("label"=>"Fecha de Nacimiento", "required"=>"required", "attr"=>array(
@@ -40,7 +40,7 @@ class PersonalType extends AbstractType
                 "attr"=>array(
                 "class" => "form-control form-control-sm"
                 )))
-                ->add('numeroDocumento', TextType::class, array("label"=>"Numero de Documento", "attr"=>array(
+                ->add('numeroDocumento', TextType::class, array("label"=>"Numero de Documento",  "required"=>"required", "attr"=>array(
                 "class" => "form-control form-control-sm", "maxlength" => 8
                 )))
                 ->add('sexo', ChoiceType::class, array("label"=>"Sexo", "required"=>"required", 
@@ -51,14 +51,14 @@ class PersonalType extends AbstractType
                 "attr"=>array(
                 "class" => "form-control form-control-sm"
                 )))
-                ->add('cuspp', TextType::class, array("label"=>"CUSPP", "attr"=>array(
+                ->add('cuspp', TextType::class, array("label"=>"CUSPP", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm", "maxlength" => 8
                 )))
-                ->add('numAutogenerado', TextType::class, array("label"=>"Numero Autogenerado", "attr"=>array(
+                ->add('numAutogenerado', TextType::class, array("label"=>"Numero Autogenerado", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm", "maxlength" => 8
                 )))
                 ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm", "checked" => "true"
+                "class" => "form-control form-control-sm"
                 )))
                 ->add('Guardar', SubmitType::class, array("attr"=>array(
                 "class" => "form-submit btn btn-success form-control-sm"

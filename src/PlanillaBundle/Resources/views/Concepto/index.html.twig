@@ -3,7 +3,9 @@
     <div class="col-lg-6">
         <h2>Lista de Conceptos</h2>
         <hr/>
-        <a href="{{ path("concepto_add") }}" class="btn btn-success">Añadir concepto</a>
+            {{form_start(form)}}
+            {{form_end(form,{'action':'concepto_index', 'method':'POST'})}}
+            <a href="{{ path("concepto_add") }}" class="btn btn-success">Añadir concepto</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -23,10 +25,10 @@
                 <tr {% if concepto.estado == false %} class="table-secondary" {% endif%} >
                     {% if concepto.tipoConcepto == 1 %}
                         <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-warning ">{{ concepto.id }}</a></td>
-                        <td>INGRESOS</td>
+                        <td>INGRESO</td>
                     {% else%}
                         <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-danger">{{ concepto.id }}</a></td>
-                        <td>EGRESOS</td>
+                        <td>EGRESO</td>
                     {% endif %}
                         <td>{{ concepto.concepto }}</td>
                         <td>{{ concepto.abreviatura }}</td>
