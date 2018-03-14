@@ -49,7 +49,7 @@
     },
     "config": {
         "platform": {
-            "php": "5.5.9"
+            "php": "7.2.3"
         },
         "sort-packages": true
     },
