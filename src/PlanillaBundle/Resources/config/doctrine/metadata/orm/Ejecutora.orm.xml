@@ -12,7 +12,7 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="nombre" type="string" column="nombre" length="255" nullable="true">
+    <field name="nombre" type="string" column="nombre" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
@@ -27,11 +27,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="255" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
     <many-to-one field="pliego" target-entity="Pliego" fetch="LAZY">
       <join-columns>
         <join-column name="pliego_id" referenced-column-name="id"/>

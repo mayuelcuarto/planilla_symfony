@@ -33,13 +33,13 @@
                     <li><a class="dropdown-item" href="{{path("usuario_index")}}">Usuarios</a></li>
                     <li><a class="dropdown-item" href="#">Maestro</a></li>
                     
-                    <li><a class="dropdown-item" href="#">Fuente de Financiamiento</a></li>
-                    <li><a class="dropdown-item" href="#">Específica de Gasto</a></li>
+                    <li><a class="dropdown-item" href="{{path("fuente_index")}}">Fuente de Financiamiento</a></li>
+                    <li><a class="dropdown-item" href="{{path("especifica_index")}}">Específica de Gasto</a></li>
                     <li class="dropdown-divider"></li>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <li><a class="dropdown-item" href="#"><strong>Ejecutora</strong></a></li>
-                        <li><a class="dropdown-item" href="#">&nbsp;Sector</a></li>
-                        <li><a class="dropdown-item" href="#">&nbsp;Pliego</a></li>
+                    <li><a class="dropdown-item" href="{{path("ejecutora_index")}}"><strong>Ejecutora</strong></a></li>
+                        <li><a class="dropdown-item" href="{{path("pliego_index")}}">&nbsp;Pliego</a></li>
+                        <li><a class="dropdown-item" href="{{path("sector_index")}}">&nbsp;Sector</a></li>
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#"><strong>Meta</strong></a></li>
                         <li><a class="dropdown-item" href="#">&nbsp;Programa</a></li>

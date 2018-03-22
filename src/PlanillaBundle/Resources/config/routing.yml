@@ -60,3 +60,63 @@ plaza_add:
 plaza_edit:
     path: /plaza/edit/{id}
     defaults: { _controller: PlanillaBundle:Plaza:edit }
+    
+especifica_index:
+    path: /especifica/index
+    defaults: { _controller: PlanillaBundle:Especifica:index }
+    
+especifica_add:
+    path: /especifica/add
+    defaults: { _controller: PlanillaBundle:Especifica:add }
+    
+especifica_edit:
+    path: /especifica/edit/{id}
+    defaults: { _controller: PlanillaBundle:Especifica:edit }
+    
+fuente_index:
+    path: /fuente/index
+    defaults: { _controller: PlanillaBundle:FuenteFinanc:index }
+    
+fuente_add:
+    path: /fuente/add
+    defaults: { _controller: PlanillaBundle:FuenteFinanc:add }
+    
+fuente_edit:
+    path: /fuente/edit/{id}
+    defaults: { _controller: PlanillaBundle:FuenteFinanc:edit }
+    
+sector_index:
+    path: /sector/index
+    defaults: { _controller: PlanillaBundle:Sector:index }
+    
+sector_add:
+    path: /sector/add
+    defaults: { _controller: PlanillaBundle:Sector:add }
+    
+sector_edit:
+    path: /sector/edit/{id}
+    defaults: { _controller: PlanillaBundle:Sector:edit }
+    
+pliego_index:
+    path: /pliego/index
+    defaults: { _controller: PlanillaBundle:Pliego:index }
+    
+pliego_add:
+    path: /pliego/add
+    defaults: { _controller: PlanillaBundle:Pliego:add }
+    
+pliego_edit:
+    path: /pliego/edit/{id}
+    defaults: { _controller: PlanillaBundle:Pliego:edit }
+    
+ejecutora_index:
+    path: /ejecutora/index
+    defaults: { _controller: PlanillaBundle:Ejecutora:index }
+    
+ejecutora_add:
+    path: /ejecutora/add
+    defaults: { _controller: PlanillaBundle:Ejecutora:add }
+    
+ejecutora_edit:
+    path: /ejecutora/edit/{id}
+    defaults: { _controller: PlanillaBundle:Ejecutora:edit }

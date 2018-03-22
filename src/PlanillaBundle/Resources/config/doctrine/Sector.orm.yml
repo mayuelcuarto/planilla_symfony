@@ -2,12 +2,20 @@ PlanillaBundle\Entity\Sector:
     type: entity
     table: sector
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         sector:
             type: string
@@ -15,18 +23,13 @@ PlanillaBundle\Entity\Sector:
             length: 2
             options:
                 fixed: true
-            id: true
-    fields:
         nombre:
             type: string
-            nullable: true
+            nullable: false
             length: 255
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
+            type: boolean
+            nullable: false
     lifecycleCallbacks: {  }

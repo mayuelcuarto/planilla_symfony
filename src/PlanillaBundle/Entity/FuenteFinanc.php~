@@ -10,6 +10,11 @@ class FuenteFinanc
     /**
      * @var integer
      */
+    private $id;
+
+    /**
+     * @var integer
+     */
     private $anoEje;
 
     /**
@@ -28,10 +33,20 @@ class FuenteFinanc
     private $origen;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set anoEje
@@ -132,7 +147,7 @@ class FuenteFinanc
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return FuenteFinanc
      */
@@ -146,7 +161,7 @@ class FuenteFinanc
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

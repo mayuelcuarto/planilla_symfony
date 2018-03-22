@@ -26,7 +26,7 @@ class PlazaType extends AbstractType
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
             )))
-            ->add('numPlaza', TextType::class, array("attr"=>array(
+            ->add('numPlaza', TextType::class, array("label"=>"Plaza", "required"=>"required", "attr"=>array(
                 "class" => 'form-control form-control-sm', "maxlength" => 6
             )))
             ->add('secFunc', EntityType::class, array("label"=>"Meta", "required"=>"required",

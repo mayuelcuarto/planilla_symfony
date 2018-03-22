@@ -23,20 +23,29 @@ class Pliego
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
     /**
-     * @var string
-     */
-    private $regional;
-
-    /**
      * @var \PlanillaBundle\Entity\Sector
      */
-    private $anoEje;
+    private $sector;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getSector()->getAnoEje() ." - ".$this->pliego." ".$this->nombre;
+    } 
 
     /**
      * Get id
@@ -99,7 +108,7 @@ class Pliego
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Pliego
      */
@@ -113,7 +122,7 @@ class Pliego
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -121,50 +130,27 @@ class Pliego
     }
 
     /**
-     * Set regional
+     * Set sector
      *
-     * @param string $regional
+     * @param \PlanillaBundle\Entity\Sector $sector
      *
      * @return Pliego
      */
-    public function setRegional($regional)
+    public function setSector(\PlanillaBundle\Entity\Sector $sector = null)
     {
-        $this->regional = $regional;
+        $this->sector = $sector;
 
         return $this;
     }
 
     /**
-     * Get regional
-     *
-     * @return string
-     */
-    public function getRegional()
-    {
-        return $this->regional;
-    }
-
-    /**
-     * Set anoEje
-     *
-     * @param \PlanillaBundle\Entity\Sector $anoEje
-     *
-     * @return Pliego
-     */
-    public function setAnoEje(\PlanillaBundle\Entity\Sector $anoEje = null)
-    {
-        $this->anoEje = $anoEje;
-
-        return $this;
-    }
-
-    /**
-     * Get anoEje
+     * Get sector
      *
      * @return \PlanillaBundle\Entity\Sector
      */
-    public function getAnoEje()
+    public function getSector()
     {
-        return $this->anoEje;
+        return $this->sector;
     }
 }
+

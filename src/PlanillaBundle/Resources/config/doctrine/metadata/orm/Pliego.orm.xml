@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Pliego" table="pliego">
     <indexes>
-      <index name="fk_pliego_sector1" columns="ano_eje,sector"/>
+      <index name="fk_pliego_sector1_idx" columns="sector_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -12,25 +12,15 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="nombre" type="string" column="nombre" length="255" nullable="true">
+    <field name="nombre" type="string" column="nombre" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="regional" type="string" column="regional" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <many-to-one field="anoEje" target-entity="Sector" fetch="LAZY">
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
+    <many-to-one field="sector" target-entity="Sector" fetch="LAZY">
       <join-columns>
-        <join-column name="ano_eje" referenced-column-name="ano_eje"/>
-        <join-column name="sector" referenced-column-name="sector"/>
+        <join-column name="sector_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

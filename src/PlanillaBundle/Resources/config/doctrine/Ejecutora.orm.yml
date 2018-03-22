@@ -24,7 +24,7 @@ PlanillaBundle\Entity\Ejecutora:
             column: sec_ejec
         nombre:
             type: string
-            nullable: true
+            nullable: false
             length: 255
             options:
                 fixed: false
@@ -41,11 +41,8 @@ PlanillaBundle\Entity\Ejecutora:
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 255
-            options:
-                fixed: false
+            type: boolean
+            nullable: false
     manyToOne:
         pliego:
             targetEntity: Pliego

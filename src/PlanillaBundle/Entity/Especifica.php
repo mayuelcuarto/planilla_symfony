@@ -30,7 +30,7 @@ class Especifica
     /**
      * @var boolean
      */
-    private $estado = '1';
+    private $estado;
     
     /**
      * @var string

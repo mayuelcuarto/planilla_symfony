@@ -2,10 +2,9 @@ PlanillaBundle\Entity\Pliego:
     type: entity
     table: pliego
     indexes:
-        fk_pliego_sector1:
+        fk_pliego_sector1_idx:
             columns:
-                - ano_eje
-                - sector
+                - sector_id
     id:
         id:
             type: integer
@@ -24,33 +23,22 @@ PlanillaBundle\Entity\Pliego:
                 fixed: true
         nombre:
             type: string
-            nullable: true
+            nullable: false
             length: 255
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-        regional:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
+            type: boolean
+            nullable: false
     manyToOne:
-        anoEje:
+        sector:
             targetEntity: Sector
             cascade: {  }
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
-                ano_eje:
-                    referencedColumnName: ano_eje
-                sector:
-                    referencedColumnName: sector
+                sector_id:
+                    referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

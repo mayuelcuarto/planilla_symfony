@@ -1,0 +1,33 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Fuentes de Financiamiento</h2>
+        <hr/>
+        <a href="{{ path("fuente_add") }}" class="btn btn-success">Añadir Fuente</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Año</th>
+                <th>Fuente</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for fuente in fuentes %}
+                <tr {% if fuente.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("fuente_edit",{"id":fuente.id})}}" class="btn btn-warning ">{{ fuente.id }}</a></td>
+                    <td>{{ fuente.anoEje }}</td>
+                    <td>{{ fuente.fuenteFinanc }}</td>
+                    <td>{{ fuente.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

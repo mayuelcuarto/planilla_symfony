@@ -10,6 +10,11 @@ class Sector
     /**
      * @var integer
      */
+    private $id;
+
+    /**
+     * @var integer
+     */
     private $anoEje;
 
     /**
@@ -23,10 +28,34 @@ class Sector
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->anoEje ." - ".$this->sector." ".$this->nombre;
+    } 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set anoEje
@@ -103,7 +132,7 @@ class Sector
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Sector
      */
@@ -117,10 +146,11 @@ class Sector
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
         return $this->estado;
     }
 }
+

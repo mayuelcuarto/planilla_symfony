@@ -2,23 +2,21 @@ PlanillaBundle\Entity\Planilla:
     type: entity
     table: planilla
     indexes:
-        fk_planilla_fuente_financ1_idx:
-            columns:
-                - ano_eje
-                - fuente_financ
         fk_planilla_meta1_idx:
             columns:
                 - sec_func
-        fk_planilla_especifica1_idx:
-            columns:
-                - ano_eje
-                - especifica
         fk_planilla_plaza_historial1_idx1:
             columns:
                 - plaza_historial_id
         fk_planilla_usuario1_idx:
             columns:
                 - usuario_id
+        fk_planilla_fuente_financ1_idx1:
+            columns:
+                - fuente_id
+        fk_planilla_especifica1_idx1:
+            columns:
+                - especifica_id
     id:
         id:
             type: integer
@@ -80,19 +78,6 @@ PlanillaBundle\Entity\Planilla:
             length: 1
             options:
                 fixed: true
-        fuenteFinanc:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
-            column: fuente_financ
-        especifica:
-            type: string
-            nullable: true
-            length: 10
-            options:
-                fixed: true
         patronal:
             type: float
             nullable: true
@@ -125,6 +110,26 @@ PlanillaBundle\Entity\Planilla:
             options:
                 unsigned: false
     manyToOne:
+        especifica:
+            targetEntity: Especifica
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                especifica_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        fuente:
+            targetEntity: FuenteFinanc
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                fuente_id:
+                    referencedColumnName: id
+            orphanRemoval: false
         secFunc:
             targetEntity: Meta
             cascade: {  }

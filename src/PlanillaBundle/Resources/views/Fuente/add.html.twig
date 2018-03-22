@@ -1,0 +1,10 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-4">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        {{form_start(form)}}
+        {{form_end(form,{'action':'', 'method':'POST'})}}
+    </div>
+{% endblock %}

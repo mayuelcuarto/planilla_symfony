@@ -30,8 +30,22 @@ class Especifica
     /**
      * @var boolean
      */
-    private $estado = '1';
+    private $estado;
+    
+    /**
+     * @var string
+     */
+    private $cadena;
 
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->especifica." - ".$this->nombre;
+    }
 
     /**
      * Get id

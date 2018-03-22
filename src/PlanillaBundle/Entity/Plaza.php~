@@ -20,17 +20,22 @@ class Plaza
     /**
      * @var boolean
      */
-    private $estado;
+    private $estado = true;
 
     /**
-     * @var string
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $especifica;
+    private $plazaHistorial;
 
     /**
      * @var \PlanillaBundle\Entity\CategoriaOcupacional
      */
     private $categoria;
+
+    /**
+     * @var \PlanillaBundle\Entity\Especifica
+     */
+    private $especifica;
 
     /**
      * @var \PlanillaBundle\Entity\Meta
@@ -42,6 +47,13 @@ class Plaza
      */
     private $tipoPlanilla;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->plazaHistorial = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -102,27 +114,37 @@ class Plaza
     }
 
     /**
-     * Set especifica
+     * Add plazaHistorial
      *
-     * @param string $especifica
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
      *
      * @return Plaza
      */
-    public function setEspecifica($especifica)
+    public function addPlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
     {
-        $this->especifica = $especifica;
+        $this->plazaHistorial[] = $plazaHistorial;
 
         return $this;
     }
 
     /**
-     * Get especifica
+     * Remove plazaHistorial
      *
-     * @return string
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
      */
-    public function getEspecifica()
+    public function removePlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
     {
-        return $this->especifica;
+        $this->plazaHistorial->removeElement($plazaHistorial);
+    }
+
+    /**
+     * Get plazaHistorial
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlazaHistorial()
+    {
+        return $this->plazaHistorial;
     }
 
     /**
@@ -147,6 +169,30 @@ class Plaza
     public function getCategoria()
     {
         return $this->categoria;
+    }
+
+    /**
+     * Set especifica
+     *
+     * @param \PlanillaBundle\Entity\Especifica $especifica
+     *
+     * @return Plaza
+     */
+    public function setEspecifica(\PlanillaBundle\Entity\Especifica $especifica = null)
+    {
+        $this->especifica = $especifica;
+
+        return $this;
+    }
+
+    /**
+     * Get especifica
+     *
+     * @return \PlanillaBundle\Entity\Especifica
+     */
+    public function getEspecifica()
+    {
+        return $this->especifica;
     }
 
     /**
@@ -195,51 +241,5 @@ class Plaza
     public function getTipoPlanilla()
     {
         return $this->tipoPlanilla;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $plazaHistorial;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->plazaHistorial = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add plazaHistorial
-     *
-     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
-     *
-     * @return Plaza
-     */
-    public function addPlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
-    {
-        $this->plazaHistorial[] = $plazaHistorial;
-
-        return $this;
-    }
-
-    /**
-     * Remove plazaHistorial
-     *
-     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
-     */
-    public function removePlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
-    {
-        $this->plazaHistorial->removeElement($plazaHistorial);
-    }
-
-    /**
-     * Get plazaHistorial
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPlazaHistorial()
-    {
-        return $this->plazaHistorial;
     }
 }

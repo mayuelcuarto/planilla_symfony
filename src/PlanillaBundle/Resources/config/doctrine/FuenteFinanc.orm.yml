@@ -2,12 +2,20 @@ PlanillaBundle\Entity\FuenteFinanc:
     type: entity
     table: fuente_financ
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         fuenteFinanc:
             type: string
@@ -15,9 +23,7 @@ PlanillaBundle\Entity\FuenteFinanc:
             length: 2
             options:
                 fixed: true
-            id: true
             column: fuente_financ
-    fields:
         nombre:
             type: string
             nullable: true
@@ -31,9 +37,6 @@ PlanillaBundle\Entity\FuenteFinanc:
             options:
                 fixed: true
         estado:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
     lifecycleCallbacks: {  }

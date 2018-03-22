@@ -58,16 +58,6 @@ class Planilla
     private $estado;
 
     /**
-     * @var string
-     */
-    private $fuenteFinanc;
-
-    /**
-     * @var string
-     */
-    private $especifica;
-
-    /**
      * @var float
      */
     private $patronal = '0';
@@ -96,6 +86,16 @@ class Planilla
      * @var integer
      */
     private $faltas;
+
+    /**
+     * @var \PlanillaBundle\Entity\Especifica
+     */
+    private $especifica;
+
+    /**
+     * @var \PlanillaBundle\Entity\FuenteFinanc
+     */
+    private $fuente;
 
     /**
      * @var \PlanillaBundle\Entity\Meta
@@ -340,54 +340,6 @@ class Planilla
     }
 
     /**
-     * Set fuenteFinanc
-     *
-     * @param string $fuenteFinanc
-     *
-     * @return Planilla
-     */
-    public function setFuenteFinanc($fuenteFinanc)
-    {
-        $this->fuenteFinanc = $fuenteFinanc;
-
-        return $this;
-    }
-
-    /**
-     * Get fuenteFinanc
-     *
-     * @return string
-     */
-    public function getFuenteFinanc()
-    {
-        return $this->fuenteFinanc;
-    }
-
-    /**
-     * Set especifica
-     *
-     * @param string $especifica
-     *
-     * @return Planilla
-     */
-    public function setEspecifica($especifica)
-    {
-        $this->especifica = $especifica;
-
-        return $this;
-    }
-
-    /**
-     * Get especifica
-     *
-     * @return string
-     */
-    public function getEspecifica()
-    {
-        return $this->especifica;
-    }
-
-    /**
      * Set patronal
      *
      * @param float $patronal
@@ -532,6 +484,54 @@ class Planilla
     }
 
     /**
+     * Set especifica
+     *
+     * @param \PlanillaBundle\Entity\Especifica $especifica
+     *
+     * @return Planilla
+     */
+    public function setEspecifica(\PlanillaBundle\Entity\Especifica $especifica = null)
+    {
+        $this->especifica = $especifica;
+
+        return $this;
+    }
+
+    /**
+     * Get especifica
+     *
+     * @return \PlanillaBundle\Entity\Especifica
+     */
+    public function getEspecifica()
+    {
+        return $this->especifica;
+    }
+
+    /**
+     * Set fuente
+     *
+     * @param \PlanillaBundle\Entity\FuenteFinanc $fuente
+     *
+     * @return Planilla
+     */
+    public function setFuente(\PlanillaBundle\Entity\FuenteFinanc $fuente = null)
+    {
+        $this->fuente = $fuente;
+
+        return $this;
+    }
+
+    /**
+     * Get fuente
+     *
+     * @return \PlanillaBundle\Entity\FuenteFinanc
+     */
+    public function getFuente()
+    {
+        return $this->fuente;
+    }
+
+    /**
      * Set secFunc
      *
      * @param \PlanillaBundle\Entity\Meta $secFunc
@@ -603,3 +603,4 @@ class Planilla
         return $this->usuario;
     }
 }
+

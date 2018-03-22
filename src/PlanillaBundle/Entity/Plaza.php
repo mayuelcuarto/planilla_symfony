@@ -243,4 +243,3 @@ class Plaza
         return $this->tipoPlanilla;
     }
 }
-
