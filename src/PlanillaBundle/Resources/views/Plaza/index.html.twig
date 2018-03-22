@@ -1,0 +1,49 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Plazas</h2>
+        <hr/>
+            {{form_start(form)}}
+            {{form_end(form,{'action':'plaza_index', 'method':'POST'})}}
+            <a href="{{ path("plaza_add") }}" class="btn btn-success">Añadir Plaza</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo Planilla</th>
+                <th>Plaza</th>
+                <th>Categoría</th>
+                <th>Meta</th>
+                <th>Personal</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plaza in plazas %}
+                <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
+                    <td>{{ plaza.tipoPlanilla.nombre }}</td>
+                    <td>{{ plaza.numPlaza }}</td>
+                    <td>{{ plaza.categoria.nombre }}</td>
+                    <td>{{ plaza.secFunc.meta }} - {{ plaza.secFunc.nombre }}</td>
+                    <td>
+                    {% if plaza.plazaHistorial|length > 0 %}
+                        {% for plazaHistorial in plaza.plazaHistorial %}
+                            {% if plazaHistorial.estado == 1 %}
+                                {{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        PLAZA VACANTE
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

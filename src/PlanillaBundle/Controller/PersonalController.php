@@ -77,7 +77,9 @@ class PersonalController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $personal_repo = $em->getRepository("PlanillaBundle:Personal");
                 $personal = $personal_repo->findOneBy(array("numeroDocumento" => $form->get("numeroDocumento")->getData()));
-                if(count($personal)==0){
+                if($personal != null){
+                    $status = "El personal ya existe!!!";
+                }else{
                     $personal = new Personal();
                     $personal->setApellidoPaterno($form->get("apellidoPaterno")->getData());
                     $personal->setApellidoMaterno($form->get("apellidoMaterno")->getData());
@@ -99,8 +101,6 @@ class PersonalController extends Controller
                     } else {
                         $status = "No te has registrado correctamente";
                     }
-                }else{
-                    $status = "El personal ya existe!!!";
                 }
             } else {
                 $status = "No te has registrado correctamente";

@@ -80,7 +80,9 @@ class ConceptoController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
                 $concepto = $concepto_repo->findOneBy(array("concepto" => $form->get("concepto")->getData()));
-                if(count($concepto)==0){
+                if($concepto != null){
+                    $status = "El concepto ya existe!!!";
+                }else{
                     $concepto = new Concepto();
                     $concepto->setTipoConcepto($form->get("tipoConcepto")->getData());
                     $concepto->setConcepto($form->get("concepto")->getData());
@@ -100,9 +102,7 @@ class ConceptoController extends Controller
                         $status = "El concepto se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
-                    }
-                }else{
-                    $status = "El concepto ya existe!!!";
+                    } 
                 }
             } else {
                 $status = "No te has registrado correctamente";

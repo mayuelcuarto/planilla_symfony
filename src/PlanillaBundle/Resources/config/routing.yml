@@ -48,3 +48,15 @@ personal_add:
 personal_edit:
     path: /personal/edit/{codPersonal}
     defaults: { _controller: PlanillaBundle:Personal:edit }
+    
+plaza_index:
+    path: /plaza/index
+    defaults: { _controller: PlanillaBundle:Plaza:index }
+
+plaza_add:
+    path: /plaza/add
+    defaults: { _controller: PlanillaBundle:Plaza:add }
+    
+plaza_edit:
+    path: /plaza/edit/{id}
+    defaults: { _controller: PlanillaBundle:Plaza:edit }

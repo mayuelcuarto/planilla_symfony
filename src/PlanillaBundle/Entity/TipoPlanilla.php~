@@ -3,24 +3,14 @@
 namespace PlanillaBundle\Entity;
 
 /**
- * Especifica
+ * TipoPlanilla
  */
-class Especifica
+class TipoPlanilla
 {
     /**
      * @var integer
      */
     private $id;
-
-    /**
-     * @var integer
-     */
-    private $anoEje;
-
-    /**
-     * @var string
-     */
-    private $especifica;
 
     /**
      * @var string
@@ -44,59 +34,11 @@ class Especifica
     }
 
     /**
-     * Set anoEje
-     *
-     * @param integer $anoEje
-     *
-     * @return Especifica
-     */
-    public function setAnoEje($anoEje)
-    {
-        $this->anoEje = $anoEje;
-
-        return $this;
-    }
-
-    /**
-     * Get anoEje
-     *
-     * @return integer
-     */
-    public function getAnoEje()
-    {
-        return $this->anoEje;
-    }
-
-    /**
-     * Set especifica
-     *
-     * @param string $especifica
-     *
-     * @return Especifica
-     */
-    public function setEspecifica($especifica)
-    {
-        $this->especifica = $especifica;
-
-        return $this;
-    }
-
-    /**
-     * Get especifica
-     *
-     * @return string
-     */
-    public function getEspecifica()
-    {
-        return $this->especifica;
-    }
-
-    /**
      * Set nombre
      *
      * @param string $nombre
      *
-     * @return Especifica
+     * @return TipoPlanilla
      */
     public function setNombre($nombre)
     {
@@ -120,7 +62,7 @@ class Especifica
      *
      * @param boolean $estado
      *
-     * @return Especifica
+     * @return TipoPlanilla
      */
     public function setEstado($estado)
     {

@@ -8,9 +8,9 @@ namespace PlanillaBundle\Entity;
 class Plaza
 {
     /**
-     * @var string
+     * @var integer
      */
-    private $tipoPlanilla;
+    private $id;
 
     /**
      * @var string
@@ -18,9 +18,9 @@ class Plaza
     private $numPlaza;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $estado = 'A';
+    private $estado;
 
     /**
      * @var string
@@ -30,36 +30,27 @@ class Plaza
     /**
      * @var \PlanillaBundle\Entity\CategoriaOcupacional
      */
-    private $grupoOcupacional;
+    private $categoria;
 
     /**
      * @var \PlanillaBundle\Entity\Meta
      */
     private $secFunc;
 
+    /**
+     * @var \PlanillaBundle\Entity\TipoPlanilla
+     */
+    private $tipoPlanilla;
+
 
     /**
-     * Set tipoPlanilla
+     * Get id
      *
-     * @param string $tipoPlanilla
-     *
-     * @return Plaza
+     * @return integer
      */
-    public function setTipoPlanilla($tipoPlanilla)
+    public function getId()
     {
-        $this->tipoPlanilla = $tipoPlanilla;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoPlanilla
-     *
-     * @return string
-     */
-    public function getTipoPlanilla()
-    {
-        return $this->tipoPlanilla;
+        return $this->id;
     }
 
     /**
@@ -89,7 +80,7 @@ class Plaza
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Plaza
      */
@@ -103,7 +94,7 @@ class Plaza
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -135,27 +126,27 @@ class Plaza
     }
 
     /**
-     * Set grupoOcupacional
+     * Set categoria
      *
-     * @param \PlanillaBundle\Entity\CategoriaOcupacional $grupoOcupacional
+     * @param \PlanillaBundle\Entity\CategoriaOcupacional $categoria
      *
      * @return Plaza
      */
-    public function setGrupoOcupacional(\PlanillaBundle\Entity\CategoriaOcupacional $grupoOcupacional = null)
+    public function setCategoria(\PlanillaBundle\Entity\CategoriaOcupacional $categoria = null)
     {
-        $this->grupoOcupacional = $grupoOcupacional;
+        $this->categoria = $categoria;
 
         return $this;
     }
 
     /**
-     * Get grupoOcupacional
+     * Get categoria
      *
      * @return \PlanillaBundle\Entity\CategoriaOcupacional
      */
-    public function getGrupoOcupacional()
+    public function getCategoria()
     {
-        return $this->grupoOcupacional;
+        return $this->categoria;
     }
 
     /**
@@ -180,5 +171,75 @@ class Plaza
     public function getSecFunc()
     {
         return $this->secFunc;
+    }
+
+    /**
+     * Set tipoPlanilla
+     *
+     * @param \PlanillaBundle\Entity\TipoPlanilla $tipoPlanilla
+     *
+     * @return Plaza
+     */
+    public function setTipoPlanilla(\PlanillaBundle\Entity\TipoPlanilla $tipoPlanilla = null)
+    {
+        $this->tipoPlanilla = $tipoPlanilla;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoPlanilla
+     *
+     * @return \PlanillaBundle\Entity\TipoPlanilla
+     */
+    public function getTipoPlanilla()
+    {
+        return $this->tipoPlanilla;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $plazaHistorial;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->plazaHistorial = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add plazaHistorial
+     *
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
+     *
+     * @return Plaza
+     */
+    public function addPlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
+    {
+        $this->plazaHistorial[] = $plazaHistorial;
+
+        return $this;
+    }
+
+    /**
+     * Remove plazaHistorial
+     *
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
+     */
+    public function removePlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
+    {
+        $this->plazaHistorial->removeElement($plazaHistorial);
+    }
+
+    /**
+     * Get plazaHistorial
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlazaHistorial()
+    {
+        return $this->plazaHistorial;
     }
 }

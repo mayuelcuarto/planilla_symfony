@@ -57,9 +57,9 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
+    <field name="estado" type="boolean" column="estado" nullable="false">
       <options>
-        <option name="fixed">1</option>
+        <option name="default">1</option>
       </options>
     </field>
     <many-to-one field="ejecutora" target-entity="Ejecutora" fetch="LAZY">

@@ -2,12 +2,20 @@ PlanillaBundle\Entity\Especifica:
     type: entity
     table: especifica
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         especifica:
             type: string
@@ -15,8 +23,6 @@ PlanillaBundle\Entity\Especifica:
             length: 10
             options:
                 fixed: true
-            id: true
-    fields:
         nombre:
             type: string
             nullable: true
@@ -24,9 +30,8 @@ PlanillaBundle\Entity\Especifica:
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 1
+            type: boolean
+            nullable: false
             options:
-                fixed: true
+                default: '1'
     lifecycleCallbacks: {  }

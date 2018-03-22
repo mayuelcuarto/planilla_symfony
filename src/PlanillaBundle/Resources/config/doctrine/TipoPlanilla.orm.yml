@@ -1,15 +1,13 @@
-PlanillaBundle\Entity\GrupoOcupacional:
+PlanillaBundle\Entity\TipoPlanilla:
     type: entity
-    table: grupo_ocupacional
+    table: tipo_planilla
     id:
-        grupoOcupacional:
-            type: string
+        id:
+            type: integer
             nullable: false
-            length: 2
             options:
-                fixed: true
+                unsigned: false
             id: true
-            column: grupo_ocupacional
             generator:
                 strategy: IDENTITY
     fields:
@@ -22,4 +20,6 @@ PlanillaBundle\Entity\GrupoOcupacional:
         estado:
             type: boolean
             nullable: false
+            options:
+                default: '1'
     lifecycleCallbacks: {  }

@@ -60,11 +60,6 @@ class PlazaHistorial
     /**
      * @var string
      */
-    private $numPlaza2;
-
-    /**
-     * @var string
-     */
     private $cargo;
 
     /**
@@ -78,7 +73,7 @@ class PlazaHistorial
     private $anulacion;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -88,7 +83,7 @@ class PlazaHistorial
     private $docAnulacion;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $afpMix;
 
@@ -110,7 +105,7 @@ class PlazaHistorial
     /**
      * @var \PlanillaBundle\Entity\Plaza
      */
-    private $tipoPlanilla;
+    private $plaza;
 
     /**
      * @var \PlanillaBundle\Entity\Unidad
@@ -345,30 +340,6 @@ class PlazaHistorial
     }
 
     /**
-     * Set numPlaza2
-     *
-     * @param string $numPlaza2
-     *
-     * @return PlazaHistorial
-     */
-    public function setNumPlaza2($numPlaza2)
-    {
-        $this->numPlaza2 = $numPlaza2;
-
-        return $this;
-    }
-
-    /**
-     * Get numPlaza2
-     *
-     * @return string
-     */
-    public function getNumPlaza2()
-    {
-        return $this->numPlaza2;
-    }
-
-    /**
      * Set cargo
      *
      * @param string $cargo
@@ -443,7 +414,7 @@ class PlazaHistorial
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return PlazaHistorial
      */
@@ -457,7 +428,7 @@ class PlazaHistorial
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -491,7 +462,7 @@ class PlazaHistorial
     /**
      * Set afpMix
      *
-     * @param string $afpMix
+     * @param boolean $afpMix
      *
      * @return PlazaHistorial
      */
@@ -505,7 +476,7 @@ class PlazaHistorial
     /**
      * Get afpMix
      *
-     * @return string
+     * @return boolean
      */
     public function getAfpMix()
     {
@@ -585,27 +556,27 @@ class PlazaHistorial
     }
 
     /**
-     * Set tipoPlanilla
+     * Set plaza
      *
-     * @param \PlanillaBundle\Entity\Plaza $tipoPlanilla
+     * @param \PlanillaBundle\Entity\Plaza $plaza
      *
      * @return PlazaHistorial
      */
-    public function setTipoPlanilla(\PlanillaBundle\Entity\Plaza $tipoPlanilla = null)
+    public function setPlaza(\PlanillaBundle\Entity\Plaza $plaza = null)
     {
-        $this->tipoPlanilla = $tipoPlanilla;
+        $this->plaza = $plaza;
 
         return $this;
     }
 
     /**
-     * Get tipoPlanilla
+     * Get plaza
      *
      * @return \PlanillaBundle\Entity\Plaza
      */
-    public function getTipoPlanilla()
+    public function getPlaza()
     {
-        return $this->tipoPlanilla;
+        return $this->plaza;
     }
 
     /**

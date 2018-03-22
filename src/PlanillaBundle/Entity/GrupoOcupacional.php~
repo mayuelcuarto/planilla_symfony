@@ -18,7 +18,7 @@ class GrupoOcupacional
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -60,7 +60,7 @@ class GrupoOcupacional
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return GrupoOcupacional
      */
@@ -74,7 +74,7 @@ class GrupoOcupacional
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

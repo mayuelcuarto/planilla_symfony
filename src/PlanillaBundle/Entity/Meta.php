@@ -63,15 +63,29 @@ class Meta
     private $direccion;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $estado;
+    private $estado = '1';
 
     /**
      * @var \PlanillaBundle\Entity\Ejecutora
      */
     private $ejecutora;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->meta ." - ".$this->nombre;
+    }    
 
     /**
      * Get secFunc
@@ -326,7 +340,7 @@ class Meta
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Meta
      */
@@ -340,7 +354,7 @@ class Meta
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

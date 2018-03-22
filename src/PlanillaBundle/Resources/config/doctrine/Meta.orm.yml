@@ -79,11 +79,10 @@ PlanillaBundle\Entity\Meta:
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 1
+            type: boolean
+            nullable: false
             options:
-                fixed: true
+                default: '1'
     manyToOne:
         ejecutora:
             targetEntity: Ejecutora

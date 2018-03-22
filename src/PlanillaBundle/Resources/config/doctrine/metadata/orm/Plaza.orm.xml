@@ -2,31 +2,42 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Plaza" table="plaza">
     <indexes>
-      <index name="fk_plaza_categoria_ocupacional1_idx" columns="grupo_ocupacional,categoria_ocupacional"/>
       <index name="fk_plaza_meta1_idx" columns="sec_func"/>
+      <index name="fk_plaza_categoria_ocupacional1_idx" columns="categoria_id"/>
+      <index name="fk_plaza_tipo_planilla1_idx" columns="tipo_planilla"/>
+      <index name="fk_plaza_especifica1_idx" columns="especifica_id"/>
     </indexes>
-    <id name="tipoPlanilla" type="string" column="tipo_planilla" length="2"/>
-    <id name="numPlaza" type="string" column="num_plaza" length="6"/>
-    <field name="estado" type="string" column="estado" length="1" nullable="false">
-      <options>
-        <option name="fixed">1</option>
-        <option name="default">A</option>
-      </options>
-    </field>
-    <field name="especifica" type="string" column="especifica" length="10" nullable="true">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="numPlaza" type="string" column="num_plaza" length="6" nullable="false">
       <options>
         <option name="fixed">1</option>
       </options>
     </field>
+    <field name="estado" type="boolean" column="estado" nullable="false">
+      <options>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <many-to-one field="categoria" target-entity="CategoriaOcupacional" fetch="LAZY">
+      <join-columns>
+        <join-column name="categoria_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="especifica" target-entity="Especifica" fetch="LAZY">
+      <join-columns>
+        <join-column name="especifica_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">
       <join-columns>
         <join-column name="sec_func" referenced-column-name="sec_func"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="grupoOcupacional" target-entity="CategoriaOcupacional" fetch="LAZY">
+    <many-to-one field="tipoPlanilla" target-entity="TipoPlanilla" fetch="LAZY">
       <join-columns>
-        <join-column name="grupo_ocupacional" referenced-column-name="grupo_ocupacional"/>
-        <join-column name="categoria_ocupacional" referenced-column-name="categoria_ocupacional"/>
+        <join-column name="tipo_planilla" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

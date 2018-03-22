@@ -10,6 +10,11 @@ class Especifica
     /**
      * @var integer
      */
+    private $id;
+
+    /**
+     * @var integer
+     */
     private $anoEje;
 
     /**
@@ -23,10 +28,34 @@ class Especifica
     private $nombre;
 
     /**
+     * @var boolean
+     */
+    private $estado = '1';
+    
+    /**
      * @var string
      */
-    private $estado;
+    private $cadena;
 
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->especifica." - ".$this->nombre;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set anoEje
@@ -103,7 +132,7 @@ class Especifica
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Especifica
      */
@@ -117,7 +146,7 @@ class Especifica
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

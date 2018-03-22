@@ -65,7 +65,7 @@ class Personal
     /**
      * @var boolean
      */
-    private $estado = '1';
+    private $estado;
 
 
     /**
@@ -342,4 +342,3 @@ class Personal
         return $this->estado;
     }
 }
-

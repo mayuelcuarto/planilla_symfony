@@ -50,7 +50,9 @@ class UsuarioController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $usuario_repo = $em->getRepository("PlanillaBundle:Usuario");
                 $usuario = $usuario_repo->findOneBy(array("nick" => $form->get("nick")->getData()));
-                if(count($usuario)==0){
+                if($usuario != null){
+                    $status = "El usuario ya existe!!!";
+                }else{
                     $usuario = new Usuario();
                     $usuario->setApellidos($form->get("apellidos")->getData());
                     $usuario->setNombres($form->get("nombres")->getData());
@@ -73,8 +75,6 @@ class UsuarioController extends Controller
                     } else {
                         $status = "No te has registrado correctamente";
                     }
-                }else{
-                    $status = "El usuario ya existe!!!";
                 }
             } else {
                 $status = "No te has registrado correctamente";

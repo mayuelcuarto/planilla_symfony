@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Especifica" table="especifica">
+  <entity name="TipoPlanilla" table="tipo_planilla">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="anoEje" type="integer" column="ano_eje" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="especifica" type="string" column="especifica" length="10" nullable="false">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="nombre" type="string" column="nombre" length="255" nullable="true">
+    <field name="nombre" type="string" column="nombre" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>

@@ -2,34 +2,31 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="CategoriaOcupacional" table="categoria_ocupacional">
     <indexes>
-      <index name="IDX_B5356E87BB73C202" columns="grupo_ocupacional"/>
+      <index name="fk_categoria_ocupacional_grupo_ocupacional1_idx" columns="grupo_ocupacional"/>
     </indexes>
-    <id name="categoriaOcupacional" type="string" column="categoria_ocupacional" length="2"/>
-    <id name="grupoOcupacional" association-key="true"/>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="categoriaOcupacional" type="string" column="categoria_ocupacional" length="2" nullable="false">
+      <options>
+        <option name="fixed">1</option>
+      </options>
+    </field>
     <field name="nombre" type="string" column="nombre" length="255" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <field name="sinCatego" type="string" column="sin_catego" length="1" nullable="false">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="false">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
     <field name="abreviatura" type="string" column="abreviatura" length="255" nullable="true">
       <options>
         <option name="fixed"/>
       </options>
     </field>
-    <one-to-one field="grupoOcupacional" target-entity="GrupoOcupacional" fetch="LAZY">
+    <many-to-one field="grupoOcupacional" target-entity="GrupoOcupacional" fetch="LAZY">
       <join-columns>
         <join-column name="grupo_ocupacional" referenced-column-name="grupo_ocupacional"/>
       </join-columns>
-    </one-to-one>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

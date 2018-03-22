@@ -2,56 +2,60 @@ PlanillaBundle\Entity\Plaza:
     type: entity
     table: plaza
     indexes:
-        fk_plaza_categoria_ocupacional1_idx:
-            columns:
-                - grupo_ocupacional
-                - categoria_ocupacional
         fk_plaza_meta1_idx:
             columns:
                 - sec_func
+        fk_plaza_categoria_ocupacional1_idx:
+            columns:
+                - categoria_id
+        fk_plaza_tipo_planilla1_idx:
+            columns:
+                - tipo_planilla
+        fk_plaza_especifica1_idx:
+            columns:
+                - especifica_id
     id:
-        tipoPlanilla:
-            type: string
+        id:
+            type: integer
             nullable: false
-            length: 2
             options:
-                fixed: true
+                unsigned: false
             id: true
-            column: tipo_planilla
+            generator:
+                strategy: IDENTITY
+    fields:
         numPlaza:
             type: string
             nullable: false
             length: 6
             options:
                 fixed: true
-            id: true
             column: num_plaza
-    fields:
         estado:
-            type: string
+            type: boolean
             nullable: false
-            length: 1
             options:
-                fixed: true
-                default: A
-        especifica:
-            type: string
-            nullable: true
-            length: 10
-            options:
-                fixed: true
+                default: '1'
     manyToOne:
-        grupoOcupacional:
+        categoria:
             targetEntity: CategoriaOcupacional
             cascade: {  }
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
-                grupo_ocupacional:
-                    referencedColumnName: grupo_ocupacional
-                categoria_ocupacional:
-                    referencedColumnName: categoria_ocupacional
+                categoria_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        especifica:
+            targetEntity: Especifica
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                especifica_id:
+                    referencedColumnName: id
             orphanRemoval: false
         secFunc:
             targetEntity: Meta
@@ -63,4 +67,18 @@ PlanillaBundle\Entity\Plaza:
                 sec_func:
                     referencedColumnName: sec_func
             orphanRemoval: false
+        tipoPlanilla:
+            targetEntity: TipoPlanilla
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_planilla:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        plazaHistorial:
+            targetEntity: PlazaHistorial
+            mappedBy: plaza
     lifecycleCallbacks: {  }

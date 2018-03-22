@@ -8,6 +8,11 @@ namespace PlanillaBundle\Entity;
 class CategoriaOcupacional
 {
     /**
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $categoriaOcupacional;
@@ -18,12 +23,7 @@ class CategoriaOcupacional
     private $nombre;
 
     /**
-     * @var string
-     */
-    private $sinCatego;
-
-    /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -37,6 +37,16 @@ class CategoriaOcupacional
      */
     private $grupoOcupacional;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set categoriaOcupacional
@@ -87,33 +97,9 @@ class CategoriaOcupacional
     }
 
     /**
-     * Set sinCatego
-     *
-     * @param string $sinCatego
-     *
-     * @return CategoriaOcupacional
-     */
-    public function setSinCatego($sinCatego)
-    {
-        $this->sinCatego = $sinCatego;
-
-        return $this;
-    }
-
-    /**
-     * Get sinCatego
-     *
-     * @return string
-     */
-    public function getSinCatego()
-    {
-        return $this->sinCatego;
-    }
-
-    /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return CategoriaOcupacional
      */
@@ -127,7 +113,7 @@ class CategoriaOcupacional
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

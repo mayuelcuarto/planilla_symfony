@@ -72,9 +72,9 @@
         <option name="unsigned"/>
       </options>
     </field>
-    <many-to-one field="usuario" target-entity="Usuario" fetch="LAZY">
+    <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">
       <join-columns>
-        <join-column name="usuario_id" referenced-column-name="id"/>
+        <join-column name="sec_func" referenced-column-name="sec_func"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="plazaHistorial" target-entity="PlazaHistorial" fetch="LAZY">
@@ -82,9 +82,9 @@
         <join-column name="plaza_historial_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">
+    <many-to-one field="usuario" target-entity="Usuario" fetch="LAZY">
       <join-columns>
-        <join-column name="sec_func" referenced-column-name="sec_func"/>
+        <join-column name="usuario_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>
