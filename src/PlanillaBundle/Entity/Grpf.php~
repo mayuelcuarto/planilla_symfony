@@ -10,6 +10,11 @@ class Grpf
     /**
      * @var integer
      */
+    private $id;
+
+    /**
+     * @var integer
+     */
     private $anoEje;
 
     /**
@@ -23,20 +28,39 @@ class Grpf
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $ambito;
+    private $esPresupu;
 
     /**
      * @var string
      */
-    private $esPresupu;
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getAnoEje() ." - ".$this->nombre;
+    } 
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set anoEje
@@ -113,7 +137,7 @@ class Grpf
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Grpf
      */
@@ -127,7 +151,7 @@ class Grpf
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -135,33 +159,9 @@ class Grpf
     }
 
     /**
-     * Set ambito
-     *
-     * @param string $ambito
-     *
-     * @return Grpf
-     */
-    public function setAmbito($ambito)
-    {
-        $this->ambito = $ambito;
-
-        return $this;
-    }
-
-    /**
-     * Get ambito
-     *
-     * @return string
-     */
-    public function getAmbito()
-    {
-        return $this->ambito;
-    }
-
-    /**
      * Set esPresupu
      *
-     * @param string $esPresupu
+     * @param boolean $esPresupu
      *
      * @return Grpf
      */
@@ -175,25 +175,11 @@ class Grpf
     /**
      * Get esPresupu
      *
-     * @return string
+     * @return boolean
      */
     public function getEsPresupu()
     {
         return $this->esPresupu;
     }
-    /**
-     * @var integer
-     */
-    private $id;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }
+

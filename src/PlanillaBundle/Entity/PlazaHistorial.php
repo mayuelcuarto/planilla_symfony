@@ -603,4 +603,3 @@ class PlazaHistorial
         return $this->unidad;
     }
 }
-

@@ -81,4 +81,3 @@ class TipoPlanilla
         return $this->estado;
     }
 }
-

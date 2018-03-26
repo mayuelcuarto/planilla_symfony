@@ -23,11 +23,6 @@ class Plaza
     private $estado;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $plazaHistorial;
-
-    /**
      * @var \PlanillaBundle\Entity\CategoriaOcupacional
      */
     private $categoria;
@@ -47,13 +42,6 @@ class Plaza
      */
     private $tipoPlanilla;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->plazaHistorial = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -111,40 +99,6 @@ class Plaza
     public function getEstado()
     {
         return $this->estado;
-    }
-
-    /**
-     * Add plazaHistorial
-     *
-     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
-     *
-     * @return Plaza
-     */
-    public function addPlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
-    {
-        $this->plazaHistorial[] = $plazaHistorial;
-
-        return $this;
-    }
-
-    /**
-     * Remove plazaHistorial
-     *
-     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
-     */
-    public function removePlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
-    {
-        $this->plazaHistorial->removeElement($plazaHistorial);
-    }
-
-    /**
-     * Get plazaHistorial
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPlazaHistorial()
-    {
-        return $this->plazaHistorial;
     }
 
     /**

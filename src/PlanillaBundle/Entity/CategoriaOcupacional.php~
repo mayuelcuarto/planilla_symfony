@@ -168,3 +168,4 @@ class CategoriaOcupacional
         return $this->grupoOcupacional;
     }
 }
+

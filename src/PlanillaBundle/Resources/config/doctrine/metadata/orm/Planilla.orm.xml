@@ -2,11 +2,11 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Planilla" table="planilla">
     <indexes>
-      <index name="fk_planilla_meta1_idx" columns="sec_func"/>
       <index name="fk_planilla_plaza_historial1_idx1" columns="plaza_historial_id"/>
       <index name="fk_planilla_usuario1_idx" columns="usuario_id"/>
       <index name="fk_planilla_fuente_financ1_idx1" columns="fuente_id"/>
       <index name="fk_planilla_especifica1_idx1" columns="especifica_id"/>
+      <index name="fk_planilla_meta1_idx" columns="sec_func"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>

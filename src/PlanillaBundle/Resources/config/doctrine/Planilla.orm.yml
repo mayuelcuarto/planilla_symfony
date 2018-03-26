@@ -2,9 +2,6 @@ PlanillaBundle\Entity\Planilla:
     type: entity
     table: planilla
     indexes:
-        fk_planilla_meta1_idx:
-            columns:
-                - sec_func
         fk_planilla_plaza_historial1_idx1:
             columns:
                 - plaza_historial_id
@@ -17,6 +14,9 @@ PlanillaBundle\Entity\Planilla:
         fk_planilla_especifica1_idx1:
             columns:
                 - especifica_id
+        fk_planilla_meta1_idx:
+            columns:
+                - sec_func
     id:
         id:
             type: integer

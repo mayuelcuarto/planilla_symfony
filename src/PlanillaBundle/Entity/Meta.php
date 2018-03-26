@@ -8,7 +8,7 @@ namespace PlanillaBundle\Entity;
 class Meta
 {
     /**
-     * @var string
+     * @var integer
      */
     private $secFunc;
 
@@ -66,26 +66,12 @@ class Meta
      * @var \PlanillaBundle\Entity\Programa
      */
     private $programa;
-    
-    /**
-     * @var string
-     */
-    private $cadena;
-    
-    /**
-     * Get cadena
-     *
-     * @return string
-     */
-    public function getCadena()
-    {
-        return $this->meta ." - ".$this->nombre;
-    }
+
 
     /**
      * Get secFunc
      *
-     * @return string
+     * @return integer
      */
     public function getSecFunc()
     {

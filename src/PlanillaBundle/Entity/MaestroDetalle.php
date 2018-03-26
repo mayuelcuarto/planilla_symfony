@@ -153,4 +153,3 @@ class MaestroDetalle
         return $this->descripcio;
     }
 }
-

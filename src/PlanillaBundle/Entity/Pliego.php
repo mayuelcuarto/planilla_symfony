@@ -153,4 +153,3 @@ class Pliego
         return $this->sector;
     }
 }
-

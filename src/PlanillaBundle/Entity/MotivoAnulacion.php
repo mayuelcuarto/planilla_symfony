@@ -81,4 +81,3 @@ class MotivoAnulacion
         return $this->estado;
     }
 }
-

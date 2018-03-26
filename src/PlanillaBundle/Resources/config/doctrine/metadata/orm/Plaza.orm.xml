@@ -2,10 +2,10 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Plaza" table="plaza">
     <indexes>
-      <index name="fk_plaza_meta1_idx" columns="sec_func"/>
       <index name="fk_plaza_categoria_ocupacional1_idx" columns="categoria_id"/>
       <index name="fk_plaza_tipo_planilla1_idx" columns="tipo_planilla"/>
       <index name="fk_plaza_especifica1_idx" columns="especifica_id"/>
+      <index name="fk_plaza_meta1_idx" columns="sec_func"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>

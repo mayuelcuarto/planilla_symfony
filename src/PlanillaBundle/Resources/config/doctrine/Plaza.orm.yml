@@ -2,9 +2,6 @@ PlanillaBundle\Entity\Plaza:
     type: entity
     table: plaza
     indexes:
-        fk_plaza_meta1_idx:
-            columns:
-                - sec_func
         fk_plaza_categoria_ocupacional1_idx:
             columns:
                 - categoria_id
@@ -14,6 +11,9 @@ PlanillaBundle\Entity\Plaza:
         fk_plaza_especifica1_idx:
             columns:
                 - especifica_id
+        fk_plaza_meta1_idx:
+            columns:
+                - sec_func
     id:
         id:
             type: integer

@@ -81,4 +81,3 @@ class Control
         return $this->correlativo;
     }
 }
-

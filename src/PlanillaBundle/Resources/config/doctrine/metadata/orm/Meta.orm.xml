@@ -10,7 +10,7 @@
       <index name="fk_meta_divfunc1_idx" columns="divfunc_id"/>
       <index name="fk_meta_grpf1_idx" columns="grpf_id"/>
     </indexes>
-    <id name="secFunc" type="string" column="sec_func" length="4">
+    <id name="secFunc" type="integer" column="sec_func">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="meta" type="string" column="meta" length="255" nullable="false">

@@ -327,3 +327,4 @@ class Remuneracion
         return $this->concepto;
     }
 }
+

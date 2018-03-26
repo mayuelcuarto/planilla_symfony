@@ -10,6 +10,11 @@ class Funcion
     /**
      * @var integer
      */
+    private $id;
+
+    /**
+     * @var integer
+     */
     private $anoEje;
 
     /**
@@ -23,20 +28,39 @@ class Funcion
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
     /**
      * @var string
      */
-    private $ambito;
+    private $esPresupu;
 
     /**
      * @var string
      */
-    private $esPresupu;
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getAnoEje() ." - ".$this->nombre;
+    } 
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set anoEje
@@ -113,7 +137,7 @@ class Funcion
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Funcion
      */
@@ -127,35 +151,11 @@ class Funcion
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
         return $this->estado;
-    }
-
-    /**
-     * Set ambito
-     *
-     * @param string $ambito
-     *
-     * @return Funcion
-     */
-    public function setAmbito($ambito)
-    {
-        $this->ambito = $ambito;
-
-        return $this;
-    }
-
-    /**
-     * Get ambito
-     *
-     * @return string
-     */
-    public function getAmbito()
-    {
-        return $this->ambito;
     }
 
     /**
@@ -181,19 +181,5 @@ class Funcion
     {
         return $this->esPresupu;
     }
-    /**
-     * @var integer
-     */
-    private $id;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 }
+

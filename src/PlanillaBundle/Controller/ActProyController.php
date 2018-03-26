@@ -43,14 +43,14 @@ class ActProyController extends Controller
                 $actividad_repo = $em->getRepository("PlanillaBundle:ActProy");
                 $actividad = $actividad_repo->findOneBy(array(
                     "anoEje" => $form->get("anoEje")->getData(),
-                    "actividad" => $form->get("actProy")->getData()
+                    "actProy" => $form->get("actProy")->getData()
                         ));
                 if($actividad != null){
                     $status = "El actividad ya existe!!!";
                 }else{
                     $actividad = new ActProy();
                     $actividad->setAnoEje($form->get("anoEje")->getData());
-                    $actividad->setActividad($form->get("actProy")->getData());
+                    $actividad->setActProy($form->get("actProy")->getData());
                     $actividad->setNombre($form->get("nombre")->getData());
                     $actividad->setEstado($form->get("estado")->getData());
 
@@ -89,7 +89,7 @@ class ActProyController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                     $actividad->setAnoEje($form->get("anoEje")->getData());
-                    $actividad->setActividad($form->get("actProy")->getData());
+                    $actividad->setActProy($form->get("actProy")->getData());
                     $actividad->setNombre($form->get("nombre")->getData());
                     $actividad->setEstado($form->get("estado")->getData());
 

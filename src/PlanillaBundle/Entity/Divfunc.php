@@ -182,4 +182,3 @@ class Divfunc
         return $this->esPresupu;
     }
 }
-

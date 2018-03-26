@@ -25,11 +25,10 @@ PlanillaBundle\Entity\Meta:
                 - grpf_id
     id:
         secFunc:
-            type: string
+            type: integer
             nullable: false
-            length: 4
             options:
-                fixed: true
+                unsigned: false
             id: true
             column: sec_func
             generator:
