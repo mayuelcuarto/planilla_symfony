@@ -31,12 +31,12 @@ class Especifica
      * @var boolean
      */
     private $estado;
-    
+
     /**
      * @var string
      */
     private $cadena;
-
+    
     /**
      * Get cadena
      *
@@ -153,3 +153,4 @@ class Especifica
         return $this->estado;
     }
 }
+

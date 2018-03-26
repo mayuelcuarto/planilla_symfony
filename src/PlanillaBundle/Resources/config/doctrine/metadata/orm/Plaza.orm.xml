@@ -15,11 +15,7 @@
         <option name="fixed">1</option>
       </options>
     </field>
-    <field name="estado" type="boolean" column="estado" nullable="false">
-      <options>
-        <option name="default">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
     <many-to-one field="categoria" target-entity="CategoriaOcupacional" fetch="LAZY">
       <join-columns>
         <join-column name="categoria_id" referenced-column-name="id"/>

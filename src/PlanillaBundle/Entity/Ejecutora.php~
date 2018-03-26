@@ -33,7 +33,7 @@ class Ejecutora
     private $ruc;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -152,7 +152,7 @@ class Ejecutora
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Ejecutora
      */
@@ -166,7 +166,7 @@ class Ejecutora
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {

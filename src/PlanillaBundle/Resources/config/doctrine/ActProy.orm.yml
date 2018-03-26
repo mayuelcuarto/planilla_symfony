@@ -2,12 +2,20 @@ PlanillaBundle\Entity\ActProy:
     type: entity
     table: act_proy
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         actProy:
             type: string
@@ -15,16 +23,7 @@ PlanillaBundle\Entity\ActProy:
             length: 10
             options:
                 fixed: true
-            id: true
             column: act_proy
-    fields:
-        tipoActProy:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-            column: tipo_act_proy
         nombre:
             type: string
             nullable: true
@@ -32,22 +31,10 @@ PlanillaBundle\Entity\ActProy:
             options:
                 fixed: false
         estado:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
-        ambito:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
         esPresupu:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_presupu
     lifecycleCallbacks: {  }

@@ -1,0 +1,35 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Metas</h2>
+        <hr/>
+        <a href="{{ path("meta_add") }}" class="btn btn-success">Añadir Meta</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Año</th>
+                <th>Meta</th>
+                <th>Finalidad</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for meta in metas %}
+                <tr {% if meta.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("meta_edit",{"id":meta.secFunc})}}" class="btn btn-warning ">{{ meta.secFunc }}</a></td>
+                    <td>{{ meta.ejecutora.pliego.sector.anoEje }}</td>
+                    <td>{{ meta.meta }}</td>
+                    <td>{{ meta.finalidad }}</td>
+                    <td>{{ meta.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

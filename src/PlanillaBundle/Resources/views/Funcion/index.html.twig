@@ -1,0 +1,33 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Funcions</h2>
+        <hr/>
+        <a href="{{ path("funcion_add") }}" class="btn btn-success">Añadir Funcion</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Año</th>
+                <th>Funcion</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for funcion in funcions %}
+                <tr {% if funcion.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("funcion_edit",{"id":funcion.id})}}" class="btn btn-warning ">{{ funcion.id }}</a></td>
+                    <td>{{ funcion.anoEje }}</td>
+                    <td>{{ funcion.funcion }}</td>
+                    <td>{{ funcion.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

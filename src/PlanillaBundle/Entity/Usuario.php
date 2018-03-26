@@ -1,9 +1,7 @@
 <?php
-
 namespace PlanillaBundle\Entity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Usuario
  */
@@ -13,37 +11,30 @@ class Usuario implements UserInterface
      * @var string
      */
     private $dni;
-
     /**
      * @var string
      */
     private $apellidos;
-
     /**
      * @var string
      */
     private $nombres;
-
     /**
      * @var string
      */
     private $cargo;
-
     /**
      * @var string
      */
     private $nick;
-
     /**
      * @var string
      */
     private $clave;
-
     /**
      * @var boolean
      */
     private $estado = '1';
-
     /**
      * @var string
      */
@@ -54,7 +45,6 @@ class Usuario implements UserInterface
     public function __construct() {
         $this->planilla = new ArrayCollection() ;
     }
-
     /**
      * Set dni
      *
@@ -65,7 +55,6 @@ class Usuario implements UserInterface
     public function setDni($dni)
     {
         $this->dni = $dni;
-
         return $this;
     }
     
@@ -78,7 +67,6 @@ class Usuario implements UserInterface
     {
         return $this->dni;
     }
-
     /**
      * Set apellidos
      *
@@ -89,10 +77,8 @@ class Usuario implements UserInterface
     public function setApellidos($apellidos)
     {
         $this->apellidos = $apellidos;
-
         return $this;
     }
-
     /**
      * Get apellidos
      *
@@ -102,7 +88,6 @@ class Usuario implements UserInterface
     {
         return $this->apellidos;
     }
-
     /**
      * Set nombres
      *
@@ -113,10 +98,8 @@ class Usuario implements UserInterface
     public function setNombres($nombres)
     {
         $this->nombres = $nombres;
-
         return $this;
     }
-
     /**
      * Get nombres
      *
@@ -126,7 +109,6 @@ class Usuario implements UserInterface
     {
         return $this->nombres;
     }
-
     /**
      * Set cargo
      *
@@ -137,10 +119,8 @@ class Usuario implements UserInterface
     public function setCargo($cargo)
     {
         $this->cargo = $cargo;
-
         return $this;
     }
-
     /**
      * Get cargo
      *
@@ -150,7 +130,6 @@ class Usuario implements UserInterface
     {
         return $this->cargo;
     }
-
     /**
      * Set nick
      *
@@ -161,10 +140,8 @@ class Usuario implements UserInterface
     public function setNick($nick)
     {
         $this->nick = $nick;
-
         return $this;
     }
-
     /**
      * Get nick
      *
@@ -174,7 +151,6 @@ class Usuario implements UserInterface
     {
         return $this->nick;
     }
-
     /**
      * Set clave
      *
@@ -185,10 +161,8 @@ class Usuario implements UserInterface
     public function setClave($clave)
     {
         $this->clave = $clave;
-
         return $this;
     }
-
     /**
      * Get clave
      *
@@ -198,7 +172,6 @@ class Usuario implements UserInterface
     {
         return $this->clave;
     }
-
     /**
      * Set estado
      *
@@ -209,10 +182,8 @@ class Usuario implements UserInterface
     public function setEstado($estado)
     {
         $this->estado = $estado;
-
         return $this;
     }
-
     /**
      * Get estado
      *
@@ -222,7 +193,6 @@ class Usuario implements UserInterface
     {
         return $this->estado;
     }
-
     /**
      * Set claveapi
      *
@@ -233,10 +203,8 @@ class Usuario implements UserInterface
     public function setClaveapi($claveapi)
     {
         $this->claveapi = $claveapi;
-
         return $this;
     }
-
     /**
      * Get claveapi
      *
@@ -250,13 +218,10 @@ class Usuario implements UserInterface
      * @var string
      */
     private $password;
-
     /**
      * @var string
      */
     private $role;
-
-
     /**
      * Set password
      *
@@ -267,10 +232,8 @@ class Usuario implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
-
     /**
      * Get password
      *
@@ -280,7 +243,6 @@ class Usuario implements UserInterface
     {
         return $this->password;
     }
-
     /**
      * Set role
      *
@@ -291,10 +253,8 @@ class Usuario implements UserInterface
     public function setRole($role)
     {
         $this->role = $role;
-
         return $this;
     }
-
     /**
      * Get role
      *
@@ -304,29 +264,22 @@ class Usuario implements UserInterface
     {
         return $this->role;
     }
-
     public function eraseCredentials() {
         
     }
-
     public function getRoles() {
         return array($this->getRole());
     }
-
     public function getSalt() {
         return null;
     }
-
     public function getUsername() {
         return $this->nick;
     }
-
     /**
      * @var integer
      */
     private $id;
-
-
     /**
      * Get id
      *
@@ -336,7 +289,6 @@ class Usuario implements UserInterface
     {
         return $this->id;
     }
-
     /**
      * Add planilla
      *
@@ -347,10 +299,8 @@ class Usuario implements UserInterface
     public function addPlanilla(\PlanillaBundle\Entity\Planilla $planilla)
     {
         $this->planilla[] = $planilla;
-
         return $this;
     }
-
     /**
      * Remove planilla
      *
@@ -360,7 +310,6 @@ class Usuario implements UserInterface
     {
         $this->planilla->removeElement($planilla);
     }
-
     /**
      * Get planilla
      *

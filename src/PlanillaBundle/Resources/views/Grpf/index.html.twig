@@ -1,0 +1,33 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Grupo Funcional</h2>
+        <hr/>
+        <a href="{{ path("grpf_add") }}" class="btn btn-success">Añadir Grupo Funcional</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Año</th>
+                <th>GRPF</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for grpf in grpfs %}
+                <tr {% if grpf.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("grpf_edit",{"id":grpf.id})}}" class="btn btn-warning ">{{ grpf.id }}</a></td>
+                    <td>{{ grpf.anoEje }}</td>
+                    <td>{{ grpf.grpf }}</td>
+                    <td>{{ grpf.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

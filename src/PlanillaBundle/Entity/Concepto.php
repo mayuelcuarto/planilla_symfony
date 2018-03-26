@@ -342,3 +342,4 @@ class Concepto
         return $this->mcppConcepto;
     }
 }
+

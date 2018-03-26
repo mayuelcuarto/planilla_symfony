@@ -7,6 +7,11 @@
       <index name="fk_plaza_historial_modo_ingreso1_idx" columns="modo_ingreso_id"/>
       <index name="fk_plaza_historial_unidad1_idx" columns="unidad_id"/>
       <index name="fk_plaza_historial_plaza1_idx1" columns="plaza_id"/>
+      <index name="fk_plaza_historial_situacion_laboral1_idx" columns="situacion_laboral_id"/>
+      <index name="fk_plaza_historial_regimen_pensionario1_idx" columns="regimen_pensionario_id"/>
+      <index name="fk_plaza_historial_regimen_laboral1_idx" columns="regimen_laboral_id"/>
+      <index name="fk_plaza_historial_condicion_laboral1_idx" columns="condicion_laboral"/>
+      <index name="fk_plaza_historial_motivo_anulacion1_idx" columns="motivo_anulacion_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
@@ -17,26 +22,6 @@
       </options>
     </field>
     <field name="fechaIngreso" type="date" column="fecha_ingreso" nullable="true"/>
-    <field name="situacionLaboral" type="string" column="situacion_laboral" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="regimenPensionario" type="string" column="regimen_pensionario" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="regimenLaboral" type="string" column="regimen_laboral" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="condicionLaboral" type="string" column="condicion_laboral" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <field name="fechaCese" type="date" column="fecha_cese" nullable="true"/>
     <field name="resolucion" type="string" column="resolucion" length="255" nullable="true">
       <options>
@@ -50,11 +35,6 @@
       </options>
     </field>
     <field name="fechaAfp" type="date" column="fecha_afp" nullable="true"/>
-    <field name="anulacion" type="string" column="anulacion" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <field name="estado" type="boolean" column="estado" nullable="true"/>
     <field name="docAnulacion" type="string" column="doc_anulacion" length="255" nullable="true">
       <options>
@@ -67,9 +47,19 @@
         <join-column name="afp" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <many-to-one field="condicionLaboral" target-entity="CondicionLaboral" fetch="LAZY">
+      <join-columns>
+        <join-column name="condicion_laboral" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
     <many-to-one field="modoIngreso" target-entity="ModoIngreso" fetch="LAZY">
       <join-columns>
         <join-column name="modo_ingreso_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="motivoAnulacion" target-entity="MotivoAnulacion" fetch="LAZY">
+      <join-columns>
+        <join-column name="motivo_anulacion_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="codPersonal" target-entity="Personal" fetch="LAZY">
@@ -80,6 +70,21 @@
     <many-to-one field="plaza" target-entity="Plaza" fetch="LAZY">
       <join-columns>
         <join-column name="plaza_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="regimenLaboral" target-entity="RegimenLaboral" fetch="LAZY">
+      <join-columns>
+        <join-column name="regimen_laboral_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="regimenPensionario" target-entity="RegimenPensionario" fetch="LAZY">
+      <join-columns>
+        <join-column name="regimen_pensionario_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="situacionLaboral" target-entity="SituacionLaboral" fetch="LAZY">
+      <join-columns>
+        <join-column name="situacion_laboral_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="unidad" target-entity="Unidad" fetch="LAZY">

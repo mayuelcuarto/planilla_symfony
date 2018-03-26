@@ -23,26 +23,6 @@ class PlazaHistorial
     private $fechaIngreso;
 
     /**
-     * @var string
-     */
-    private $situacionLaboral;
-
-    /**
-     * @var string
-     */
-    private $regimenPensionario;
-
-    /**
-     * @var string
-     */
-    private $regimenLaboral;
-
-    /**
-     * @var string
-     */
-    private $condicionLaboral;
-
-    /**
      * @var \DateTime
      */
     private $fechaCese;
@@ -68,11 +48,6 @@ class PlazaHistorial
     private $fechaAfp;
 
     /**
-     * @var string
-     */
-    private $anulacion;
-
-    /**
      * @var boolean
      */
     private $estado;
@@ -93,9 +68,19 @@ class PlazaHistorial
     private $afp;
 
     /**
+     * @var \PlanillaBundle\Entity\CondicionLaboral
+     */
+    private $condicionLaboral;
+
+    /**
      * @var \PlanillaBundle\Entity\ModoIngreso
      */
     private $modoIngreso;
+
+    /**
+     * @var \PlanillaBundle\Entity\MotivoAnulacion
+     */
+    private $motivoAnulacion;
 
     /**
      * @var \PlanillaBundle\Entity\Personal
@@ -106,6 +91,21 @@ class PlazaHistorial
      * @var \PlanillaBundle\Entity\Plaza
      */
     private $plaza;
+
+    /**
+     * @var \PlanillaBundle\Entity\RegimenLaboral
+     */
+    private $regimenLaboral;
+
+    /**
+     * @var \PlanillaBundle\Entity\RegimenPensionario
+     */
+    private $regimenPensionario;
+
+    /**
+     * @var \PlanillaBundle\Entity\SituacionLaboral
+     */
+    private $situacionLaboral;
 
     /**
      * @var \PlanillaBundle\Entity\Unidad
@@ -169,102 +169,6 @@ class PlazaHistorial
     public function getFechaIngreso()
     {
         return $this->fechaIngreso;
-    }
-
-    /**
-     * Set situacionLaboral
-     *
-     * @param string $situacionLaboral
-     *
-     * @return PlazaHistorial
-     */
-    public function setSituacionLaboral($situacionLaboral)
-    {
-        $this->situacionLaboral = $situacionLaboral;
-
-        return $this;
-    }
-
-    /**
-     * Get situacionLaboral
-     *
-     * @return string
-     */
-    public function getSituacionLaboral()
-    {
-        return $this->situacionLaboral;
-    }
-
-    /**
-     * Set regimenPensionario
-     *
-     * @param string $regimenPensionario
-     *
-     * @return PlazaHistorial
-     */
-    public function setRegimenPensionario($regimenPensionario)
-    {
-        $this->regimenPensionario = $regimenPensionario;
-
-        return $this;
-    }
-
-    /**
-     * Get regimenPensionario
-     *
-     * @return string
-     */
-    public function getRegimenPensionario()
-    {
-        return $this->regimenPensionario;
-    }
-
-    /**
-     * Set regimenLaboral
-     *
-     * @param string $regimenLaboral
-     *
-     * @return PlazaHistorial
-     */
-    public function setRegimenLaboral($regimenLaboral)
-    {
-        $this->regimenLaboral = $regimenLaboral;
-
-        return $this;
-    }
-
-    /**
-     * Get regimenLaboral
-     *
-     * @return string
-     */
-    public function getRegimenLaboral()
-    {
-        return $this->regimenLaboral;
-    }
-
-    /**
-     * Set condicionLaboral
-     *
-     * @param string $condicionLaboral
-     *
-     * @return PlazaHistorial
-     */
-    public function setCondicionLaboral($condicionLaboral)
-    {
-        $this->condicionLaboral = $condicionLaboral;
-
-        return $this;
-    }
-
-    /**
-     * Get condicionLaboral
-     *
-     * @return string
-     */
-    public function getCondicionLaboral()
-    {
-        return $this->condicionLaboral;
     }
 
     /**
@@ -388,30 +292,6 @@ class PlazaHistorial
     }
 
     /**
-     * Set anulacion
-     *
-     * @param string $anulacion
-     *
-     * @return PlazaHistorial
-     */
-    public function setAnulacion($anulacion)
-    {
-        $this->anulacion = $anulacion;
-
-        return $this;
-    }
-
-    /**
-     * Get anulacion
-     *
-     * @return string
-     */
-    public function getAnulacion()
-    {
-        return $this->anulacion;
-    }
-
-    /**
      * Set estado
      *
      * @param boolean $estado
@@ -508,6 +388,30 @@ class PlazaHistorial
     }
 
     /**
+     * Set condicionLaboral
+     *
+     * @param \PlanillaBundle\Entity\CondicionLaboral $condicionLaboral
+     *
+     * @return PlazaHistorial
+     */
+    public function setCondicionLaboral(\PlanillaBundle\Entity\CondicionLaboral $condicionLaboral = null)
+    {
+        $this->condicionLaboral = $condicionLaboral;
+
+        return $this;
+    }
+
+    /**
+     * Get condicionLaboral
+     *
+     * @return \PlanillaBundle\Entity\CondicionLaboral
+     */
+    public function getCondicionLaboral()
+    {
+        return $this->condicionLaboral;
+    }
+
+    /**
      * Set modoIngreso
      *
      * @param \PlanillaBundle\Entity\ModoIngreso $modoIngreso
@@ -529,6 +433,30 @@ class PlazaHistorial
     public function getModoIngreso()
     {
         return $this->modoIngreso;
+    }
+
+    /**
+     * Set motivoAnulacion
+     *
+     * @param \PlanillaBundle\Entity\MotivoAnulacion $motivoAnulacion
+     *
+     * @return PlazaHistorial
+     */
+    public function setMotivoAnulacion(\PlanillaBundle\Entity\MotivoAnulacion $motivoAnulacion = null)
+    {
+        $this->motivoAnulacion = $motivoAnulacion;
+
+        return $this;
+    }
+
+    /**
+     * Get motivoAnulacion
+     *
+     * @return \PlanillaBundle\Entity\MotivoAnulacion
+     */
+    public function getMotivoAnulacion()
+    {
+        return $this->motivoAnulacion;
     }
 
     /**
@@ -580,6 +508,78 @@ class PlazaHistorial
     }
 
     /**
+     * Set regimenLaboral
+     *
+     * @param \PlanillaBundle\Entity\RegimenLaboral $regimenLaboral
+     *
+     * @return PlazaHistorial
+     */
+    public function setRegimenLaboral(\PlanillaBundle\Entity\RegimenLaboral $regimenLaboral = null)
+    {
+        $this->regimenLaboral = $regimenLaboral;
+
+        return $this;
+    }
+
+    /**
+     * Get regimenLaboral
+     *
+     * @return \PlanillaBundle\Entity\RegimenLaboral
+     */
+    public function getRegimenLaboral()
+    {
+        return $this->regimenLaboral;
+    }
+
+    /**
+     * Set regimenPensionario
+     *
+     * @param \PlanillaBundle\Entity\RegimenPensionario $regimenPensionario
+     *
+     * @return PlazaHistorial
+     */
+    public function setRegimenPensionario(\PlanillaBundle\Entity\RegimenPensionario $regimenPensionario = null)
+    {
+        $this->regimenPensionario = $regimenPensionario;
+
+        return $this;
+    }
+
+    /**
+     * Get regimenPensionario
+     *
+     * @return \PlanillaBundle\Entity\RegimenPensionario
+     */
+    public function getRegimenPensionario()
+    {
+        return $this->regimenPensionario;
+    }
+
+    /**
+     * Set situacionLaboral
+     *
+     * @param \PlanillaBundle\Entity\SituacionLaboral $situacionLaboral
+     *
+     * @return PlazaHistorial
+     */
+    public function setSituacionLaboral(\PlanillaBundle\Entity\SituacionLaboral $situacionLaboral = null)
+    {
+        $this->situacionLaboral = $situacionLaboral;
+
+        return $this;
+    }
+
+    /**
+     * Get situacionLaboral
+     *
+     * @return \PlanillaBundle\Entity\SituacionLaboral
+     */
+    public function getSituacionLaboral()
+    {
+        return $this->situacionLaboral;
+    }
+
+    /**
      * Set unidad
      *
      * @param \PlanillaBundle\Entity\Unidad $unidad
@@ -603,3 +603,4 @@ class PlazaHistorial
         return $this->unidad;
     }
 }
+

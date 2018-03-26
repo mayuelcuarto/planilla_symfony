@@ -2,12 +2,20 @@ PlanillaBundle\Entity\Divfunc:
     type: entity
     table: divfunc
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         divfunc:
             type: string
@@ -15,8 +23,6 @@ PlanillaBundle\Entity\Divfunc:
             length: 3
             options:
                 fixed: true
-            id: true
-    fields:
         nombre:
             type: string
             nullable: true
@@ -24,22 +30,10 @@ PlanillaBundle\Entity\Divfunc:
             options:
                 fixed: false
         estado:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
-        ambito:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
         esPresupu:
-            type: string
+            type: boolean
             nullable: true
-            length: 1
-            options:
-                fixed: true
             column: es_presupu
     lifecycleCallbacks: {  }

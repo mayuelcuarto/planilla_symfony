@@ -342,3 +342,4 @@ class Personal
         return $this->estado;
     }
 }
+

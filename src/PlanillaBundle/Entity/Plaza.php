@@ -20,7 +20,7 @@ class Plaza
     /**
      * @var boolean
      */
-    private $estado = true;
+    private $estado;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -243,3 +243,4 @@ class Plaza
         return $this->tipoPlanilla;
     }
 }
+

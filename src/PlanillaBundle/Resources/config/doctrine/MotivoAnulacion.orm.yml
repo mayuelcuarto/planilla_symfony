@@ -1,0 +1,24 @@
+PlanillaBundle\Entity\MotivoAnulacion:
+    type: entity
+    table: motivo_anulacion
+    id:
+        id:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 265
+            options:
+                fixed: false
+        estado:
+            type: boolean
+            nullable: false
+    lifecycleCallbacks: {  }

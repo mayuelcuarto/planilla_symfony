@@ -17,6 +17,21 @@ PlanillaBundle\Entity\PlazaHistorial:
         fk_plaza_historial_plaza1_idx1:
             columns:
                 - plaza_id
+        fk_plaza_historial_situacion_laboral1_idx:
+            columns:
+                - situacion_laboral_id
+        fk_plaza_historial_regimen_pensionario1_idx:
+            columns:
+                - regimen_pensionario_id
+        fk_plaza_historial_regimen_laboral1_idx:
+            columns:
+                - regimen_laboral_id
+        fk_plaza_historial_condicion_laboral1_idx:
+            columns:
+                - condicion_laboral
+        fk_plaza_historial_motivo_anulacion1_idx:
+            columns:
+                - motivo_anulacion_id
     id:
         id:
             type: integer
@@ -37,34 +52,6 @@ PlanillaBundle\Entity\PlazaHistorial:
             type: date
             nullable: true
             column: fecha_ingreso
-        situacionLaboral:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-            column: situacion_laboral
-        regimenPensionario:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-            column: regimen_pensionario
-        regimenLaboral:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-            column: regimen_laboral
-        condicionLaboral:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
-            column: condicion_laboral
         fechaCese:
             type: date
             nullable: true
@@ -89,12 +76,6 @@ PlanillaBundle\Entity\PlazaHistorial:
             type: date
             nullable: true
             column: fecha_afp
-        anulacion:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
         estado:
             type: boolean
             nullable: true
@@ -120,6 +101,16 @@ PlanillaBundle\Entity\PlazaHistorial:
                 afp:
                     referencedColumnName: id
             orphanRemoval: false
+        condicionLaboral:
+            targetEntity: CondicionLaboral
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                condicion_laboral:
+                    referencedColumnName: id
+            orphanRemoval: false
         modoIngreso:
             targetEntity: ModoIngreso
             cascade: {  }
@@ -128,6 +119,16 @@ PlanillaBundle\Entity\PlazaHistorial:
             inversedBy: null
             joinColumns:
                 modo_ingreso_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        motivoAnulacion:
+            targetEntity: MotivoAnulacion
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                motivo_anulacion_id:
                     referencedColumnName: id
             orphanRemoval: false
         codPersonal:
@@ -148,6 +149,36 @@ PlanillaBundle\Entity\PlazaHistorial:
             inversedBy: plazaHistorial
             joinColumns:
                 plaza_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        regimenLaboral:
+            targetEntity: RegimenLaboral
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                regimen_laboral_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        regimenPensionario:
+            targetEntity: RegimenPensionario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                regimen_pensionario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        situacionLaboral:
+            targetEntity: SituacionLaboral
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                situacion_laboral_id:
                     referencedColumnName: id
             orphanRemoval: false
         unidad:

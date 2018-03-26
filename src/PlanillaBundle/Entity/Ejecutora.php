@@ -42,6 +42,20 @@ class Ejecutora
      */
     private $pliego;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getPliego()->getSector()->getAnoEje() ." - ".$this->secEjec." - ".$this->nombre;
+    } 
 
     /**
      * Get id

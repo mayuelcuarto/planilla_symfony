@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="ActProy" table="act_proy">
-    <id name="anoEje" type="integer" column="ano_eje"/>
-    <id name="actProy" type="string" column="act_proy" length="10"/>
-    <field name="tipoActProy" type="string" column="tipo_act_proy" length="1" nullable="true">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="anoEje" type="integer" column="ano_eje" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="actProy" type="string" column="act_proy" length="10" nullable="false">
       <options>
         <option name="fixed">1</option>
       </options>
@@ -13,20 +19,7 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="ambito" type="string" column="ambito" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
-    <field name="esPresupu" type="string" column="es_presupu" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="true"/>
+    <field name="esPresupu" type="boolean" column="es_presupu" nullable="true"/>
   </entity>
 </doctrine-mapping>

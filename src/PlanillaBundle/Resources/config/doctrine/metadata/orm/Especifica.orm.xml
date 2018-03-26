@@ -19,10 +19,6 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="estado" type="boolean" column="estado" nullable="false">
-      <options>
-        <option name="default">1</option>
-      </options>
-    </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
   </entity>
 </doctrine-mapping>

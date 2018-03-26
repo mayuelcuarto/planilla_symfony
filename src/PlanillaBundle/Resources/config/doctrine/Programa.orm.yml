@@ -2,12 +2,20 @@ PlanillaBundle\Entity\Programa:
     type: entity
     table: programa
     id:
-        anoEje:
+        id:
             type: integer
             nullable: false
             options:
                 unsigned: false
             id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        anoEje:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
             column: ano_eje
         programa:
             type: string
@@ -15,8 +23,6 @@ PlanillaBundle\Entity\Programa:
             length: 10
             options:
                 fixed: true
-            id: true
-    fields:
         nombre:
             type: string
             nullable: true
@@ -24,17 +30,8 @@ PlanillaBundle\Entity\Programa:
             options:
                 fixed: false
         estado:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
-        ambito:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
+            type: boolean
+            nullable: false
         esPresupu:
             type: string
             nullable: true

@@ -15,36 +15,6 @@ class Meta
     /**
      * @var string
      */
-    private $programa;
-
-    /**
-     * @var string
-     */
-    private $producto;
-
-    /**
-     * @var string
-     */
-    private $actProy;
-
-    /**
-     * @var string
-     */
-    private $funcion;
-
-    /**
-     * @var string
-     */
-    private $divfunc;
-
-    /**
-     * @var string
-     */
-    private $grpf;
-
-    /**
-     * @var string
-     */
     private $meta;
 
     /**
@@ -58,19 +28,44 @@ class Meta
     private $nombre;
 
     /**
-     * @var string
-     */
-    private $direccion;
-
-    /**
      * @var boolean
      */
     private $estado = '1';
 
     /**
+     * @var \PlanillaBundle\Entity\ActProy
+     */
+    private $actProy;
+
+    /**
+     * @var \PlanillaBundle\Entity\Divfunc
+     */
+    private $divfunc;
+
+    /**
      * @var \PlanillaBundle\Entity\Ejecutora
      */
     private $ejecutora;
+
+    /**
+     * @var \PlanillaBundle\Entity\Funcion
+     */
+    private $funcion;
+
+    /**
+     * @var \PlanillaBundle\Entity\Grpf
+     */
+    private $grpf;
+
+    /**
+     * @var \PlanillaBundle\Entity\Producto
+     */
+    private $producto;
+
+    /**
+     * @var \PlanillaBundle\Entity\Programa
+     */
+    private $programa;
 
     /**
      * @var string
@@ -86,7 +81,6 @@ class Meta
     {
         return $this->meta ." - ".$this->nombre;
     }    
-
     /**
      * Get secFunc
      *
@@ -95,150 +89,6 @@ class Meta
     public function getSecFunc()
     {
         return $this->secFunc;
-    }
-
-    /**
-     * Set programa
-     *
-     * @param string $programa
-     *
-     * @return Meta
-     */
-    public function setPrograma($programa)
-    {
-        $this->programa = $programa;
-
-        return $this;
-    }
-
-    /**
-     * Get programa
-     *
-     * @return string
-     */
-    public function getPrograma()
-    {
-        return $this->programa;
-    }
-
-    /**
-     * Set producto
-     *
-     * @param string $producto
-     *
-     * @return Meta
-     */
-    public function setProducto($producto)
-    {
-        $this->producto = $producto;
-
-        return $this;
-    }
-
-    /**
-     * Get producto
-     *
-     * @return string
-     */
-    public function getProducto()
-    {
-        return $this->producto;
-    }
-
-    /**
-     * Set actProy
-     *
-     * @param string $actProy
-     *
-     * @return Meta
-     */
-    public function setActProy($actProy)
-    {
-        $this->actProy = $actProy;
-
-        return $this;
-    }
-
-    /**
-     * Get actProy
-     *
-     * @return string
-     */
-    public function getActProy()
-    {
-        return $this->actProy;
-    }
-
-    /**
-     * Set funcion
-     *
-     * @param string $funcion
-     *
-     * @return Meta
-     */
-    public function setFuncion($funcion)
-    {
-        $this->funcion = $funcion;
-
-        return $this;
-    }
-
-    /**
-     * Get funcion
-     *
-     * @return string
-     */
-    public function getFuncion()
-    {
-        return $this->funcion;
-    }
-
-    /**
-     * Set divfunc
-     *
-     * @param string $divfunc
-     *
-     * @return Meta
-     */
-    public function setDivfunc($divfunc)
-    {
-        $this->divfunc = $divfunc;
-
-        return $this;
-    }
-
-    /**
-     * Get divfunc
-     *
-     * @return string
-     */
-    public function getDivfunc()
-    {
-        return $this->divfunc;
-    }
-
-    /**
-     * Set grpf
-     *
-     * @param string $grpf
-     *
-     * @return Meta
-     */
-    public function setGrpf($grpf)
-    {
-        $this->grpf = $grpf;
-
-        return $this;
-    }
-
-    /**
-     * Get grpf
-     *
-     * @return string
-     */
-    public function getGrpf()
-    {
-        return $this->grpf;
     }
 
     /**
@@ -314,30 +164,6 @@ class Meta
     }
 
     /**
-     * Set direccion
-     *
-     * @param string $direccion
-     *
-     * @return Meta
-     */
-    public function setDireccion($direccion)
-    {
-        $this->direccion = $direccion;
-
-        return $this;
-    }
-
-    /**
-     * Get direccion
-     *
-     * @return string
-     */
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
-
-    /**
      * Set estado
      *
      * @param boolean $estado
@@ -359,6 +185,54 @@ class Meta
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set actProy
+     *
+     * @param \PlanillaBundle\Entity\ActProy $actProy
+     *
+     * @return Meta
+     */
+    public function setActProy(\PlanillaBundle\Entity\ActProy $actProy = null)
+    {
+        $this->actProy = $actProy;
+
+        return $this;
+    }
+
+    /**
+     * Get actProy
+     *
+     * @return \PlanillaBundle\Entity\ActProy
+     */
+    public function getActProy()
+    {
+        return $this->actProy;
+    }
+
+    /**
+     * Set divfunc
+     *
+     * @param \PlanillaBundle\Entity\Divfunc $divfunc
+     *
+     * @return Meta
+     */
+    public function setDivfunc(\PlanillaBundle\Entity\Divfunc $divfunc = null)
+    {
+        $this->divfunc = $divfunc;
+
+        return $this;
+    }
+
+    /**
+     * Get divfunc
+     *
+     * @return \PlanillaBundle\Entity\Divfunc
+     */
+    public function getDivfunc()
+    {
+        return $this->divfunc;
     }
 
     /**
@@ -384,4 +258,101 @@ class Meta
     {
         return $this->ejecutora;
     }
+
+    /**
+     * Set funcion
+     *
+     * @param \PlanillaBundle\Entity\Funcion $funcion
+     *
+     * @return Meta
+     */
+    public function setFuncion(\PlanillaBundle\Entity\Funcion $funcion = null)
+    {
+        $this->funcion = $funcion;
+
+        return $this;
+    }
+
+    /**
+     * Get funcion
+     *
+     * @return \PlanillaBundle\Entity\Funcion
+     */
+    public function getFuncion()
+    {
+        return $this->funcion;
+    }
+
+    /**
+     * Set grpf
+     *
+     * @param \PlanillaBundle\Entity\Grpf $grpf
+     *
+     * @return Meta
+     */
+    public function setGrpf(\PlanillaBundle\Entity\Grpf $grpf = null)
+    {
+        $this->grpf = $grpf;
+
+        return $this;
+    }
+
+    /**
+     * Get grpf
+     *
+     * @return \PlanillaBundle\Entity\Grpf
+     */
+    public function getGrpf()
+    {
+        return $this->grpf;
+    }
+
+    /**
+     * Set producto
+     *
+     * @param \PlanillaBundle\Entity\Producto $producto
+     *
+     * @return Meta
+     */
+    public function setProducto(\PlanillaBundle\Entity\Producto $producto = null)
+    {
+        $this->producto = $producto;
+
+        return $this;
+    }
+
+    /**
+     * Get producto
+     *
+     * @return \PlanillaBundle\Entity\Producto
+     */
+    public function getProducto()
+    {
+        return $this->producto;
+    }
+
+    /**
+     * Set programa
+     *
+     * @param \PlanillaBundle\Entity\Programa $programa
+     *
+     * @return Meta
+     */
+    public function setPrograma(\PlanillaBundle\Entity\Programa $programa = null)
+    {
+        $this->programa = $programa;
+
+        return $this;
+    }
+
+    /**
+     * Get programa
+     *
+     * @return \PlanillaBundle\Entity\Programa
+     */
+    public function getPrograma()
+    {
+        return $this->programa;
+    }
 }
+

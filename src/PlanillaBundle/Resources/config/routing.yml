@@ -120,3 +120,87 @@ ejecutora_add:
 ejecutora_edit:
     path: /ejecutora/edit/{id}
     defaults: { _controller: PlanillaBundle:Ejecutora:edit }
+    
+programa_index:
+    path: /programa/index
+    defaults: { _controller: PlanillaBundle:Programa:index }
+    
+programa_add:
+    path: /programa/add
+    defaults: { _controller: PlanillaBundle:Programa:add }
+    
+programa_edit:
+    path: /programa/edit/{id}
+    defaults: { _controller: PlanillaBundle:Programa:edit }
+    
+producto_index:
+    path: /producto/index
+    defaults: { _controller: PlanillaBundle:Producto:index }
+    
+producto_add:
+    path: /producto/add
+    defaults: { _controller: PlanillaBundle:Producto:add }
+    
+producto_edit:
+    path: /producto/edit/{id}
+    defaults: { _controller: PlanillaBundle:Producto:edit }
+    
+actividad_index:
+    path: /actividad/index
+    defaults: { _controller: PlanillaBundle:ActProy:index }
+    
+actividad_add:
+    path: /actividad/add
+    defaults: { _controller: PlanillaBundle:ActProy:add }
+    
+actividad_edit:
+    path: /actividad/edit/{id}
+    defaults: { _controller: PlanillaBundle:ActProy:edit }
+    
+funcion_index:
+    path: /funcion/index
+    defaults: { _controller: PlanillaBundle:Funcion:index }
+    
+funcion_add:
+    path: /funcion/add
+    defaults: { _controller: PlanillaBundle:Funcion:add }
+    
+funcion_edit:
+    path: /funcion/edit/{id}
+    defaults: { _controller: PlanillaBundle:Funcion:edit }
+    
+divfunc_index:
+    path: /divfunc/index
+    defaults: { _controller: PlanillaBundle:Divfunc:index }
+    
+divfunc_add:
+    path: /divfunc/add
+    defaults: { _controller: PlanillaBundle:Divfunc:add }
+    
+divfunc_edit:
+    path: /divfunc/edit/{id}
+    defaults: { _controller: PlanillaBundle:Divfunc:edit }
+    
+grpf_index:
+    path: /grpf/index
+    defaults: { _controller: PlanillaBundle:Grpf:index }
+    
+grpf_add:
+    path: /grpf/add
+    defaults: { _controller: PlanillaBundle:Grpf:add }
+    
+grpf_edit:
+    path: /grpf/edit/{id}
+    defaults: { _controller: PlanillaBundle:Grpf:edit }
+    
+meta_index:
+    path: /meta/index
+    defaults: { _controller: PlanillaBundle:Meta:index }
+    
+meta_add:
+    path: /meta/add
+    defaults: { _controller: PlanillaBundle:Meta:add }
+    
+meta_edit:
+    path: /meta/edit/{id}
+    defaults: { _controller: PlanillaBundle:Meta:edit }
