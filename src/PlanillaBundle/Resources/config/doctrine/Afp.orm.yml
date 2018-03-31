@@ -1,6 +1,10 @@
 PlanillaBundle\Entity\Afp:
     type: entity
     table: afp
+    indexes:
+        fk_afp_regimen_pensionario1_idx:
+            columns:
+                - regimen_pensionario
     id:
         id:
             type: string
@@ -12,13 +16,6 @@ PlanillaBundle\Entity\Afp:
             generator:
                 strategy: IDENTITY
     fields:
-        regimenPensionario:
-            type: string
-            nullable: false
-            length: 2
-            options:
-                fixed: true
-            column: regimen_pensionario
         nombre:
             type: string
             nullable: false
@@ -26,11 +23,8 @@ PlanillaBundle\Entity\Afp:
             options:
                 fixed: false
         estado:
-            type: string
+            type: boolean
             nullable: false
-            length: 1
-            options:
-                fixed: true
         snp:
             type: float
             nullable: true
@@ -62,4 +56,15 @@ PlanillaBundle\Entity\Afp:
             precision: 10
             scale: 0
             column: ra_mixta
+    manyToOne:
+        regimenPensionario:
+            targetEntity: RegimenPensionario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                regimen_pensionario:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

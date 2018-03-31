@@ -81,4 +81,3 @@ class CondicionLaboral
         return $this->estado;
     }
 }
-

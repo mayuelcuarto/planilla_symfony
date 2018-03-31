@@ -73,7 +73,7 @@ class ConceptoController extends Controller
     public function addAction(Request $request){
         $concepto = new Concepto();
         $form = $this->createForm(ConceptoType::class, $concepto);
-
+        $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {

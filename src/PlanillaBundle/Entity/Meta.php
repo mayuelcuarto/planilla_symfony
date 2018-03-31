@@ -67,6 +67,20 @@ class Meta
      */
     private $programa;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getEjecutora()->getPliego()->getSector()->getAnoEje()." - ".$this->meta." ".$this->nombre;
+    } 
 
     /**
      * Get secFunc
@@ -342,4 +356,3 @@ class Meta
         return $this->programa;
     }
 }
-

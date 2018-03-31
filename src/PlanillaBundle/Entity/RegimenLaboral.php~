@@ -110,4 +110,3 @@ class RegimenLaboral
         return $this->descripcion;
     }
 }
-

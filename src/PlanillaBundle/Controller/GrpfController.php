@@ -40,7 +40,7 @@ class GrpfController extends Controller
                     "grpf" => $form->get("grpf")->getData()
                         ));
                 if($grpf != null){
-                    $status = "El grpf ya existe!!!";
+                    $status = "El grupo funcional ya existe!!!";
                 }else{
                     $grpf = new Grpf();
                     $grpf->setAnoEje($form->get("anoEje")->getData());
@@ -52,7 +52,7 @@ class GrpfController extends Controller
                     $em->persist($grpf);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El grpf se ha creado correctamente";
+                        $status = "El grupo funcional se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 
@@ -91,13 +91,13 @@ class GrpfController extends Controller
                     $em->persist($grpf);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El grpf se ha editado correctamente";
+                        $status = "El grupo funcional se ha editado correctamente";
                     } else {
-                        $status = "Error al editar grpf!!";
+                        $status = "Error al editar grupo funcional!!";
                     }
  
             } else {
-                $status = "El grpf no se ha editado, porque el formulario no es válido!!";
+                $status = "El grupo funcional no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

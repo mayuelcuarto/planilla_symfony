@@ -15,15 +15,10 @@ class Afp
     /**
      * @var string
      */
-    private $regimenPensionario;
-
-    /**
-     * @var string
-     */
     private $nombre;
 
     /**
-     * @var string
+     * @var boolean
      */
     private $estado;
 
@@ -57,7 +52,11 @@ class Afp
      */
     private $raMixta;
 
-
+    /**
+     * @var \PlanillaBundle\Entity\RegimenPensionario
+     */
+    private $regimenPensionario;
+    
     /**
      * Get id
      *
@@ -66,30 +65,6 @@ class Afp
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set regimenPensionario
-     *
-     * @param string $regimenPensionario
-     *
-     * @return Afp
-     */
-    public function setRegimenPensionario($regimenPensionario)
-    {
-        $this->regimenPensionario = $regimenPensionario;
-
-        return $this;
-    }
-
-    /**
-     * Get regimenPensionario
-     *
-     * @return string
-     */
-    public function getRegimenPensionario()
-    {
-        return $this->regimenPensionario;
     }
 
     /**
@@ -119,7 +94,7 @@ class Afp
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param boolean $estado
      *
      * @return Afp
      */
@@ -133,7 +108,7 @@ class Afp
     /**
      * Get estado
      *
-     * @return string
+     * @return boolean
      */
     public function getEstado()
     {
@@ -282,5 +257,29 @@ class Afp
     public function getRaMixta()
     {
         return $this->raMixta;
+    }
+
+    /**
+     * Set regimenPensionario
+     *
+     * @param \PlanillaBundle\Entity\RegimenPensionario $regimenPensionario
+     *
+     * @return Afp
+     */
+    public function setRegimenPensionario(\PlanillaBundle\Entity\RegimenPensionario $regimenPensionario = null)
+    {
+        $this->regimenPensionario = $regimenPensionario;
+
+        return $this;
+    }
+
+    /**
+     * Get regimenPensionario
+     *
+     * @return \PlanillaBundle\Entity\RegimenPensionario
+     */
+    public function getRegimenPensionario()
+    {
+        return $this->regimenPensionario;
     }
 }

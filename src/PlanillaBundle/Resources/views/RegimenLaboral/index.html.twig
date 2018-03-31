@@ -1,0 +1,29 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Regímenes Laborales</h2>
+        <hr/>
+        <a href="{{ path("regimenLaboral_add") }}" class="btn btn-success">Añadir Régimen Laboral</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for regimenLaboral in regimenLaborals %}
+                <tr {% if regimenLaboral.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("regimenLaboral_edit",{"id":regimenLaboral.id})}}" class="btn btn-warning ">{{ regimenLaboral.id }}</a></td>
+                    <td>{{ regimenLaboral.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

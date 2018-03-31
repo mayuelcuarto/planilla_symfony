@@ -603,4 +603,3 @@ class Planilla
         return $this->usuario;
     }
 }
-

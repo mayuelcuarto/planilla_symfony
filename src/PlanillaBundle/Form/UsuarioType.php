@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UsuarioType extends AbstractType
@@ -43,6 +44,9 @@ class UsuarioType extends AbstractType
                     'USUARIO' => "ROLE_USER",
                 ),      
                 "attr"=>array(
+                "class" => "form-control form-control-sm"
+            )))
+            ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
             )))
             ->add('Guardar', SubmitType::class, array("attr"=>array(

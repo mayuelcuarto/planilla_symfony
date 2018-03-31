@@ -196,5 +196,50 @@ class Plaza
     {
         return $this->tipoPlanilla;
     }
-}
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $plazaHistorial;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->plazaHistorial = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add plazaHistorial
+     *
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
+     *
+     * @return Plaza
+     */
+    public function addPlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
+    {
+        $this->plazaHistorial[] = $plazaHistorial;
+
+        return $this;
+    }
+
+    /**
+     * Remove plazaHistorial
+     *
+     * @param \PlanillaBundle\Entity\PlazaHistorial $plazaHistorial
+     */
+    public function removePlazaHistorial(\PlanillaBundle\Entity\PlazaHistorial $plazaHistorial)
+    {
+        $this->plazaHistorial->removeElement($plazaHistorial);
+    }
+
+    /**
+     * Get plazaHistorial
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlazaHistorial()
+    {
+        return $this->plazaHistorial;
+    }
+}

@@ -43,7 +43,7 @@ class UsuarioController extends Controller
     public function addAction(Request $request){
         $usuario = new Usuario();
         $form = $this->createForm(UsuarioType::class, $usuario);
-
+        $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -67,6 +67,7 @@ class UsuarioController extends Controller
                     $usuario->setPassword($password);
                     $usuario->setClaveapi($password);
                     $usuario->setRole($form->get("role")->getData());
+                    $usuario->setEstado($form->get("estado")->getData());
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($usuario);
                     $flush = $em->flush();
@@ -114,6 +115,7 @@ class UsuarioController extends Controller
                     $usuario->setPassword($password);
                     $usuario->setClaveapi($password);
                     $usuario->setRole($form->get("role")->getData());
+                    $usuario->setEstado($form->get("estado")->getData());
        
                     $em->persist($usuario);
                     $flush = $em->flush();

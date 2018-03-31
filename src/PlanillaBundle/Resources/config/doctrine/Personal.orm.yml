@@ -1,6 +1,13 @@
 PlanillaBundle\Entity\Personal:
     type: entity
     table: personal
+    indexes:
+        fk_personal_sexo1_idx:
+            columns:
+                - sexo
+        fk_personal_tipo_doc1_idx:
+            columns:
+                - tipo_doc
     id:
         codPersonal:
             type: integer
@@ -42,13 +49,6 @@ PlanillaBundle\Entity\Personal:
             type: date
             nullable: true
             column: fecha_nacimiento
-        tipoDoc:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
-            column: tipo_doc
         numeroDocumento:
             type: string
             nullable: true
@@ -56,12 +56,6 @@ PlanillaBundle\Entity\Personal:
             options:
                 fixed: false
             column: numero_documento
-        sexo:
-            type: string
-            nullable: true
-            length: 2
-            options:
-                fixed: true
         cuspp:
             type: string
             nullable: true
@@ -78,4 +72,25 @@ PlanillaBundle\Entity\Personal:
         estado:
             type: boolean
             nullable: false
+    manyToOne:
+        sexo:
+            targetEntity: Sexo
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sexo:
+                    referencedColumnName: id
+            orphanRemoval: false
+        tipoDoc:
+            targetEntity: TipoDoc
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_doc:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

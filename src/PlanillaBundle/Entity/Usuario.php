@@ -34,7 +34,7 @@ class Usuario implements UserInterface
     /**
      * @var boolean
      */
-    private $estado = '1';
+    private $estado;
     /**
      * @var string
      */

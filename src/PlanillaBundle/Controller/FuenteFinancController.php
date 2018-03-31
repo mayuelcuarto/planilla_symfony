@@ -40,7 +40,7 @@ class FuenteFinancController extends Controller
                     "fuenteFinanc" => $form->get("fuenteFinanc")->getData()
                         ));
                 if($fuente != null){
-                    $status = "La fuente ya existe!!!";
+                    $status = "La fuente de financiamiento ya existe!!!";
                 }else{
                     $fuente = new FuenteFinanc();
                     $fuente->setAnoEje($form->get("anoEje")->getData());
@@ -52,7 +52,7 @@ class FuenteFinancController extends Controller
                     $em->persist($fuente);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "La fuente se ha creado correctamente";
+                        $status = "La fuente de financiamiento se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 
@@ -91,13 +91,13 @@ class FuenteFinancController extends Controller
                     $em->persist($fuente);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "La fuente se ha editado correctamente";
+                        $status = "La fuente de financiamiento se ha editado correctamente";
                     } else {
-                        $status = "Error al editar fuente!!";
+                        $status = "Error al editar fuente de financiamiento!!";
                     }
  
             } else {
-                $status = "La fuente no se ha editado, porque el formulario no es válido!!";
+                $status = "La fuente de financiamiento no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

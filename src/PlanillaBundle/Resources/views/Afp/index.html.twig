@@ -1,0 +1,29 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Afp</h2>
+        <hr/>
+        <a href="{{ path("afp_add") }}" class="btn btn-success">Añadir Afp</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for afp in afps %}
+                <tr {% if afp.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("afp_edit",{"id":afp.id})}}" class="btn btn-warning ">{{ afp.id }}</a></td>
+                    <td>{{ afp.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

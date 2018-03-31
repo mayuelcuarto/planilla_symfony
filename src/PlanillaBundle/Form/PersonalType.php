@@ -8,8 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PersonalType extends AbstractType
 {
@@ -33,23 +33,20 @@ class PersonalType extends AbstractType
                 ->add('fechaNacimiento', BirthdayType::class, array("label"=>"Fecha de Nacimiento", "required"=>"required", "attr"=>array(
                 "class" => "form-control form-control-sm"
                 )))
-                ->add('tipoDoc', ChoiceType::class, array("label"=>"Tipo", "required"=>"required", 
-                'choices'  => array(
-                    'DNI' => "01"
-                ), 
+                ->add('tipoDoc', EntityType::class, array("label"=>"Tipo de Documento", "required"=>"required",
+                "class" => 'PlanillaBundle:TipoDoc',
+                "choice_label"  => 'nombre',
                 "attr"=>array(
-                "class" => "form-control form-control-sm"
+                "class" => 'form-control form-control-sm'
                 )))
                 ->add('numeroDocumento', TextType::class, array("label"=>"Numero de Documento",  "required"=>"required", "attr"=>array(
                 "class" => "form-control form-control-sm", "maxlength" => 8
                 )))
-                ->add('sexo', ChoiceType::class, array("label"=>"Sexo", "required"=>"required", 
-                'choices'  => array(
-                    'MASCULINO' => "1",
-                    'FEMENINO' => "2"
-                ), 
+                ->add('sexo', EntityType::class, array("label"=>"Sexo", "required"=>"required",
+                "class" => 'PlanillaBundle:Sexo',
+                "choice_label"  => 'nombre',
                 "attr"=>array(
-                "class" => "form-control form-control-sm"
+                "class" => 'form-control form-control-sm'
                 )))
                 ->add('cuspp', TextType::class, array("label"=>"CUSPP", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm", "maxlength" => 8

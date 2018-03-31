@@ -81,4 +81,3 @@ class RegimenPensionario
         return $this->estado;
     }
 }
-

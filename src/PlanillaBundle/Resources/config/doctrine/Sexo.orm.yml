@@ -1,0 +1,23 @@
+PlanillaBundle\Entity\Sexo:
+    type: entity
+    table: sexo
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        estado:
+            type: boolean
+            nullable: false
+    lifecycleCallbacks: {  }

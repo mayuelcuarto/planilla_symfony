@@ -1,0 +1,29 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Lista de Tipos de Concepto</h2>
+        <hr/>
+        <a href="{{ path("tipoConcepto_add") }}" class="btn btn-success">Añadir Tipo de Concepto</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tipoConcepto in tipoConceptos %}
+                <tr {% if tipoConcepto.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("tipoConcepto_edit",{"id":tipoConcepto.id})}}" class="btn btn-warning ">{{ tipoConcepto.id }}</a></td>
+                    <td>{{ tipoConcepto.nombre }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}

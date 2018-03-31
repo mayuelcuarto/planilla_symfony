@@ -52,7 +52,7 @@ class DivfuncController extends Controller
                     $em->persist($divfunc);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El divfunc se ha creado correctamente";
+                        $status = "La división funcional se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 
@@ -91,13 +91,13 @@ class DivfuncController extends Controller
                     $em->persist($divfunc);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El divfunc se ha editado correctamente";
+                        $status = "La división funcional se ha editado correctamente";
                     } else {
-                        $status = "Error al editar divfunc!!";
+                        $status = "Error al editar división funcional!!";
                     }
  
             } else {
-                $status = "El divfunc no se ha editado, porque el formulario no es válido!!";
+                $status = "La división funcional no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

@@ -8,7 +8,7 @@ namespace PlanillaBundle\Entity;
 class Meta
 {
     /**
-     * @var string
+     * @var integer
      */
     private $secFunc;
 
@@ -30,7 +30,7 @@ class Meta
     /**
      * @var boolean
      */
-    private $estado = '1';
+    private $estado;
 
     /**
      * @var \PlanillaBundle\Entity\ActProy
@@ -79,12 +79,13 @@ class Meta
      */
     public function getCadena()
     {
-        return $this->meta ." - ".$this->nombre;
-    }    
+        return $this->getEjecutora()->getPliego()->getSector()->getAnoEje()." - ".$this->meta." ".$this->nombre;
+    } 
+
     /**
      * Get secFunc
      *
-     * @return string
+     * @return integer
      */
     public function getSecFunc()
     {
@@ -355,4 +356,3 @@ class Meta
         return $this->programa;
     }
 }
-

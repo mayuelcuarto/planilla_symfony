@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Funcions</h2>
+        <h2>Lista de Funciones</h2>
         <hr/>
-        <a href="{{ path("funcion_add") }}" class="btn btn-success">Añadir Funcion</a>
+        <a href="{{ path("funcion_add") }}" class="btn btn-success">Añadir Función</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>

@@ -23,13 +23,9 @@
             <tbody>
             {% for concepto in conceptos %}
                 <tr {% if concepto.estado == false %} class="table-secondary" {% endif%} >
-                    {% if concepto.tipoConcepto == 1 %}
-                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-warning ">{{ concepto.id }}</a></td>
-                        <td>INGRESO</td>
-                    {% else%}
-                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-danger">{{ concepto.id }}</a></td>
-                        <td>EGRESO</td>
-                    {% endif %}
+                    
+                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" {% if concepto.tipoConcepto.id == 1 %} class="btn btn-warning" {% else %} class="btn btn-danger" {% endif %}>{{ concepto.id }}</a></td>
+                        <td>{{ concepto.tipoConcepto.nombre }}</td>
                         <td>{{ concepto.concepto }}</td>
                         <td>{{ concepto.abreviatura }}</td>
                         <td>{{ concepto.mcppConcepto }}</td>

@@ -168,4 +168,3 @@ class PlanillaHasConcepto
         return $this->concepto;
     }
 }
-

@@ -58,7 +58,7 @@ class ActProyController extends Controller
                     $em->persist($actividad);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El actividad se ha creado correctamente";
+                        $status = "La actividad se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 
@@ -97,13 +97,13 @@ class ActProyController extends Controller
                     $em->persist($actividad);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El actividad se ha editado correctamente";
+                        $status = "La actividad se ha editado correctamente";
                     } else {
                         $status = "Error al editar actividad!!";
                     }
  
             } else {
-                $status = "El actividad no se ha editado, porque el formulario no es válido!!";
+                $status = "La actividad no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

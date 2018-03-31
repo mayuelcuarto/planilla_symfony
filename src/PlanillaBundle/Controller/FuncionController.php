@@ -40,7 +40,7 @@ class FuncionController extends Controller
                     "funcion" => $form->get("funcion")->getData()
                         ));
                 if($funcion != null){
-                    $status = "El funcion ya existe!!!";
+                    $status = "La función ya existe!!!";
                 }else{
                     $funcion = new Funcion();
                     $funcion->setAnoEje($form->get("anoEje")->getData());
@@ -52,7 +52,7 @@ class FuncionController extends Controller
                     $em->persist($funcion);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El funcion se ha creado correctamente";
+                        $status = "La función se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 
@@ -91,13 +91,13 @@ class FuncionController extends Controller
                     $em->persist($funcion);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El funcion se ha editado correctamente";
+                        $status = "La función se ha editado correctamente";
                     } else {
-                        $status = "Error al editar funcion!!";
+                        $status = "Error al editar función!!";
                     }
  
             } else {
-                $status = "El funcion no se ha editado, porque el formulario no es válido!!";
+                $status = "La función no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

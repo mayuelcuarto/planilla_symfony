@@ -52,4 +52,3 @@ class ModoIngreso
         return $this->nombre;
     }
 }
-

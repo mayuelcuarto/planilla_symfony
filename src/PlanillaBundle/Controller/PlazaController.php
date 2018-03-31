@@ -130,13 +130,13 @@ class PlazaController extends Controller
                     $em->persist($plaza);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "El concepto se ha editado correctamente";
+                        $status = "La plaza se ha editado correctamente";
                     } else {
-                        $status = "Error al editar concepto!!";
+                        $status = "Error al editar plaza!!";
                     }
  
             } else {
-                $status = "El concepto no se ha editado, porque el formulario no es válido!!";
+                $status = "La plaza no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

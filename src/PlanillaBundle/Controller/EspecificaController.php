@@ -40,7 +40,7 @@ class EspecificaController extends Controller
                     "especifica" => $form->get("especifica")->getData()
                         ));
                 if($especifica != null){
-                    $status = "La especifica ya existe!!!";
+                    $status = "La específica ya existe!!!";
                 }else{
                     $especifica = new Especifica();
                     $especifica->setAnoEje($form->get("anoEje")->getData());
@@ -52,7 +52,7 @@ class EspecificaController extends Controller
                     $em->persist($especifica);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "La especifica se ha creado correctamente";
+                        $status = "La específica se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
                     } 

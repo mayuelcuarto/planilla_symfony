@@ -204,3 +204,123 @@ meta_add:
 meta_edit:
     path: /meta/edit/{id}
     defaults: { _controller: PlanillaBundle:Meta:edit }
+    
+afp_index:
+    path: /afp/index
+    defaults: { _controller: PlanillaBundle:Afp:index }
+    
+afp_add:
+    path: /afp/add
+    defaults: { _controller: PlanillaBundle:Afp:add }
+    
+afp_edit:
+    path: /afp/edit/{id}
+    defaults: { _controller: PlanillaBundle:Afp:edit }
+    
+regimenPensionario_index:
+    path: /regimenPensionario/index
+    defaults: { _controller: PlanillaBundle:RegimenPensionario:index }
+    
+regimenPensionario_add:
+    path: /regimenPensionario/add
+    defaults: { _controller: PlanillaBundle:RegimenPensionario:add }
+    
+regimenPensionario_edit:
+    path: /regimenPensionario/edit/{id}
+    defaults: { _controller: PlanillaBundle:RegimenPensionario:edit }
+    
+regimenLaboral_index:
+    path: /regimenLaboral/index
+    defaults: { _controller: PlanillaBundle:RegimenLaboral:index }
+    
+regimenLaboral_add:
+    path: /regimenLaboral/add
+    defaults: { _controller: PlanillaBundle:RegimenLaboral:add }
+    
+regimenLaboral_edit:
+    path: /regimenLaboral/edit/{id}
+    defaults: { _controller: PlanillaBundle:RegimenLaboral:edit }
+    
+situacionLaboral_index:
+    path: /situacionLaboral/index
+    defaults: { _controller: PlanillaBundle:SituacionLaboral:index }
+    
+situacionLaboral_add:
+    path: /situacionLaboral/add
+    defaults: { _controller: PlanillaBundle:SituacionLaboral:add }
+    
+situacionLaboral_edit:
+    path: /situacionLaboral/edit/{id}
+    defaults: { _controller: PlanillaBundle:SituacionLaboral:edit }
+
+condicionLaboral_index:
+    path: /condicionLaboral/index
+    defaults: { _controller: PlanillaBundle:CondicionLaboral:index }
+    
+condicionLaboral_add:
+    path: /condicionLaboral/add
+    defaults: { _controller: PlanillaBundle:CondicionLaboral:add }
+    
+condicionLaboral_edit:
+    path: /condicionLaboral/edit/{id}
+    defaults: { _controller: PlanillaBundle:CondicionLaboral:edit }
+    
+motivoAnulacion_index:
+    path: /motivoAnulacion/index
+    defaults: { _controller: PlanillaBundle:MotivoAnulacion:index }
+    
+motivoAnulacion_add:
+    path: /motivoAnulacion/add
+    defaults: { _controller: PlanillaBundle:MotivoAnulacion:add }
+    
+motivoAnulacion_edit:
+    path: /motivoAnulacion/edit/{id}
+    defaults: { _controller: PlanillaBundle:MotivoAnulacion:edit }
+    
+tipoDoc_index:
+    path: /tipoDoc/index
+    defaults: { _controller: PlanillaBundle:TipoDoc:index }
+    
+tipoDoc_add:
+    path: /tipoDoc/add
+    defaults: { _controller: PlanillaBundle:TipoDoc:add }
+    
+tipoDoc_edit:
+    path: /tipoDoc/edit/{id}
+    defaults: { _controller: PlanillaBundle:TipoDoc:edit }
+    
+sexo_index:
+    path: /sexo/index
+    defaults: { _controller: PlanillaBundle:Sexo:index }
+    
+sexo_add:
+    path: /sexo/add
+    defaults: { _controller: PlanillaBundle:Sexo:add }
+    
+sexo_edit:
+    path: /sexo/edit/{id}
+    defaults: { _controller: PlanillaBundle:Sexo:edit }
+    
+tipoPlanilla_index:
+    path: /tipoPlanilla/index
+    defaults: { _controller: PlanillaBundle:TipoPlanilla:index }
+    
+tipoPlanilla_add:
+    path: /tipoPlanilla/add
+    defaults: { _controller: PlanillaBundle:TipoPlanilla:add }
+    
+tipoPlanilla_edit:
+    path: /tipoPlanilla/edit/{id}
+    defaults: { _controller: PlanillaBundle:TipoPlanilla:edit }
+    
+tipoConcepto_index:
+    path: /tipoConcepto/index
+    defaults: { _controller: PlanillaBundle:TipoConcepto:index }
+    
+tipoConcepto_add:
+    path: /tipoConcepto/add
+    defaults: { _controller: PlanillaBundle:TipoConcepto:add }
+    
+tipoConcepto_edit:
+    path: /tipoConcepto/edit/{id}
+    defaults: { _controller: PlanillaBundle:TipoConcepto:edit }

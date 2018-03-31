@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Personal" table="personal">
+    <indexes>
+      <index name="fk_personal_sexo1_idx" columns="sexo"/>
+      <index name="fk_personal_tipo_doc1_idx" columns="tipo_doc"/>
+    </indexes>
     <id name="codPersonal" type="integer" column="cod_personal">
       <generator strategy="IDENTITY"/>
     </id>
@@ -25,19 +29,9 @@
       </options>
     </field>
     <field name="fechaNacimiento" type="date" column="fecha_nacimiento" nullable="true"/>
-    <field name="tipoDoc" type="string" column="tipo_doc" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <field name="numeroDocumento" type="string" column="numero_documento" length="255" nullable="true">
       <options>
         <option name="fixed"/>
-      </options>
-    </field>
-    <field name="sexo" type="string" column="sexo" length="2" nullable="true">
-      <options>
-        <option name="fixed">1</option>
       </options>
     </field>
     <field name="cuspp" type="string" column="cuspp" length="255" nullable="true">
@@ -51,5 +45,15 @@
       </options>
     </field>
     <field name="estado" type="boolean" column="estado" nullable="false"/>
+    <many-to-one field="sexo" target-entity="Sexo" fetch="LAZY">
+      <join-columns>
+        <join-column name="sexo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="tipoDoc" target-entity="TipoDoc" fetch="LAZY">
+      <join-columns>
+        <join-column name="tipo_doc" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

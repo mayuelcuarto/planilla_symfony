@@ -81,4 +81,3 @@ class SituacionLaboral
         return $this->estado;
     }
 }
-
