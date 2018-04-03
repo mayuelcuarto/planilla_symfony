@@ -5,7 +5,7 @@
         <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'plaza_index', 'method':'POST'})}}
-            <a href="{{ path("plaza_add") }}" class="btn btn-success">Añadir Plaza</a>
+            <a href="{{ path("plaza_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Añadir Plaza</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -14,21 +14,19 @@
             <thead>
             <tr>
                 <th>ID</th>
+                <th>Historial</th>
+                <th>Personal</th>
                 <th>Tipo Planilla</th>
                 <th>Plaza</th>
                 <th>Categoría</th>
                 <th>Meta</th>
-                <th>Personal</th>
             </tr>
             </thead>
             <tbody>
             {% for plaza in plazas %}
                 <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
                     <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
-                    <td>{{ plaza.tipoPlanilla.nombre }}</td>
-                    <td>{{ plaza.numPlaza }}</td>
-                    <td>{{ plaza.categoria.nombre }}</td>
-                    <td>{{ plaza.secFunc.meta }} - {{ plaza.secFunc.nombre }}</td>
+                    <td><a href="{{path("plazaHistorial_index",{"id":plaza.id})}}" class="btn btn-info">MOSTRAR</a></td>
                     <td>
                     {% if plaza.plazaHistorial|length > 0 %}
                         {% for plazaHistorial in plaza.plazaHistorial %}
@@ -40,6 +38,10 @@
                         PLAZA VACANTE
                     {% endif %}
                     </td>
+                    <td>{{ plaza.tipoPlanilla.nombre }}</td>
+                    <td>{{ plaza.numPlaza }}</td>
+                    <td>{{ plaza.categoria.nombre }}</td>
+                    <td>{{ plaza.secFunc.meta }} - {{ plaza.secFunc.nombre }}</td>
                 </tr>
             {% endfor %}
             </tbody>

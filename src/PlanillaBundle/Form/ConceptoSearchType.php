@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ConceptoSearchType extends AbstractType
 {
@@ -18,14 +18,12 @@ class ConceptoSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder                 
-            ->add('tipoConcepto', ChoiceType::class, array("label"=>"Tipo", "required"=>"required", 
-                'choices'  => array(
-                    'INGRESO' => "1",
-                    'EGRESO' => "2",
-                ), 
+            ->add('tipoConcepto', EntityType::class, array("label"=>"Tipo de Concepto", "required"=>"required",
+                "class" => 'PlanillaBundle:TipoConcepto',
+                "choice_label"  => 'nombre',
                 "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
+                "class" => 'form-control form-control-sm'
+                )))
             ->add('concepto', TextType::class, array("label"=>"Nombre de Concepto", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
             )))

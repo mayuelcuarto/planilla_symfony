@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Ejecutora;
 use PlanillaBundle\Form\EjecutoraType;
+use PlanillaBundle\Form\EjecutoraEditType;
 
 class EjecutoraController extends Controller
 {
@@ -76,7 +77,7 @@ class EjecutoraController extends Controller
         $ejecutora_repo = $em->getRepository("PlanillaBundle:Ejecutora");
         $ejecutora = $ejecutora_repo->find($id);
         
-        $form = $this->createForm(EjecutoraType::class, $ejecutora);
+        $form = $this->createForm(EjecutoraEditType::class, $ejecutora);
         
         $form->handleRequest($request);
         

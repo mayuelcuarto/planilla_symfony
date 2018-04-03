@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class PlazaType extends AbstractType
+class PlazaEditType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -31,30 +31,18 @@ class PlazaType extends AbstractType
             )))
             ->add('secFunc', EntityType::class, array("label"=>"Meta", "required"=>"required",
                 "class" => 'PlanillaBundle:Meta',
-                'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('m')
-                                  ->where('m.estado = 1');
-                },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
             )))
             ->add('especifica', EntityType::class, array("label"=>"Específica", "required"=>"required",
                 "class" => 'PlanillaBundle:Especifica',
-                'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('e')
-                                  ->where('e.estado = 1');
-                },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
             )))
             ->add('categoria', EntityType::class, array("label"=>"Categoría", "required"=>"required",
                 "class" => 'PlanillaBundle:CategoriaOcupacional',
-                'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('c')
-                                  ->where('c.estado = 1');
-                },
                 "choice_label"  => 'nombre',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'

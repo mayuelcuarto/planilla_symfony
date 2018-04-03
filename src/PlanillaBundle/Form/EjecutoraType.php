@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class EjecutoraType extends AbstractType
 {
@@ -20,6 +21,10 @@ class EjecutoraType extends AbstractType
         $builder
             ->add('pliego', EntityType::class, array("label"=>"Pliego", "required"=>"required",
                 "class" => 'PlanillaBundle:Pliego',
+                "query_builder" => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('p')
+                                  ->where('p.estado = 1');
+                },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'

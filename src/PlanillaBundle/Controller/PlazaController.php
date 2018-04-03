@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Plaza;
 use PlanillaBundle\Form\PlazaType;
+use PlanillaBundle\Form\PlazaEditType;
 use PlanillaBundle\Form\PlazaSearchType;
+use PDO;
 
 class PlazaController extends Controller
 {
@@ -20,7 +22,7 @@ class PlazaController extends Controller
     public function indexAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
-        $plazas = $plaza_repo->findBy(array(), array('estado' => 'DESC','tipoPlanilla' => 'ASC'));
+        $plazas = $plaza_repo->findBy(array("tipoPlanilla" => 1), array('estado' => 'DESC','tipoPlanilla' => 'ASC'));
         
         $plaza = new Plaza();
         $form = $this->createForm(PlazaSearchType::class, $plaza);
@@ -29,16 +31,24 @@ class PlazaController extends Controller
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $var_personal = $form->get("personal")->getData();
                 
-                $em = $this->getDoctrine()->getManager();
-                $plaza_repo = $em->getRepository("PlanillaBundle:Plaza")->createQueryBuilder('p')
-                        ->where('p.tipoPlanilla = :tipoPlanilla')
-                        ->setParameter('tipoPlanilla', $tipoPlanilla)
-                        ->addOrderBy('p.estado', 'DESC')
-                        ->addOrderBy('p.numPlaza', 'ASC')
-                        ->getQuery()
-                        ->getResult();
-                $plazas = $plaza_repo;
+                if($var_personal!=null){
+                    $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Plaza pl 
+                                        INNER JOIN pl.plazaHistorial ph
+                                        INNER JOIN ph.codPersonal pe 
+                                        WHERE  
+                                        ((pe.apellidoPaterno LIKE :var_personal) 
+                                        OR (pe.apellidoMaterno LIKE :var_personal) 
+                                        OR (pe.nombre LIKE :var_personal))
+                                        AND pl.tipoPlanilla = :tipoPlanilla 
+                                        ORDER BY ph.estado DESC")
+                    ->setParameter('tipoPlanilla', $tipoPlanilla)
+                    ->setParameter('var_personal', "%".$var_personal."%");
+                    $plazas = $dql->getResult();
+                }else{
+                    $plazas = $plaza_repo->findBy(array("tipoPlanilla" => $tipoPlanilla), array('estado' => 'DESC','tipoPlanilla' => 'ASC'));
+                }
                 if(count($plazas)==0){
                     $status = "La búsqueda no encontró coincidencias";
                 }else{
@@ -51,24 +61,41 @@ class PlazaController extends Controller
             $this->session->getFlashBag()->add("status", $status);
             return $this->render("@Planilla/plaza/index.html.twig", array(
                 "plazas" => $plazas,
-                "form" => $form->createView()
+                "form" => $form->createView(),
+                "tipoPlanilla" => $tipoPlanilla->getId()
             ));
         }
         
         return $this->render("@Planilla/plaza/index.html.twig", array(
             "plazas" => $plazas,
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            "tipoPlanilla" => 1
         ));
     }
     
-    public function addAction(Request $request){
+    public function addAction(Request $request, $tipoPlanilla){
         $plaza = new Plaza();
+        $em = $this->getDoctrine()->getManager();
+        $sth1 = $em->getConnection()
+                    ->prepare("SELECT SugerirPlaza(:tipoPlanilla)");
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla);
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $numPlaza = $fila[0];
+        }
+        
         $form = $this->createForm(PlazaType::class, $plaza);
+        $tipoPlanilla_repo = $em->getRepository("PlanillaBundle:TipoPlanilla");
+        $tipoPlanilla2 = $tipoPlanilla_repo->findOneBy(array(
+                    "id" => $tipoPlanilla
+                        ));
+        
+        $form->get("tipoPlanilla")->setData($tipoPlanilla2);
+        $form->get("numPlaza")->setData($numPlaza);
         $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
                 $plaza = $plaza_repo->findOneBy(array(
                     "numPlaza" => $form->get("numPlaza")->getData(),
@@ -113,7 +140,7 @@ class PlazaController extends Controller
         $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
         $plaza = $plaza_repo->find($id);
         
-        $form = $this->createForm(PlazaType::class, $plaza);
+        $form = $this->createForm(PlazaEditType::class, $plaza);
         
         $form->handleRequest($request);
         

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Pliego;
 use PlanillaBundle\Form\PliegoType;
+use PlanillaBundle\Form\PliegoEditType;
 
 class PliegoController extends Controller
 {
@@ -76,7 +77,7 @@ class PliegoController extends Controller
         $pliego_repo = $em->getRepository("PlanillaBundle:Pliego");
         $pliego = $pliego_repo->find($id);
         
-        $form = $this->createForm(PliegoType::class, $pliego);
+        $form = $this->createForm(PliegoEditType::class, $pliego);
         
         $form->handleRequest($request);
         

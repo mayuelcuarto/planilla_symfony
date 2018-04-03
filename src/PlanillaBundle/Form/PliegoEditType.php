@@ -9,9 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
 
-class PliegoType extends AbstractType
+class PliegoEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,10 +20,6 @@ class PliegoType extends AbstractType
         $builder
             ->add('sector', EntityType::class, array("label"=>"Sector", "required"=>"required",
                 "class" => 'PlanillaBundle:Sector',
-                "query_builder" => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('s')
-                                  ->where('s.estado = 1');
-                },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'

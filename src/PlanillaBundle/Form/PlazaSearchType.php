@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class PlazaSearchType extends AbstractType
@@ -20,6 +21,10 @@ class PlazaSearchType extends AbstractType
             ->add('tipoPlanilla', EntityType::class, array("label"=>"Tipo Planilla", "required"=>"required",
                 "class" => 'PlanillaBundle:TipoPlanilla',
                 "choice_label" => 'nombre',
+                "attr"=>array(
+                "class" => 'form-control form-control-sm'
+            )))
+            ->add('personal', TextType::class, array("label"=>"Personal", 'mapped' => false, "required"=>false,
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
             )))

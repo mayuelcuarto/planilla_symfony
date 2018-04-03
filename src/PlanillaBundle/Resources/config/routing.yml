@@ -54,8 +54,9 @@ plaza_index:
     defaults: { _controller: PlanillaBundle:Plaza:index }
 
 plaza_add:
-    path: /plaza/add
+    path: /plaza/add/{tipoPlanilla}
     defaults: { _controller: PlanillaBundle:Plaza:add }
+    
     
 plaza_edit:
     path: /plaza/edit/{id}
@@ -324,3 +325,19 @@ tipoConcepto_add:
 tipoConcepto_edit:
     path: /tipoConcepto/edit/{id}
     defaults: { _controller: PlanillaBundle:TipoConcepto:edit }
+    
+plazaHistorial_index:
+    path: /plazaHistorial/index/{id}
+    defaults: { _controller: PlanillaBundle:PlazaHistorial:index }
+
+plazaHistorial_add:
+    path: /plazaHistorial/add/{plazaId}
+    defaults: { _controller: PlanillaBundle:PlazaHistorial:add }
+    
+plazaHistorial_edit:
+    path: /plazaHistorial/edit/{id}
+    defaults: { _controller: PlanillaBundle:PlazaHistorial:edit }
+    
+plazaHistorial_baja:
+    path: /plazaHistorial/baja/{id}
+    defaults: { _controller: PlanillaBundle:PlazaHistorial:baja }

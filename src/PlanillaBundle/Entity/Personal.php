@@ -67,6 +67,20 @@ class Personal
      */
     private $tipoDoc;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getApellidoPaterno()." ".$this->getApellidoMaterno().", ".$this->getNombre();
+    } 
 
     /**
      * Get codPersonal

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class PersonalType extends AbstractType
 {
@@ -36,6 +37,10 @@ class PersonalType extends AbstractType
                 ->add('tipoDoc', EntityType::class, array("label"=>"Tipo de Documento", "required"=>"required",
                 "class" => 'PlanillaBundle:TipoDoc',
                 "choice_label"  => 'nombre',
+                "query_builder" => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('p')
+                                  ->where('p.estado = 1');
+                },
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
                 )))

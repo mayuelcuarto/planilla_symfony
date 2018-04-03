@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Meta;
 use PlanillaBundle\Form\MetaType;
+use PlanillaBundle\Form\MetaEditType;
 
 class MetaController extends Controller
 {
@@ -90,7 +91,7 @@ class MetaController extends Controller
         $meta_repo = $em->getRepository("PlanillaBundle:Meta");
         $meta = $meta_repo->find($id);
         
-        $form = $this->createForm(MetaType::class, $meta);
+        $form = $this->createForm(MetaEditType::class, $meta);
         
         $form->handleRequest($request);
         

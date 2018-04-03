@@ -9,9 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
 
-class PliegoType extends AbstractType
+class EjecutoraEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,21 +18,23 @@ class PliegoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sector', EntityType::class, array("label"=>"Sector", "required"=>"required",
-                "class" => 'PlanillaBundle:Sector',
-                "query_builder" => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('s')
-                                  ->where('s.estado = 1');
-                },
-                "choice_label"  => 'cadena',
+            ->add('pliego', EntityType::class, array("label"=>"Pliego", "required"=>"required",
+                "class" => 'PlanillaBundle:Pliego',
+                "choice_label" => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'
             )))
-            ->add('pliego', TextType::class, array("label"=>"Pliego", "required"=>"required","attr"=>array(
-                "class" => 'form-control form-control-sm', "maxlength" => 3
+            ->add('secEjec', TextType::class, array("label"=>"Ejecutora", "required"=>"required", "attr"=>array(
+                "class" => 'form-control form-control-sm', "maxlength" => 6
             )))
-            ->add('nombre', TextType::class, array("label"=>"Nombre", "required"=>"required","attr"=>array(
+            ->add('nombre', TextType::class, array("label"=>"Nombre", "required"=>"required", "attr"=>array(
                 "class" => 'form-control form-control-sm'
+            )))
+            ->add('direccion', TextType::class, array("label"=>"Dirección", "required"=>false, "attr"=>array(
+                "class" => 'form-control form-control-sm'
+            )))
+            ->add('ruc', TextType::class, array("label"=>"R.U.C.", "required"=>false, "attr"=>array(
+                "class" => 'form-control form-control-sm', "maxlength" => 11
             )))
             ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
@@ -48,7 +49,7 @@ class PliegoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PlanillaBundle\Entity\Pliego'
+            'data_class' => 'PlanillaBundle\Entity\Ejecutora'
         ));
     }
 
@@ -57,7 +58,7 @@ class PliegoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'planillabundle_pliego';
+        return 'planillabundle_ejecutora';
     }
 
 

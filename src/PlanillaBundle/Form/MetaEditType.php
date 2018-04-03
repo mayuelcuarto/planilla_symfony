@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class MetaType extends AbstractType
+class MetaEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -23,7 +23,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:Programa',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
-                                  ->where('p.estado = 1');
+                                  ->where('p.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -33,7 +33,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:Producto',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
-                                  ->where('p.estado = 1');
+                                  ->where('p.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -43,7 +43,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:ActProy',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('a')
-                                  ->where('a.estado = 1');
+                                  ->where('a.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -53,7 +53,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:Funcion',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('f')
-                                  ->where('f.estado = 1');
+                                  ->where('f.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -63,7 +63,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:Divfunc',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('d')
-                                  ->where('d.estado = 1');
+                                  ->where('d.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -73,7 +73,7 @@ class MetaType extends AbstractType
                 "class" => 'PlanillaBundle:Grpf',
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('g')
-                                  ->where('g.estado = 1');
+                                  ->where('g.anoEje > 2010');
                 },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
@@ -81,10 +81,6 @@ class MetaType extends AbstractType
             )))
             ->add('ejecutora', EntityType::class, array("label"=>"Ejecutora", "required"=>"required",
                 "class" => 'PlanillaBundle:Ejecutora',
-                'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('e')
-                                  ->where('e.estado = 1');
-                },
                 "choice_label"  => 'cadena',
                 "attr"=>array(
                 "class" => 'form-control form-control-sm'

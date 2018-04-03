@@ -15,7 +15,6 @@
                 <th>Apellidos</th>
                 <th>Cargo</th>
                 <th>DNI</th>
-                <th>Eliminar</th>
             </tr>
             {% for usuario in usuarios %}
                 <tr>
@@ -24,13 +23,6 @@
                     <td>{{ usuario.apellidos}}</td>
                     <td>{{ usuario.cargo }}</td>
                     <td>{{ usuario.dni }}</td>
-                    <td>
-                    {% if(usuario.planilla|length == 0) %}
-                    <a href="{{path("usuario_delete",{"id":usuario.id})}}" class="btn btn-danger">Eliminar</a>
-                    {% else %}
-                    Imposible eliminar
-                    {% endif %}
-                    </td>
                     </tr>
             {% endfor %}
         </table>

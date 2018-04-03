@@ -1,0 +1,44 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h2>Historial de Plaza</h2>
+        <hr/>
+        {% if activado == true %}
+            <a href="{{path("plazaHistorial_add", {"plazaId":plazaId})}}" class="btn btn-success">Añadir Historial</a>
+        {% else %}
+            <span class="btn btn-outline-dark">Añadir Historial</span>
+        {% endif %}
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Baja</th>
+                <th>Personal</th>
+                <th>Tipo Planilla</th>
+                <th>Plaza</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plazaHistorial in plazaHistorials %}
+                <tr {% if plazaHistorial.estado == false %} class="table-secondary" {% endif%} >
+                    <td><a href="{{path("plazaHistorial_edit",{"id":plazaHistorial.id})}}" class="btn btn-warning ">{{ plazaHistorial.secPersonal }}</a></td>
+                    <td>{% if plazaHistorial.estado == true %}
+                        <a href="{{path("plazaHistorial_baja",{"id":plazaHistorial.id})}}" class="btn btn-danger">X</a>
+                        {% else %}
+                        <span class="btn btn-outline-dark">X</span>
+                        {% endif%}
+                    </td>
+                    <td>{{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}</td>
+                    <td>{{ plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
+                    <td>{{ plazaHistorial.plaza.numPlaza }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
