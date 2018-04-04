@@ -174,7 +174,7 @@ class PlazaHistorialController extends Controller
             $this->session->getFlashBag()->add("status", $status);
             return $this->redirectToRoute("plazaHistorial_index",array("id" => $plazaHistorial->getPlaza()->getId()));
         }
-        return $this->render('@Planilla/plazaHistorial/edit.html.twig',
+        return $this->render('@Planilla/plazaHistorial/baja.html.twig',
                 array(
                     "form" => $form->createView(),
                     "plazaId" => $plazaHistorial->getPlaza()->getId()
