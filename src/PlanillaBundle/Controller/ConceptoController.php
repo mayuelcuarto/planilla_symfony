@@ -20,7 +20,7 @@ class ConceptoController extends Controller
     public function indexAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
-        $conceptos = $concepto_repo->findBy(array(), array('estado' => 'DESC','tipoConcepto' => 'ASC'));
+        $conceptos = $concepto_repo->findBy(array('tipoConcepto' => 1), array('estado' => 'DESC','tipoConcepto' => 'ASC'));
         
         $concepto = new Concepto();
         $form = $this->createForm(ConceptoSearchType::class, $concepto);

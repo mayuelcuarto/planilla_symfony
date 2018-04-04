@@ -31,9 +31,6 @@ class AfpType extends AbstractType
         ->add('nombre', TextType::class, array("label"=>"Nombre", "required"=>"required", "attr"=>array(
                 "class" => "form-control form-control-sm"
             )))
-        ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
         ->add('snp', NumberType::class, array("label"=>"SNP", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
             )))
@@ -50,6 +47,9 @@ class AfpType extends AbstractType
                 "class" => "form-control form-control-sm"
             )))
         ->add('raMixta', NumberType::class, array("label"=>"Comisión RA Mixta", "required"=>false, "attr"=>array(
+                "class" => "form-control form-control-sm"
+            )))
+        ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
                 "class" => "form-control form-control-sm"
             )))
         ->add('Guardar', SubmitType::class, array("attr"=>array(

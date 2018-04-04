@@ -1,11 +1,11 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Conceptos</h2>
+        <h3>Lista de Conceptos</h3>
         <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'concepto_index', 'method':'POST'})}}
-            <a href="{{ path("concepto_add") }}" class="btn btn-success">Añadir concepto</a>
+            <a href="{{ path("concepto_add") }}" class="btn btn-success">Agregar concepto</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -34,5 +34,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

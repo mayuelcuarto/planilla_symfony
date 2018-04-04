@@ -1,6 +1,3 @@
-DELIMITER $$
-
-DROP FUNCTION IF EXISTS `planilla2`.`SugerirMotivoAnulacion`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION  `planilla2`.`SugerirMotivoAnulacion`() RETURNS CHAR(2)
 BEGIN
 DECLARE aux INT;
@@ -12,6 +9,4 @@ ELSE
 SET aux2 = aux;
 END IF;
 RETURN aux2;
-END $$
-
-DELIMITER ;
+END

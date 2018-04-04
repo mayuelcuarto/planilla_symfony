@@ -1,11 +1,6 @@
-DELIMITER $$
-
-DROP FUNCTION IF EXISTS `planilla2`.`SugerirRegimenLaboral`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION  `planilla2`.`SugerirRegimenLaboral`() RETURNS INT
+CREATE DEFINER=`root`@`localhost` FUNCTION `SugerirRegimenLaboral`() RETURNS int(11)
 BEGIN
 DECLARE aux INTEGER;
 SET aux = (SELECT MAX(id) FROM regimen_laboral) + 1;
 RETURN aux;
-END $$
-
-DELIMITER ;
+END

@@ -341,3 +341,27 @@ plazaHistorial_edit:
 plazaHistorial_baja:
     path: /plazaHistorial/baja/{id}
     defaults: { _controller: PlanillaBundle:PlazaHistorial:baja }
+    
+grupoOcupacional_index:
+    path: /grupoOcupacional/index
+    defaults: { _controller: PlanillaBundle:GrupoOcupacional:index }
+    
+grupoOcupacional_add:
+    path: /grupoOcupacional/add
+    defaults: { _controller: PlanillaBundle:GrupoOcupacional:add }
+    
+grupoOcupacional_edit:
+    path: /grupoOcupacional/edit/{id}
+    defaults: { _controller: PlanillaBundle:GrupoOcupacional:edit }
+    
+categoriaOcupacional_index:
+    path: /categoriaOcupacional/index
+    defaults: { _controller: PlanillaBundle:CategoriaOcupacional:index }
+    
+categoriaOcupacional_add:
+    path: /categoriaOcupacional/add
+    defaults: { _controller: PlanillaBundle:CategoriaOcupacional:add }
+    
+categoriaOcupacional_edit:
+    path: /categoriaOcupacional/edit/{id}
+    defaults: { _controller: PlanillaBundle:CategoriaOcupacional:edit }

@@ -1,6 +1,8 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-4">
+        <h4>Editar Historial de Plaza</h4>
+        <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}

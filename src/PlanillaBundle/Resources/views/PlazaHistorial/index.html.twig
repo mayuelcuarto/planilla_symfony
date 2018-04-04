@@ -1,12 +1,12 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Historial de Plaza</h2>
+        <h3>Historial de Plaza</h3>
         <hr/>
         {% if activado == true %}
-            <a href="{{path("plazaHistorial_add", {"plazaId":plazaId})}}" class="btn btn-success">Añadir Historial</a>
+            <a href="{{path("plazaHistorial_add", {"plazaId":plazaId})}}" class="btn btn-success">Agregar Historial</a>
         {% else %}
-            <span class="btn btn-outline-dark">Añadir Historial</span>
+            <span class="btn btn-outline-dark">Agregar Historial</span>
         {% endif %}
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
@@ -40,5 +40,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

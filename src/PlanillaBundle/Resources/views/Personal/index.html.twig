@@ -1,11 +1,11 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Listado de Personal</h2>
+        <h3>Listado de Personal</h3>
         <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'personal_index', 'method':'POST'})}}
-            <a href="{{ path("personal_add") }}" class="btn btn-success">Añadir personal</a>
+            <a href="{{ path("personal_add") }}" class="btn btn-success">Agregar personal</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -29,5 +29,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Motivos de Anulación</h2>
+        <h3>Lista de Motivos de Anulación</h3>
         <hr/>
-        <a href="{{ path("motivoAnulacion_add") }}" class="btn btn-success">Añadir Motivo de Anulación</a>
+        <a href="{{ path("motivoAnulacion_add") }}" class="btn btn-success">Agregar Motivo de Anulación</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -25,5 +25,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

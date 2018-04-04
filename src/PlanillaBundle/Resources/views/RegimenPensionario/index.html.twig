@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Regímenes Pensionarios</h2>
+        <h3>Lista de Regímenes Pensionarios</h3>
         <hr/>
-        <a href="{{ path("regimenPensionario_add") }}" class="btn btn-success">Añadir Régimen Pensionario</a>
+        <a href="{{ path("regimenPensionario_add") }}" class="btn btn-success">Agregar Régimen Pensionario</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -25,5 +25,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

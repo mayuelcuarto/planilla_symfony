@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Pliegos</h2>
+        <h3>Lista de Pliegos</h3>
         <hr/>
-        <a href="{{ path("pliego_add") }}" class="btn btn-success">Añadir Pliego</a>
+        <a href="{{ path("pliego_add") }}" class="btn btn-success">Agregar Pliego</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -31,5 +31,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

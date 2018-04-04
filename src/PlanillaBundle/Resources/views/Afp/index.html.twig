@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Afp</h2>
+        <h3>Lista de Afp</h3>
         <hr/>
-        <a href="{{ path("afp_add") }}" class="btn btn-success">Añadir Afp</a>
+        <a href="{{ path("afp_add") }}" class="btn btn-success">Agregar Afp</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -25,5 +25,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

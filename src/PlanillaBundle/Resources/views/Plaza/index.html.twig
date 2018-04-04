@@ -1,11 +1,11 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Plazas</h2>
+        <h3>Lista de Plazas</h3>
         <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'plaza_index', 'method':'POST'})}}
-            <a href="{{ path("plaza_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Añadir Plaza</a>
+            <a href="{{ path("plaza_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Agregar Plaza</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -47,5 +47,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

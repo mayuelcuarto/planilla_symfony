@@ -1,9 +1,9 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h2>Lista de Tipos de Documento</h2>
+        <h3>Lista de Tipos de Documento</h3>
         <hr/>
-        <a href="{{ path("tipoDoc_add") }}" class="btn btn-success">Añadir Tipo de Documento</a>
+        <a href="{{ path("tipoDoc_add") }}" class="btn btn-success">Agregar Tipo de Documento</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
@@ -25,5 +25,4 @@
             </tbody>
         </table>
     </div>
-    <div class="clearfix"></div>
 {% endblock %}

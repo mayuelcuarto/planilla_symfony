@@ -1,6 +1,3 @@
-DELIMITER $$
-
-DROP PROCEDURE IF EXISTS `planilla2`.`AgregarMotivoAnulacion`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE  `planilla2`.`AgregarMotivoAnulacion`(IN id CHAR(2), IN nombre VARCHAR(255), IN estado BOOLEAN)
 BEGIN
 DECLARE varerror INTEGER;
@@ -12,6 +9,4 @@ COMMIT;
 ELSE
 ROLLBACK;
 END IF;
-END $$
-
-DELIMITER ;
+END
