@@ -62,8 +62,4 @@ PlanillaBundle\Entity\Usuario:
             length: 255
             options:
                 fixed: false
-    oneToMany:
-        planilla:
-            targetEntity: Planilla
-            mappedBy: usuario
     lifecycleCallbacks: {  }

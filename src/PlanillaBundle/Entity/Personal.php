@@ -356,4 +356,3 @@ class Personal
         return $this->tipoDoc;
     }
 }
-

@@ -365,3 +365,15 @@ categoriaOcupacional_add:
 categoriaOcupacional_edit:
     path: /categoriaOcupacional/edit/{id}
     defaults: { _controller: PlanillaBundle:CategoriaOcupacional:edit }
+    
+planilla_index:
+    path: /planilla/index
+    defaults: { _controller: PlanillaBundle:Planilla:index }
+    
+planilla_add:
+    path: /planilla/add/{tipoPlanilla}
+    defaults: { _controller: PlanillaBundle:Planilla:add }
+    
+planilla_edit:
+    path: /planilla/edit/{id}
+    defaults: { _controller: PlanillaBundle:Planilla:edit }

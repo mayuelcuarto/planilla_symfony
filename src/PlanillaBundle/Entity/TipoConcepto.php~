@@ -3,12 +3,12 @@
 namespace PlanillaBundle\Entity;
 
 /**
- * TipoDoc
+ * TipoConcepto
  */
-class TipoDoc
+class TipoConcepto
 {
     /**
-     * @var string
+     * @var integer
      */
     private $id;
 
@@ -26,7 +26,7 @@ class TipoDoc
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
@@ -38,7 +38,7 @@ class TipoDoc
      *
      * @param string $nombre
      *
-     * @return TipoDoc
+     * @return TipoConcepto
      */
     public function setNombre($nombre)
     {
@@ -62,7 +62,7 @@ class TipoDoc
      *
      * @param boolean $estado
      *
-     * @return TipoDoc
+     * @return TipoConcepto
      */
     public function setEstado($estado)
     {
@@ -81,3 +81,4 @@ class TipoDoc
         return $this->estado;
     }
 }
+

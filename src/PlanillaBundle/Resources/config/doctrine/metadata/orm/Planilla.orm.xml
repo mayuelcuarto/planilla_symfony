@@ -7,16 +7,12 @@
       <index name="fk_planilla_fuente_financ1_idx1" columns="fuente_id"/>
       <index name="fk_planilla_especifica1_idx1" columns="especifica_id"/>
       <index name="fk_planilla_meta1_idx" columns="sec_func"/>
+      <index name="fk_planilla_mes1_idx" columns="mes_eje"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="anoEje" type="integer" column="ano_eje" nullable="false">
-      <options>
-        <option name="unsigned"/>
-      </options>
-    </field>
-    <field name="mesEje" type="integer" column="mes_eje" nullable="false">
       <options>
         <option name="unsigned"/>
       </options>
@@ -70,6 +66,11 @@
     <many-to-one field="fuente" target-entity="FuenteFinanc" fetch="LAZY">
       <join-columns>
         <join-column name="fuente_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="mesEje" target-entity="Mes" fetch="LAZY">
+      <join-columns>
+        <join-column name="mes_eje" referenced-column-name="mes_eje"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="secFunc" target-entity="Meta" fetch="LAZY">

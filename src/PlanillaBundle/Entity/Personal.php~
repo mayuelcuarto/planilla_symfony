@@ -40,17 +40,7 @@ class Personal
     /**
      * @var string
      */
-    private $tipoDoc;
-
-    /**
-     * @var string
-     */
     private $numeroDocumento;
-
-    /**
-     * @var string
-     */
-    private $sexo;
 
     /**
      * @var string
@@ -67,6 +57,30 @@ class Personal
      */
     private $estado;
 
+    /**
+     * @var \PlanillaBundle\Entity\Sexo
+     */
+    private $sexo;
+
+    /**
+     * @var \PlanillaBundle\Entity\TipoDoc
+     */
+    private $tipoDoc;
+
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getApellidoPaterno()." ".$this->getApellidoMaterno().", ".$this->getNombre();
+    } 
 
     /**
      * Get codPersonal
@@ -199,30 +213,6 @@ class Personal
     }
 
     /**
-     * Set tipoDoc
-     *
-     * @param string $tipoDoc
-     *
-     * @return Personal
-     */
-    public function setTipoDoc($tipoDoc)
-    {
-        $this->tipoDoc = $tipoDoc;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoDoc
-     *
-     * @return string
-     */
-    public function getTipoDoc()
-    {
-        return $this->tipoDoc;
-    }
-
-    /**
      * Set numeroDocumento
      *
      * @param string $numeroDocumento
@@ -244,30 +234,6 @@ class Personal
     public function getNumeroDocumento()
     {
         return $this->numeroDocumento;
-    }
-
-    /**
-     * Set sexo
-     *
-     * @param string $sexo
-     *
-     * @return Personal
-     */
-    public function setSexo($sexo)
-    {
-        $this->sexo = $sexo;
-
-        return $this;
-    }
-
-    /**
-     * Get sexo
-     *
-     * @return string
-     */
-    public function getSexo()
-    {
-        return $this->sexo;
     }
 
     /**
@@ -341,4 +307,53 @@ class Personal
     {
         return $this->estado;
     }
+
+    /**
+     * Set sexo
+     *
+     * @param \PlanillaBundle\Entity\Sexo $sexo
+     *
+     * @return Personal
+     */
+    public function setSexo(\PlanillaBundle\Entity\Sexo $sexo = null)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return \PlanillaBundle\Entity\Sexo
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
+    /**
+     * Set tipoDoc
+     *
+     * @param \PlanillaBundle\Entity\TipoDoc $tipoDoc
+     *
+     * @return Personal
+     */
+    public function setTipoDoc(\PlanillaBundle\Entity\TipoDoc $tipoDoc = null)
+    {
+        $this->tipoDoc = $tipoDoc;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoDoc
+     *
+     * @return \PlanillaBundle\Entity\TipoDoc
+     */
+    public function getTipoDoc()
+    {
+        return $this->tipoDoc;
+    }
 }
+

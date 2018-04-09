@@ -4,17 +4,13 @@
     <indexes>
       <index name="fk_planilla_idx" columns="planilla_id"/>
       <index name="fk_planilla_has_concepto_concepto1_idx" columns="concepto_id"/>
+      <index name="fk_planilla_has_concepto_usuario1_idx" columns="usuario_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="monto" type="float" column="monto" precision="10" scale="0" nullable="true"/>
     <field name="fechaIng" type="datetime" column="fecha_ing" nullable="true"/>
-    <field name="usuarioDni" type="string" column="usuario_dni" length="8" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <many-to-one field="planilla" target-entity="Planilla" fetch="LAZY">
       <join-columns>
         <join-column name="planilla_id" referenced-column-name="id"/>
@@ -23,6 +19,11 @@
     <many-to-one field="concepto" target-entity="Concepto" fetch="LAZY">
       <join-columns>
         <join-column name="concepto_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="usuario" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="usuario_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

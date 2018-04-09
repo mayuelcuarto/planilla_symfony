@@ -17,6 +17,9 @@ PlanillaBundle\Entity\Planilla:
         fk_planilla_meta1_idx:
             columns:
                 - sec_func
+        fk_planilla_mes1_idx:
+            columns:
+                - mes_eje
     id:
         id:
             type: integer
@@ -34,12 +37,6 @@ PlanillaBundle\Entity\Planilla:
             options:
                 unsigned: false
             column: ano_eje
-        mesEje:
-            type: integer
-            nullable: false
-            options:
-                unsigned: false
-            column: mes_eje
         fechaPago:
             type: date
             nullable: true
@@ -130,6 +127,16 @@ PlanillaBundle\Entity\Planilla:
                 fuente_id:
                     referencedColumnName: id
             orphanRemoval: false
+        mesEje:
+            targetEntity: Mes
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                mes_eje:
+                    referencedColumnName: mes_eje
+            orphanRemoval: false
         secFunc:
             targetEntity: Meta
             cascade: {  }
@@ -155,7 +162,7 @@ PlanillaBundle\Entity\Planilla:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: planilla
+            inversedBy: null
             joinColumns:
                 usuario_id:
                     referencedColumnName: id

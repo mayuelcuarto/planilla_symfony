@@ -1,0 +1,29 @@
+PlanillaBundle\Entity\PlanillaAuditoria:
+    type: entity
+    table: planilla_auditoria
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        planillaId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: planilla_id
+        fecha:
+            type: datetime
+            nullable: false
+        detalle:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

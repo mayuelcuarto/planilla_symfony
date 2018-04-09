@@ -81,4 +81,3 @@ class TipoConcepto
         return $this->estado;
     }
 }
-

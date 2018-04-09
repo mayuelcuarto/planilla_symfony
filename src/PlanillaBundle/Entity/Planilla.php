@@ -18,11 +18,6 @@ class Planilla
     private $anoEje;
 
     /**
-     * @var integer
-     */
-    private $mesEje;
-
-    /**
      * @var \DateTime
      */
     private $fechaPago;
@@ -98,6 +93,11 @@ class Planilla
     private $fuente;
 
     /**
+     * @var \PlanillaBundle\Entity\Mes
+     */
+    private $mesEje;
+
+    /**
      * @var \PlanillaBundle\Entity\Meta
      */
     private $secFunc;
@@ -145,30 +145,6 @@ class Planilla
     public function getAnoEje()
     {
         return $this->anoEje;
-    }
-
-    /**
-     * Set mesEje
-     *
-     * @param integer $mesEje
-     *
-     * @return Planilla
-     */
-    public function setMesEje($mesEje)
-    {
-        $this->mesEje = $mesEje;
-
-        return $this;
-    }
-
-    /**
-     * Get mesEje
-     *
-     * @return integer
-     */
-    public function getMesEje()
-    {
-        return $this->mesEje;
     }
 
     /**
@@ -532,6 +508,30 @@ class Planilla
     }
 
     /**
+     * Set mesEje
+     *
+     * @param \PlanillaBundle\Entity\Mes $mesEje
+     *
+     * @return Planilla
+     */
+    public function setMesEje(\PlanillaBundle\Entity\Mes $mesEje = null)
+    {
+        $this->mesEje = $mesEje;
+
+        return $this;
+    }
+
+    /**
+     * Get mesEje
+     *
+     * @return \PlanillaBundle\Entity\Mes
+     */
+    public function getMesEje()
+    {
+        return $this->mesEje;
+    }
+
+    /**
      * Set secFunc
      *
      * @param \PlanillaBundle\Entity\Meta $secFunc
@@ -603,3 +603,4 @@ class Planilla
         return $this->usuario;
     }
 }
+

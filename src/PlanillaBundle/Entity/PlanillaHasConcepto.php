@@ -10,7 +10,7 @@ class PlanillaHasConcepto
     /**
      * @var integer
      */
-    private $id = '0';
+    private $id;
 
     /**
      * @var float
@@ -23,11 +23,6 @@ class PlanillaHasConcepto
     private $fechaIng;
 
     /**
-     * @var string
-     */
-    private $usuarioDni;
-
-    /**
      * @var \PlanillaBundle\Entity\Planilla
      */
     private $planilla;
@@ -36,6 +31,11 @@ class PlanillaHasConcepto
      * @var \PlanillaBundle\Entity\Concepto
      */
     private $concepto;
+
+    /**
+     * @var \PlanillaBundle\Entity\Usuario
+     */
+    private $usuario;
 
 
     /**
@@ -97,30 +97,6 @@ class PlanillaHasConcepto
     }
 
     /**
-     * Set usuarioDni
-     *
-     * @param string $usuarioDni
-     *
-     * @return PlanillaHasConcepto
-     */
-    public function setUsuarioDni($usuarioDni)
-    {
-        $this->usuarioDni = $usuarioDni;
-
-        return $this;
-    }
-
-    /**
-     * Get usuarioDni
-     *
-     * @return string
-     */
-    public function getUsuarioDni()
-    {
-        return $this->usuarioDni;
-    }
-
-    /**
      * Set planilla
      *
      * @param \PlanillaBundle\Entity\Planilla $planilla
@@ -167,4 +143,29 @@ class PlanillaHasConcepto
     {
         return $this->concepto;
     }
+
+    /**
+     * Set usuario
+     *
+     * @param \PlanillaBundle\Entity\Usuario $usuario
+     *
+     * @return PlanillaHasConcepto
+     */
+    public function setUsuario(\PlanillaBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \PlanillaBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
 }
+

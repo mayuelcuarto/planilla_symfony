@@ -44,7 +44,7 @@ class Especifica
      */
     public function getCadena()
     {
-        return $this->especifica." - ".$this->nombre;
+        return $this->getAnoEje()." - ".$this->getEspecifica()." ".$this->getNombre();
     }
 
     /**

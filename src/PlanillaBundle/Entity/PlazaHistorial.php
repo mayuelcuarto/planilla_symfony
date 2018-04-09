@@ -112,6 +112,20 @@ class PlazaHistorial
      */
     private $unidad;
 
+    /**
+     * @var string
+     */
+    private $cadena;
+    
+    /**
+     * Get cadena
+     *
+     * @return string
+     */
+    public function getCadena()
+    {
+        return $this->getCodPersonal()->getCadena();
+    } 
 
     /**
      * Get id

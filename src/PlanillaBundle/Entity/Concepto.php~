@@ -15,11 +15,6 @@ class Concepto
     /**
      * @var string
      */
-    private $tipoConcepto;
-
-    /**
-     * @var string
-     */
     private $concepto;
 
     /**
@@ -67,6 +62,11 @@ class Concepto
      */
     private $mcppConcepto;
 
+    /**
+     * @var \PlanillaBundle\Entity\TipoConcepto
+     */
+    private $tipoConcepto;
+
 
     /**
      * Get id
@@ -76,30 +76,6 @@ class Concepto
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set tipoConcepto
-     *
-     * @param string $tipoConcepto
-     *
-     * @return Concepto
-     */
-    public function setTipoConcepto($tipoConcepto)
-    {
-        $this->tipoConcepto = $tipoConcepto;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoConcepto
-     *
-     * @return string
-     */
-    public function getTipoConcepto()
-    {
-        return $this->tipoConcepto;
     }
 
     /**
@@ -341,4 +317,29 @@ class Concepto
     {
         return $this->mcppConcepto;
     }
+
+    /**
+     * Set tipoConcepto
+     *
+     * @param \PlanillaBundle\Entity\TipoConcepto $tipoConcepto
+     *
+     * @return Concepto
+     */
+    public function setTipoConcepto(\PlanillaBundle\Entity\TipoConcepto $tipoConcepto = null)
+    {
+        $this->tipoConcepto = $tipoConcepto;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoConcepto
+     *
+     * @return \PlanillaBundle\Entity\TipoConcepto
+     */
+    public function getTipoConcepto()
+    {
+        return $this->tipoConcepto;
+    }
 }
+

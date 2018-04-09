@@ -81,4 +81,3 @@ class Sexo
         return $this->estado;
     }
 }
-

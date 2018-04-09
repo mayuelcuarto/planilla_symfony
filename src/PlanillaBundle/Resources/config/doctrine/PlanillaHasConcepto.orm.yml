@@ -8,13 +8,15 @@ PlanillaBundle\Entity\PlanillaHasConcepto:
         fk_planilla_has_concepto_concepto1_idx:
             columns:
                 - concepto_id
+        fk_planilla_has_concepto_usuario1_idx:
+            columns:
+                - usuario_id
     id:
         id:
             type: integer
             nullable: false
             options:
                 unsigned: false
-                default: '0'
             id: true
             generator:
                 strategy: IDENTITY
@@ -28,13 +30,6 @@ PlanillaBundle\Entity\PlanillaHasConcepto:
             type: datetime
             nullable: true
             column: fecha_ing
-        usuarioDni:
-            type: string
-            nullable: true
-            length: 8
-            options:
-                fixed: true
-            column: usuario_dni
     manyToOne:
         planilla:
             targetEntity: Planilla
@@ -54,6 +49,16 @@ PlanillaBundle\Entity\PlanillaHasConcepto:
             inversedBy: null
             joinColumns:
                 concepto_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        usuario:
+            targetEntity: Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

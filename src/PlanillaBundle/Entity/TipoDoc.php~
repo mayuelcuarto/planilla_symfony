@@ -81,3 +81,4 @@ class TipoDoc
         return $this->estado;
     }
 }
+
