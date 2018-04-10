@@ -1,50 +1,54 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
-        <h3>Lista de Plazas</h3>
-        <hr/>
+    <div class="row">
+        <div class="col-lg-4">
+            <h3>Lista de Plazas</h3>
+            <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'plaza_index', 'method':'POST'})}}
             <a href="{{ path("plaza_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Agregar Plaza</a>
-        <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Historial</th>
-                <th>Personal</th>
-                <th>Tipo Planilla</th>
-                <th>Plaza</th>
-                <th>Categoría</th>
-                <th>Meta</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for plaza in plazas %}
-                <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
-                    <td><a href="{{path("plazaHistorial_index",{"id":plaza.id})}}" class="btn btn-info">MOSTRAR</a></td>
-                    <td>
-                    {% if plaza.plazaHistorial|length > 0 %}
-                        {% for plazaHistorial in plaza.plazaHistorial %}
-                            {% if plazaHistorial.estado == 1 %}
-                                {{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        PLAZA VACANTE
-                    {% endif %}
-                    </td>
-                    <td>{{ plaza.tipoPlanilla.nombre }}</td>
-                    <td>{{ plaza.numPlaza }}</td>
-                    <td>{{ plaza.categoria.nombre }}</td>
-                    <td>{{ plaza.secFunc.meta }} - {{ plaza.secFunc.nombre }}</td>
-                </tr>
+            <hr/>
+            {% for message in app.session.flashbag().get('status') %}
+                <div class="alert alert-success">{{message}}</div>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
+        <aside class="col-lg-8 blog-sidebar">
+            <table class="table-sm table-bordered table-responsive" height="430px">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Historial</th>
+                        <th>Personal</th>
+                        <th>Tipo Planilla</th>
+                        <th>Plaza</th>
+                        <th>Categoría</th>
+                        <th>Meta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for plaza in plazas %}
+                        <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
+                            <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
+                            <td><a href="{{path("plazaHistorial_index",{"id":plaza.id})}}" class="btn btn-info">MOSTRAR</a></td>
+                            <td>
+                                {% if plaza.plazaHistorial|length > 0 %}
+                                    {% for plazaHistorial in plaza.plazaHistorial %}
+                                        {% if plazaHistorial.estado == 1 %}
+                                            {{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    PLAZA VACANTE
+                                {% endif %}
+                            </td>
+                            <td>{{ plaza.tipoPlanilla.nombre }}</td>
+                            <td>{{ plaza.numPlaza }}</td>
+                            <td>{{ plaza.categoria.nombre }}</td>
+                            <td>{{ plaza.secFunc.meta }} - {{ plaza.secFunc.nombre }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </aside>
     </div>
 {% endblock %}

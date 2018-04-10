@@ -1,42 +1,44 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-<div class="row">
-    <div class="col-lg-4">
-        <h3>Procesamiento de Planillas</h3>
-        <hr/>
+    <div class="row">
+        <div class="col-lg-4">
+            <h3>Procesamiento de Planillas</h3>
+            <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'planilla_index', 'method':'POST'})}}
             <a href="{{ path("planilla_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Agregar Planilla</a>
-        <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
-    </div>
-    <aside class="col-lg-8 blog-sidebar">
-        <table class="table-sm table-bordered table-responsive" height="430px">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>Mes</th>
-                <th>Tipo</th>
-                <th>Plaza</th>
-                <th>Personal</th>  
-            </tr>
-            </thead>
-            <tbody>
-            {% for planilla in planillas %}
-                <tr {% if planilla.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("planilla_edit",{"id":planilla.id})}}" class="btn btn-warning ">{{ planilla.id }}</a></td>
-                    <td>{{ planilla.anoEje }}</td>
-                    <td>{{ planilla.mesEje.nombre }}</td>
-                    <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
-                    <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
-                    <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>   
-                </tr>
+            <hr/>
+            {% for message in app.session.flashbag().get('status') %}
+                <div class="alert alert-success">{{message}}</div>
             {% endfor %}
-            </tbody>
-        </table>
-    </aside>
-</div>
+        </div>
+        <aside class="col-lg-8 blog-sidebar">
+            <table class="table-sm table-bordered table-responsive" height="430px">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Año</th>
+                        <th>Mes</th>
+                        <th>Tipo</th>
+                        <th>Plaza</th>
+                        <th>Conceptos</th>
+                        <th>Personal</th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for planilla in planillas %}
+                        <tr>
+                            <td><a href="{{path("planilla_edit",{"id":planilla.id})}}" class="btn btn-warning ">{{ planilla.id }}</a></td>
+                            <td>{{ planilla.anoEje }}</td>
+                            <td>{{ planilla.mesEje.nombre }}</td>
+                            <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
+                            <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
+                            <td><a href="" class="btn btn-info">MOSTRAR</a></td>
+                            <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>   
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </aside>
+    </div>
 {% endblock %}

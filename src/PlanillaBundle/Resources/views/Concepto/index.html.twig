@@ -1,37 +1,40 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
-        <h3>Lista de Conceptos</h3>
-        <hr/>
+    <div class="row">
+        <div class="col-lg-4">
+            <h3>Lista de Conceptos</h3>
+            <hr/>
             {{form_start(form)}}
             {{form_end(form,{'action':'concepto_index', 'method':'POST'})}}
             <a href="{{ path("concepto_add") }}" class="btn btn-success">Agregar concepto</a>
-        <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Concepto</th>
-                <th>Abreviatura</th>
-                <th>MCPP</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for concepto in conceptos %}
-                <tr {% if concepto.estado == false %} class="table-secondary" {% endif%} >
-                    
-                        <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" {% if concepto.tipoConcepto.id == 1 %} class="btn btn-warning" {% else %} class="btn btn-danger" {% endif %}>{{ concepto.id }}</a></td>
-                        <td>{{ concepto.tipoConcepto.nombre }}</td>
-                        <td>{{ concepto.concepto }}</td>
-                        <td>{{ concepto.abreviatura }}</td>
-                        <td>{{ concepto.mcppConcepto }}</td>
-                </tr>
+            <hr/>
+            {% for message in app.session.flashbag().get('status') %}
+                <div class="alert alert-success">{{message}}</div>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
+        <aside class="col-lg-8 blog-sidebar">
+            <table class="table-sm table-bordered table-responsive" height="430px">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Concepto</th>
+                        <th>Abreviatura</th>
+                        <th>MCPP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for concepto in conceptos %}
+                        <tr {% if concepto.estado == false %} class="table-secondary" {% endif%} >
+                            <td><a href="{{path("concepto_edit",{"id":concepto.id})}}" class="btn btn-warning">{{ concepto.id }}</a></td>
+                            <td>{{ concepto.tipoConcepto.nombre }}</td>
+                            <td>{{ concepto.concepto }}</td>
+                            <td>{{ concepto.abreviatura }}</td>
+                            <td>{{ concepto.mcppConcepto }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </aside>
     </div>
 {% endblock %}
