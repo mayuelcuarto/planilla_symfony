@@ -10,22 +10,22 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>Actividad</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>Actividad</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for actividad in actividades %}
-                <tr {% if actividad.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("actividad_edit",{"id":actividad.id})}}" class="btn btn-warning ">{{ actividad.id }}</a></td>
-                    <td>{{ actividad.anoEje }}</td>
-                    <td>{{ actividad.actProy }}</td>
-                    <td>{{ actividad.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for actividad in actividades %}
+                    <tr {% if actividad.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("actividad_edit",{"id":actividad.id})}}" class="btn btn-warning ">{{ actividad.id }}</a></td>
+                        <td>{{ actividad.anoEje }}</td>
+                        <td>{{ actividad.actProy }}</td>
+                        <td>{{ actividad.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

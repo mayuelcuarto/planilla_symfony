@@ -10,20 +10,20 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Categoría</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Categoría</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for categoriaOcupacional in categoriaOcupacionals %}
-                <tr {% if categoriaOcupacional.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("categoriaOcupacional_edit",{"id":categoriaOcupacional.id})}}" class="btn btn-warning ">{{ categoriaOcupacional.id }}</a></td>
-                    <td>{{ categoriaOcupacional.categoriaOcupacional }}</td>
-                    <td>{{ categoriaOcupacional.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for categoriaOcupacional in categoriaOcupacionals %}
+                    <tr {% if categoriaOcupacional.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("categoriaOcupacional_edit",{"id":categoriaOcupacional.id})}}" class="btn btn-warning ">{{ categoriaOcupacional.id }}</a></td>
+                        <td>{{ categoriaOcupacional.categoriaOcupacional }}</td>
+                        <td>{{ categoriaOcupacional.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

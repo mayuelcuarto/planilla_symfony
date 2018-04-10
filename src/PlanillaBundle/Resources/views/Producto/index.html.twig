@@ -10,22 +10,22 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>Producto</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>Producto</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for producto in productos %}
-                <tr {% if producto.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("producto_edit",{"id":producto.id})}}" class="btn btn-warning ">{{ producto.id }}</a></td>
-                    <td>{{ producto.anoEje }}</td>
-                    <td>{{ producto.producto }}</td>
-                    <td>{{ producto.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for producto in productos %}
+                    <tr {% if producto.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("producto_edit",{"id":producto.id})}}" class="btn btn-warning ">{{ producto.id }}</a></td>
+                        <td>{{ producto.anoEje }}</td>
+                        <td>{{ producto.producto }}</td>
+                        <td>{{ producto.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

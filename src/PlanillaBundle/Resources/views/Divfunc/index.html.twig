@@ -10,22 +10,22 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>División</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>División</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for divfunc in divfuncs %}
-                <tr {% if divfunc.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("divfunc_edit",{"id":divfunc.id})}}" class="btn btn-warning ">{{ divfunc.id }}</a></td>
-                    <td>{{ divfunc.anoEje }}</td>
-                    <td>{{ divfunc.divfunc }}</td>
-                    <td>{{ divfunc.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for divfunc in divfuncs %}
+                    <tr {% if divfunc.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("divfunc_edit",{"id":divfunc.id})}}" class="btn btn-warning ">{{ divfunc.id }}</a></td>
+                        <td>{{ divfunc.anoEje }}</td>
+                        <td>{{ divfunc.divfunc }}</td>
+                        <td>{{ divfunc.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

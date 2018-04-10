@@ -10,18 +10,18 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for sexo in sexos %}
-                <tr {% if sexo.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("sexo_edit",{"id":sexo.id})}}" class="btn btn-warning ">{{ sexo.id }}</a></td>
-                    <td>{{ sexo.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for sexo in sexos %}
+                    <tr {% if sexo.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("sexo_edit",{"id":sexo.id})}}" class="btn btn-warning ">{{ sexo.id }}</a></td>
+                        <td>{{ sexo.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

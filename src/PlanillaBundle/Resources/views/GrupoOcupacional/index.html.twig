@@ -10,18 +10,18 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for grupoOcupacional in grupoOcupacionals %}
-                <tr {% if grupoOcupacional.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("grupoOcupacional_edit",{"id":grupoOcupacional.grupoOcupacional})}}" class="btn btn-warning ">{{ grupoOcupacional.grupoOcupacional }}</a></td>
-                    <td>{{ grupoOcupacional.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for grupoOcupacional in grupoOcupacionals %}
+                    <tr {% if grupoOcupacional.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("grupoOcupacional_edit",{"id":grupoOcupacional.grupoOcupacional})}}" class="btn btn-warning ">{{ grupoOcupacional.grupoOcupacional }}</a></td>
+                        <td>{{ grupoOcupacional.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

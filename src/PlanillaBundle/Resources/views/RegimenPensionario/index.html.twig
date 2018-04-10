@@ -10,18 +10,18 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for regimenPensionario in regimenPensionarios %}
-                <tr {% if regimenPensionario.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("regimenPensionario_edit",{"id":regimenPensionario.id})}}" class="btn btn-warning ">{{ regimenPensionario.id }}</a></td>
-                    <td>{{ regimenPensionario.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for regimenPensionario in regimenPensionarios %}
+                    <tr {% if regimenPensionario.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("regimenPensionario_edit",{"id":regimenPensionario.id})}}" class="btn btn-warning ">{{ regimenPensionario.id }}</a></td>
+                        <td>{{ regimenPensionario.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

@@ -10,22 +10,22 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>Programa</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>Programa</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for programa in programas %}
-                <tr {% if programa.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("programa_edit",{"id":programa.id})}}" class="btn btn-warning ">{{ programa.id }}</a></td>
-                    <td>{{ programa.anoEje }}</td>
-                    <td>{{ programa.programa }}</td>
-                    <td>{{ programa.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for programa in programas %}
+                    <tr {% if programa.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("programa_edit",{"id":programa.id})}}" class="btn btn-warning ">{{ programa.id }}</a></td>
+                        <td>{{ programa.anoEje }}</td>
+                        <td>{{ programa.programa }}</td>
+                        <td>{{ programa.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

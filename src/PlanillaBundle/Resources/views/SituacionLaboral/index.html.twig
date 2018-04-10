@@ -10,18 +10,18 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for situacionLaboral in situacionLaborals %}
-                <tr {% if situacionLaboral.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("situacionLaboral_edit",{"id":situacionLaboral.id})}}" class="btn btn-warning ">{{ situacionLaboral.id }}</a></td>
-                    <td>{{ situacionLaboral.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for situacionLaboral in situacionLaborals %}
+                    <tr {% if situacionLaboral.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("situacionLaboral_edit",{"id":situacionLaboral.id})}}" class="btn btn-warning ">{{ situacionLaboral.id }}</a></td>
+                        <td>{{ situacionLaboral.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

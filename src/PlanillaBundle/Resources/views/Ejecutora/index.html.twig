@@ -10,24 +10,24 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Año</th>
-                <th>Sector</th>
-                <th>Pliego</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>Sector</th>
+                    <th>Pliego</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for ejecutora in ejecutoras %}
-                <tr {% if ejecutora.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("ejecutora_edit",{"id":ejecutora.id})}}" class="btn btn-warning ">{{ ejecutora.id }}</a></td>
-                    <td>{{ ejecutora.pliego.sector.anoEje }}</td>
-                    <td>{{ ejecutora.pliego.pliego }}</td>
-                    <td>{{ ejecutora.secEjec }}</td>
-                    <td>{{ ejecutora.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for ejecutora in ejecutoras %}
+                    <tr {% if ejecutora.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("ejecutora_edit",{"id":ejecutora.id})}}" class="btn btn-warning ">{{ ejecutora.id }}</a></td>
+                        <td>{{ ejecutora.pliego.sector.anoEje }}</td>
+                        <td>{{ ejecutora.pliego.pliego }}</td>
+                        <td>{{ ejecutora.secEjec }}</td>
+                        <td>{{ ejecutora.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

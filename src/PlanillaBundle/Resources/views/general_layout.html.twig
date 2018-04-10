@@ -14,131 +14,131 @@
     </header>
     <body>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')%}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path("planilla_homepage") }}">Sistema de Planillas 3.0</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{ path("planilla_homepage") }}">Sistema de Planillas 3.0</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Mantenimiento
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{path("personal_index")}}"><strong>Personal</strong></a></li>
-                        <li><a class="dropdown-item" href="{{path("tipoDoc_index")}}">&nbsp;Tipo de Documento</a><li>
-                        <li><a class="dropdown-item" href="{{path("sexo_index")}}">&nbsp;Sexo</a><li>
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{path("plaza_index")}}"><strong>Plazas</strong></a></li>
-                        <li><a class="dropdown-item" href="{{path("afp_index")}}">&nbsp;AFP</a><li>
-                        <li><a class="dropdown-item" href="{{path("regimenPensionario_index")}}">&nbsp;Régimen Pensionario</a><li>
-                        <li><a class="dropdown-item" href="{{path("regimenLaboral_index")}}">&nbsp;Régimen Laboral</a><li>
-                        <li><a class="dropdown-item" href="{{path("situacionLaboral_index")}}">&nbsp;Situación Laboral</a><li>
-                        <li><a class="dropdown-item" href="{{path("condicionLaboral_index")}}">&nbsp;Condición Laboral</a><li>
-                        <li><a class="dropdown-item" href="{{path("motivoAnulacion_index")}}">&nbsp;Motivo Anulación</a><li>
-                        <li><a class="dropdown-item" href="{{path("tipoPlanilla_index")}}">&nbsp;Tipo de Planilla</a><li>
-                        <li><a class="dropdown-item" href="{{path("grupoOcupacional_index")}}">&nbsp;Grupo Ocupacional</a><li>
-                        <li><a class="dropdown-item" href="{{path("categoriaOcupacional_index")}}">&nbsp;Categoría Ocupacional</a><li>
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{path("concepto_index")}}"><strong>Conceptos</strong></a></li>
-                        <li><a class="dropdown-item" href="{{path("tipoConcepto_index")}}">&nbsp;Tipo de Concepto</a><li>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{path("ejecutora_index")}}"><strong>Ejecutora</strong></a></li>
-                        <li><a class="dropdown-item" href="{{path("pliego_index")}}">&nbsp;Pliego</a></li>
-                        <li><a class="dropdown-item" href="{{path("sector_index")}}">&nbsp;Sector</a></li>
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{path("meta_index")}}"><strong>Meta</strong></a></li>
-                        <li><a class="dropdown-item" href="{{path("programa_index")}}">&nbsp;Programa</a></li>
-                        <li><a class="dropdown-item" href="{{path("producto_index")}}">&nbsp;Producto</a></li>
-                        <li><a class="dropdown-item" href="{{path("actividad_index")}}">&nbsp;Actividad</a></li>
-                        <li><a class="dropdown-item" href="{{path("funcion_index")}}">&nbsp;Función</a></li>
-                        <li><a class="dropdown-item" href="{{path("divfunc_index")}}">&nbsp;División Funcional</a></li>
-                        <li><a class="dropdown-item" href="{{path("grpf_index")}}">&nbsp;Grupo Funcional</a></li>
-                    <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{path("usuario_index")}}">Usuarios</a></li>                    
-                    <li><a class="dropdown-item" href="{{path("fuente_index")}}">Fuente de Financiamiento</a></li>
-                    <li><a class="dropdown-item" href="{{path("especifica_index")}}">Específica de Gasto</a></li>
-                    {% endif %}
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Procesos
-                  </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{path("planilla_index")}}">Planilla</a></li>
-                        <li><a class="dropdown-item" href="#">Planilla Pensionista</a></li>
-                        <li><a class="dropdown-item" href="#">Planilla CAS</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Generar Planilla Mensual</a></li>
-                        <li><a class="dropdown-item" href="#">Generar Fechas de Planilla</a></li>
-                        <li><a class="dropdown-item" href="#">Generar MCPP TXT</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Limpiar Planilla</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Consultas
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="#">Consulta de Planillas</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Reportes
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Resumen de Planillas</a>
-                    <a class="dropdown-item" href="#">Resumen de Metas</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Reporte de Planillas</a>
-                    <a class="dropdown-item" href="#">Reporte de Totales</a>
-                    <a class="dropdown-item" href="#">Reporte de Patronal</a>
-                    <a class="dropdown-item" href="#">Reporte de AFP</a>
-                    <a class="dropdown-item" href="#">Reporte por Conceptos</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Resumen de Planillas por Específica</a>
-                    <a class="dropdown-item" href="#">Reporte de Totales por Epecífica</a>
-                  </div>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Ayuda
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{{ asset('pdf/manual.pdf') }}">Manual de Usuario</a>
-                  </div>
-                </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {% block sesion %}
-                                <strong>Usuario:</strong> {{app.user.nombres}} , {{ app.user.apellidos }}
-                            {% endblock %}
+                                Mantenimiento
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ path("logout") }}">Salir</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{path("personal_index")}}"><strong>Personal</strong></a></li>
+                                <li><a class="dropdown-item" href="{{path("tipoDoc_index")}}">&nbsp;Tipo de Documento</a><li>
+                                <li><a class="dropdown-item" href="{{path("sexo_index")}}">&nbsp;Sexo</a><li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{path("plaza_index")}}"><strong>Plazas</strong></a></li>
+                                <li><a class="dropdown-item" href="{{path("afp_index")}}">&nbsp;AFP</a><li>
+                                <li><a class="dropdown-item" href="{{path("regimenPensionario_index")}}">&nbsp;Régimen Pensionario</a><li>
+                                <li><a class="dropdown-item" href="{{path("regimenLaboral_index")}}">&nbsp;Régimen Laboral</a><li>
+                                <li><a class="dropdown-item" href="{{path("situacionLaboral_index")}}">&nbsp;Situación Laboral</a><li>
+                                <li><a class="dropdown-item" href="{{path("condicionLaboral_index")}}">&nbsp;Condición Laboral</a><li>
+                                <li><a class="dropdown-item" href="{{path("motivoAnulacion_index")}}">&nbsp;Motivo Anulación</a><li>
+                                <li><a class="dropdown-item" href="{{path("tipoPlanilla_index")}}">&nbsp;Tipo de Planilla</a><li>
+                                <li><a class="dropdown-item" href="{{path("grupoOcupacional_index")}}">&nbsp;Grupo Ocupacional</a><li>
+                                <li><a class="dropdown-item" href="{{path("categoriaOcupacional_index")}}">&nbsp;Categoría Ocupacional</a><li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{path("concepto_index")}}"><strong>Conceptos</strong></a></li>
+                                <li><a class="dropdown-item" href="{{path("tipoConcepto_index")}}">&nbsp;Tipo de Concepto</a><li>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{path("ejecutora_index")}}"><strong>Ejecutora</strong></a></li>
+                                    <li><a class="dropdown-item" href="{{path("pliego_index")}}">&nbsp;Pliego</a></li>
+                                    <li><a class="dropdown-item" href="{{path("sector_index")}}">&nbsp;Sector</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{path("meta_index")}}"><strong>Meta</strong></a></li>
+                                    <li><a class="dropdown-item" href="{{path("programa_index")}}">&nbsp;Programa</a></li>
+                                    <li><a class="dropdown-item" href="{{path("producto_index")}}">&nbsp;Producto</a></li>
+                                    <li><a class="dropdown-item" href="{{path("actividad_index")}}">&nbsp;Actividad</a></li>
+                                    <li><a class="dropdown-item" href="{{path("funcion_index")}}">&nbsp;Función</a></li>
+                                    <li><a class="dropdown-item" href="{{path("divfunc_index")}}">&nbsp;División Funcional</a></li>
+                                    <li><a class="dropdown-item" href="{{path("grpf_index")}}">&nbsp;Grupo Funcional</a></li>
+                                    <li class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="{{path("usuario_index")}}">Usuarios</a></li>                    
+                                    <li><a class="dropdown-item" href="{{path("fuente_index")}}">Fuente de Financiamiento</a></li>
+                                    <li><a class="dropdown-item" href="{{path("especifica_index")}}">Específica de Gasto</a></li>
+                                    {% endif %}
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Procesos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{path("planilla_index")}}">Planilla</a></li>
+                                <li><a class="dropdown-item" href="#">Planilla Pensionista</a></li>
+                                <li><a class="dropdown-item" href="#">Planilla CAS</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Generar Planilla Mensual</a></li>
+                                <li><a class="dropdown-item" href="#">Generar Fechas de Planilla</a></li>
+                                <li><a class="dropdown-item" href="#">Generar MCPP TXT</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Limpiar Planilla</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Consultas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Consulta de Planillas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Reportes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Resumen de Planillas</a>
+                                <a class="dropdown-item" href="#">Resumen de Metas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Reporte de Planillas</a>
+                                <a class="dropdown-item" href="#">Reporte de Totales</a>
+                                <a class="dropdown-item" href="#">Reporte de Patronal</a>
+                                <a class="dropdown-item" href="#">Reporte de AFP</a>
+                                <a class="dropdown-item" href="#">Reporte por Conceptos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Resumen de Planillas por Específica</a>
+                                <a class="dropdown-item" href="#">Reporte de Totales por Epecífica</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ayuda
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ asset('pdf/manual.pdf') }}">Manual de Usuario</a>
                             </div>
                         </li>
                     </ul>
-                  {% endif %}               
-              </form>      
-            </div>
-        </nav>
-        
-        <section id="content" class="container" > 
+                    <form class="form-inline my-2 my-lg-0">
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {% block sesion %}
+                                            <strong>Usuario:</strong> {{app.user.nombres}} , {{ app.user.apellidos }}
+                                        {% endblock %}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ path("logout") }}">Salir</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        {% endif %}               
+                    </form>      
+                </div>
+            </nav>
+
+            <section id="content" class="container" > 
             {% block content %}{% endblock %}
         </section>
-        {% else %}
-            <strong>Usted no está autorizado para entrar al sistema</strong>
-        {% endif %}
-    </body>
+    {% else %}
+        <strong>Usted no está autorizado para entrar al sistema</strong>
+    {% endif %}
+</body>
 </html>

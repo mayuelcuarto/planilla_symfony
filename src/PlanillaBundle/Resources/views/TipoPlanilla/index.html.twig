@@ -10,18 +10,18 @@
         {% endfor %}
         <table class="table-sm table-bordered table-responsive" height="430px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
             </thead>
             <tbody>
-            {% for tipoPlanilla in tipoPlanillas %}
-                <tr {% if tipoPlanilla.estado == false %} class="table-secondary" {% endif%} >
-                    <td><a href="{{path("tipoPlanilla_edit",{"id":tipoPlanilla.id})}}" class="btn btn-warning ">{{ tipoPlanilla.id }}</a></td>
-                    <td>{{ tipoPlanilla.nombre }}</td>
-                </tr>
-            {% endfor %}
+                {% for tipoPlanilla in tipoPlanillas %}
+                    <tr {% if tipoPlanilla.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("tipoPlanilla_edit",{"id":tipoPlanilla.id})}}" class="btn btn-warning ">{{ tipoPlanilla.id }}</a></td>
+                        <td>{{ tipoPlanilla.nombre }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
