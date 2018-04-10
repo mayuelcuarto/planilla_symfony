@@ -9,7 +9,6 @@ use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Form\PlanillaType;
 use PlanillaBundle\Form\PlanillaEditType;
 use PlanillaBundle\Form\PlanillaSearchType;
-use PDO;
 
 class PlanillaController extends Controller
 {
@@ -21,11 +20,11 @@ class PlanillaController extends Controller
     
     public function indexAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $anoEje = 2017;
-        //$anoEje = date("Y");
+        //$anoEje = 2017;
+        $anoEje = date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        $mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
-        //$mesEje = $mes_repo->findOneBy(array("mesEje" => date("m")));
+        //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
+        $mesEje = $mes_repo->findOneBy(array("mesEje" => date("m")));
         
         $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Planilla pl 
                                         INNER JOIN pl.plazaHistorial ph
@@ -109,11 +108,12 @@ class PlanillaController extends Controller
     public function addAction(Request $request, $tipoPlanilla){
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
-        $anoEje = 2017;
-        //$anoEje = date("Y");
+        //$anoEje = 2017;
+        $anoEje = \date("Y");
+        $fechaSimple = \date("Y-m-d");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        $mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
-        //$mesEje = $mes_repo->findOneBy(array("mesEje" => date("m")));
+        //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
 
         $tipoPlanilla_repo = $em->getRepository("PlanillaBundle:TipoPlanilla");
         $tipoPlanilla2 = $tipoPlanilla_repo->findOneBy(["id" => $tipoPlanilla]);
@@ -128,35 +128,44 @@ class PlanillaController extends Controller
                     ->setParameter('tipoPlanilla', $tipoPlanilla);
         $plazas = $dql->getResult();
         
-        $form = $this->createForm(PlanillaType::class, $planilla, array('plazas' => $plazas));
-        
-        
-        
-        
-        $form->get("anoEje")->setData($anoEje);
-        $form->get("mesEje")->setData($mesEje);
-        $form->get("tipoPlanilla")->setData($tipoPlanilla2);        
+        $form = $this->createForm(PlanillaType::class, $planilla, 
+            [   'plazas' => $plazas, 
+                'anoEje' => $anoEje, 
+                'mesEje' => $mesEje,
+                'tipoPlanilla' => $tipoPlanilla2]); 
         
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
-                $planilla = $planilla_repo->findOneBy(array(
-                    "numPlanilla" => $form->get("numPlanilla")->getData(),
-                    "tipoPlanilla" => $form->get("tipoPlanilla")->getData()
-                        ));
+                $planilla = $planilla_repo->findOneBy(
+                        [   "plazaHistorial" => $form->get("plazaHistorial")->getData(),
+                            "anoEje" => $anoEje,
+                            "mesEje" => $mesEje     
+                        ]);
                 if($planilla != null){
                     $status = "La planilla ya existe!!!";
                 }else{
                     $planilla = new Planilla();
-                    $planilla->setTipoPlanilla($form->get("tipoPlanilla")->getData());
-                    $planilla->setNumPlanilla($form->get("numPlanilla")->getData());
-                    $planilla->setSecFunc($form->get("secFunc")->getData());
+                    $planilla->setAnoEje($anoEje);
+                    $planilla->setMesEje($mesEje);
+                    $planilla->setFuente($form->get("fuente")->getData());
                     $planilla->setEspecifica($form->get("especifica")->getData());
-                    $planilla->setCategoria($form->get("categoria")->getData());
-                    $planilla->setEstado($form->get("estado")->getData());
-
-                    $em = $this->getDoctrine()->getManager();
+                    $planilla->setSecFunc($form->get("secFunc")->getData());
+                    $planilla->setPlazaHistorial($form->get("plazaHistorial")->getData());
+                    $planilla->setNota($form->get("nota")->getData());
+                    $planilla->setUsuario($this->getUser());
+                    $planilla->setFechaGeneracion(new \DateTime('now'));
+                    $planilla->setFechaPago(new \DateTime('now'));
+                    $planilla->setFechaIng(new \DateTime('now'));
+                    $planilla->setRemAseg(0.00);
+                    $planilla->setRemNoaseg(0.00);
+                    $planilla->setTotalEgreso(0.00);
+                    $planilla->setPatronal(0.00);
+                    $planilla->setTardanzas(0);
+                    $planilla->setParticulares(0);
+                    $planilla->setLsgh(0);
+                    $planilla->setFaltas(0);
                     $em->persist($planilla);
                     $flush = $em->flush();
                     if ($flush == null) {
@@ -173,10 +182,9 @@ class PlanillaController extends Controller
             return $this->redirectToRoute("planilla_index");
         }
         return $this->render('@Planilla/planilla/add.html.twig',
-                array(
-                    "form" => $form->createView()
-                )
-                );
+            [   "form" => $form->createView(), 
+                "tipoPlanilla" => $tipoPlanilla ]
+        );
     }
     
     public function editAction(Request $request, $id){
@@ -184,22 +192,35 @@ class PlanillaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
         $planilla = $planilla_repo->find($id);
-        
         $tipoPlanilla = $planilla->getPlazaHistorial()->getPlaza()->getTipoPlanilla();
-        $form = $this->createForm(PlanillaEditType::class, $planilla);
-        $form->get("tipoPlanilla")->setData($tipoPlanilla);
+        
+        $dql = $em->createQuery("SELECT ph FROM PlanillaBundle:PlazaHistorial ph 
+                                        INNER JOIN ph.plaza pl 
+                                        INNER JOIN ph.codPersonal pe
+                                        WHERE 
+                                        ph.estado = 1 AND 
+                                        pl.tipoPlanilla = :tipoPlanilla  
+                                        ORDER BY pe.apellidoPaterno ")
+                    ->setParameter('tipoPlanilla', $tipoPlanilla);
+        $plazas = $dql->getResult();
+        
+        $form = $this->createForm(PlanillaEditType::class, $planilla, 
+            [   'plazas' => $plazas , 'tipoPlanilla' => $tipoPlanilla  ]);
+        $anoEje = $planilla->getAnoEje();
+        $mesEje = $planilla->getMesEje();
         $form->handleRequest($request);
         
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                    $planilla->setTipoPlanilla($form->get("tipoPlanilla")->getData());
-                    $planilla->setNumPlanilla($form->get("numPlanilla")->getData());
-                    $planilla->setSecFunc($form->get("secFunc")->getData());
+                    $planilla->setAnoEje($anoEje);
+                    $planilla->setMesEje($mesEje);
+                    $planilla->setFuente($form->get("fuente")->getData());
                     $planilla->setEspecifica($form->get("especifica")->getData());
-                    $planilla->setCategoria($form->get("categoria")->getData());
-                    $planilla->setEstado($form->get("estado")->getData());
+                    $planilla->setSecFunc($form->get("secFunc")->getData());
+                    $planilla->setPlazaHistorial($form->get("plazaHistorial")->getData());
+                    $planilla->setNota($form->get("nota")->getData());
+                    $planilla->setUsuario($this->getUser());
 
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($planilla);
                     $flush = $em->flush();
                     if ($flush == null) {
@@ -216,9 +237,9 @@ class PlanillaController extends Controller
             return $this->redirectToRoute("planilla_index");
         }
         return $this->render('@Planilla/planilla/edit.html.twig',
-                array(
-                    "form" => $form->createView()
-                )
-                );
+            [   "form" => $form->createView(), 
+                 "tipoPlanilla" => $tipoPlanilla
+            ]
+        );
     }
 }
