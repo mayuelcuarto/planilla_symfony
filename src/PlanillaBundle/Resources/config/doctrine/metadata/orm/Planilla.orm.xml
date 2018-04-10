@@ -27,11 +27,6 @@
     <field name="remAseg" type="float" column="rem_aseg" precision="15" scale="2" nullable="true"/>
     <field name="remNoaseg" type="float" column="rem_noaseg" precision="15" scale="2" nullable="true"/>
     <field name="totalEgreso" type="float" column="total_egreso" precision="15" scale="2" nullable="true"/>
-    <field name="estado" type="string" column="estado" length="1" nullable="true">
-      <options>
-        <option name="fixed">1</option>
-      </options>
-    </field>
     <field name="patronal" type="float" column="patronal" precision="10" scale="0" nullable="true">
       <options>
         <option name="default">0</option>

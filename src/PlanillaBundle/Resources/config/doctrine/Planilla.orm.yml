@@ -69,12 +69,6 @@ PlanillaBundle\Entity\Planilla:
             precision: 15
             scale: 2
             column: total_egreso
-        estado:
-            type: string
-            nullable: true
-            length: 1
-            options:
-                fixed: true
         patronal:
             type: float
             nullable: true

@@ -48,11 +48,6 @@ class Planilla
     private $totalEgreso;
 
     /**
-     * @var string
-     */
-    private $estado;
-
-    /**
      * @var float
      */
     private $patronal = '0';
@@ -289,30 +284,6 @@ class Planilla
     public function getTotalEgreso()
     {
         return $this->totalEgreso;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     *
-     * @return Planilla
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstado()
-    {
-        return $this->estado;
     }
 
     /**
