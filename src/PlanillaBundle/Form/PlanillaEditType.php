@@ -11,97 +11,88 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
-class PlanillaEditType extends AbstractType
-{
+class PlanillaEditType extends AbstractType {
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('anoEje', NumberType::class, 
-                [   "label" => "Año", 
+                ->add('anoEje', NumberType::class, ["label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => 'form-control form-control-sm', "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
                 ])
-            ->add('mesEje', EntityType::class, 
-                [   "label" => "Mes", 
+                ->add('mesEje', EntityType::class, ["label" => "Mes",
                     "required" => "required",
-                    "class" => 'PlanillaBundle:Mes',
+                    "class" => "PlanillaBundle:Mes",
                     "choice_label" => "nombre",
-                    "attr" => ["class" => 'form-control form-control-sm', "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
                 ])
-            ->add('tipoPlanilla', EntityType::class, 
-                [   "label" => "Tipo de Planilla", 
-                    "mapped" => false, 
+                ->add('tipoPlanilla', EntityType::class, ["label" => "Tipo de Planilla",
+                    "mapped" => false,
                     "required" => "required",
-                    "class" => 'PlanillaBundle:TipoPlanilla',
+                    "class" => "PlanillaBundle:TipoPlanilla",
                     "choice_label" => "nombre",
                     "data" => $options['tipoPlanilla'],
-                    "attr" => ["class" => 'form-control form-control-sm', "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
                 ])
-            ->add('fuente', EntityType::class, 
-                [   "label" => "Fuente de Financiamiento", 
+                ->add('fuente', EntityType::class, ["label" => "Fuente de Financiamiento",
                     "required" => "required",
                     "class" => "PlanillaBundle:FuenteFinanc",
                     "query_builder" => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
-                                  ->where('p.estado = 1');
+                                ->where('p.estado = 1');
                     },
                     "choice_label" => "nombre",
-                    "attr" => ["class" => 'form-control form-control-sm']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
-            ->add('especifica', EntityType::class, 
-                [   "label" => "Específica de Gasto", 
+                ->add('especifica', EntityType::class, ["label" => "Específica de Gasto",
                     "required" => "required",
-                    "class" => 'PlanillaBundle:Especifica',
+                    "class" => "PlanillaBundle:Especifica",
                     "query_builder" => function (EntityRepository $er) {
                         return $er->createQueryBuilder('e')
-                                  ->where('e.estado = 1');
+                                ->where('e.estado = 1');
                     },
                     "choice_label" => "cadena",
-                    "attr" => ["class" => 'form-control form-control-sm']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
-            ->add('secFunc', EntityType::class, 
-                [   "label" => "Meta", 
+                ->add('secFunc', EntityType::class, ["label" => "Meta",
                     "required" => "required",
-                    "class" => 'PlanillaBundle:Meta',
+                    "class" => "PlanillaBundle:Meta",
                     "query_builder" => function (EntityRepository $er) {
                         return $er->createQueryBuilder('m')
-                                  ->where('m.estado = 1');
+                                ->where('m.estado = 1');
                     },
                     "choice_label" => "cadena",
-                    "attr" => ["class" => 'form-control form-control-sm']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
-            ->add('plazaHistorial', EntityType::class, 
-                [   "label" => "Plaza de Personal", 
+                ->add('plazaHistorial', EntityType::class, ["label" => "Plaza de Personal",
                     "required" => "required",
                     "class" => "PlanillaBundle:PlazaHistorial",
                     "choices" => $options['plazas'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => 'form-control form-control-sm']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
-            ->add('nota', TextareaType::class, 
-                [   "label" => "Nota",
+                ->add('nota', TextareaType::class, ["label" => "Nota",
                     "required" => false,
-                    "attr" => ["class" => 'form-control form-control-sm']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
-            ->add('Guardar', SubmitType::class, array("attr"=>array(
-                "class" => 'form-submit btn btn-success form-control-sm'
-            )))
+                ->add('Guardar', SubmitType::class, [
+                    "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
+                ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Planilla',
             'plazas' => null,
             'tipoPlanilla' => null,
-        ));
+        ]);
     }
+
 }
