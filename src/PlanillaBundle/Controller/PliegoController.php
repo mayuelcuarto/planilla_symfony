@@ -9,25 +9,23 @@ use PlanillaBundle\Entity\Pliego;
 use PlanillaBundle\Form\PliegoType;
 use PlanillaBundle\Form\PliegoEditType;
 
-class PliegoController extends Controller
-{
+class PliegoController extends Controller {
+
     private $session;
 
     public function __construct() {
         $this->session = new Session();
     }
-    
-    public function indexAction(Request $request){
+
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $pliego_repo = $em->getRepository("PlanillaBundle:Pliego");
-        $pliegos = $pliego_repo->findBy(array(), array('estado' => 'DESC','id' => 'ASC'));
+        $pliegos = $pliego_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
 
-        return $this->render("@Planilla/pliego/index.html.twig", array(
-            "pliegos" => $pliegos
-        ));
+        return $this->render("@Planilla/pliego/index.html.twig", ["pliegos" => $pliegos]);
     }
-    
-    public function addAction(Request $request){
+
+    public function addAction(Request $request) {
         $pliego = new Pliego();
         $form = $this->createForm(PliegoType::class, $pliego);
         $form->get("estado")->setData(true);
@@ -36,13 +34,13 @@ class PliegoController extends Controller
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $pliego_repo = $em->getRepository("PlanillaBundle:Pliego");
-                $pliego = $pliego_repo->findOneBy(array(
+                $pliego = $pliego_repo->findOneBy([
                     "sector" => $form->get("sector")->getData(),
                     "pliego" => $form->get("pliego")->getData()
-                        ));
-                if($pliego != null){
+                ]);
+                if ($pliego != null) {
                     $status = "El pliego ya existe!!!";
-                }else{
+                } else {
                     $pliego = new Pliego();
                     $pliego->setSector($form->get("sector")->getData());
                     $pliego->setPliego($form->get("pliego")->getData());
@@ -56,7 +54,7 @@ class PliegoController extends Controller
                         $status = "El pliego se ha creado correctamente";
                     } else {
                         $status = "No te has registrado correctamente";
-                    } 
+                    }
                 }
             } else {
                 $status = "No te has registrado correctamente";
@@ -65,38 +63,33 @@ class PliegoController extends Controller
             $this->session->getFlashBag()->add("status", $status);
             return $this->redirectToRoute("pliego_index");
         }
-        return $this->render('@Planilla/pliego/add.html.twig',
-                array(
-                    "form" => $form->createView()
-                )
-                );
+        return $this->render('@Planilla/pliego/add.html.twig', ["form" => $form->createView()]);
     }
-    
-    public function editAction(Request $request, $id){
+
+    public function editAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $pliego_repo = $em->getRepository("PlanillaBundle:Pliego");
         $pliego = $pliego_repo->find($id);
-        
+
         $form = $this->createForm(PliegoEditType::class, $pliego);
-        
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                    $pliego->setSector($form->get("sector")->getData());
-                    $pliego->setPliego($form->get("pliego")->getData());
-                    $pliego->setNombre($form->get("nombre")->getData());
-                    $pliego->setEstado($form->get("estado")->getData());
+                $pliego->setSector($form->get("sector")->getData());
+                $pliego->setPliego($form->get("pliego")->getData());
+                $pliego->setNombre($form->get("nombre")->getData());
+                $pliego->setEstado($form->get("estado")->getData());
 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($pliego);
-                    $flush = $em->flush();
-                    if ($flush == null) {
-                        $status = "El pliego se ha editado correctamente";
-                    } else {
-                        $status = "Error al editar pliego!!";
-                    }
- 
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($pliego);
+                $flush = $em->flush();
+                if ($flush == null) {
+                    $status = "El pliego se ha editado correctamente";
+                } else {
+                    $status = "Error al editar pliego!!";
+                }
             } else {
                 $status = "El pliego no se ha editado, porque el formulario no es válido!!";
             }
@@ -104,10 +97,7 @@ class PliegoController extends Controller
             $this->session->getFlashBag()->add("status", $status);
             return $this->redirectToRoute("pliego_index");
         }
-        return $this->render('@Planilla/pliego/edit.html.twig',
-                array(
-                    "form" => $form->createView()
-                )
-                );
+        return $this->render('@Planilla/pliego/edit.html.twig', ["form" => $form->createView()]);
     }
+
 }
