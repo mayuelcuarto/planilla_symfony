@@ -11,65 +11,78 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class AfpEditType extends AbstractType
-{
+class AfpEditType extends AbstractType {
+
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-        ->add('regimenPensionario', EntityType::class, array("label"=>"Régimen Pensionario", "required"=>"required",
-                "class" => 'PlanillaBundle:RegimenPensionario',
-                "choice_label"  => 'nombre',
-                "attr"=>array(
-                "class" => 'form-control form-control-sm'
-            )))
-        ->add('nombre', TextType::class, array("label"=>"Nombre", "required"=>"required", "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('snp', NumberType::class, array("label"=>"SNP", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('jubilacion', NumberType::class, array("label"=>"Jubilación", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('seguros', NumberType::class, array("label"=>"Seguros", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('ra', NumberType::class, array("label"=>"Comisión RA", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('pension', NumberType::class, array("label"=>"Pensión", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('raMixta', NumberType::class, array("label"=>"Comisión RA Mixta", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('estado', CheckboxType::class, array("label"=>"Estado", "required"=>false, "attr"=>array(
-                "class" => "form-control form-control-sm"
-            )))
-        ->add('Guardar', SubmitType::class, array("attr"=>array(
-                "class" => 'form-submit btn btn-success form-control-sm'
-            )))
+                ->add('regimenPensionario', EntityType::class, [
+                    "label" => "Régimen Pensionario",
+                    "required" => "required",
+                    "class" => 'PlanillaBundle:RegimenPensionario',
+                    "choice_label" => 'nombre',
+                    "attr" => ["class" => 'form-control form-control-sm']
+                ])
+                ->add('nombre', TextType::class, [
+                    "label" => "Nombre",
+                    "required" => "required",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('snp', NumberType::class, [
+                    "label" => "SNP",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('jubilacion', NumberType::class, [
+                    "label" => "Jubilación",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('seguros', NumberType::class, [
+                    "label" => "Seguros",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('ra', NumberType::class, [
+                    "label" => "Comisión RA",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('pension', NumberType::class, [
+                    "label" => "Pensión",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('raMixta', NumberType::class, [
+                    "label" => "Comisión RA Mixta",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('estado', CheckboxType::class, [
+                    "label" => "Estado",
+                    "required" => false,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('Guardar', SubmitType::class, [
+                    "attr" => ["class" => 'form-submit btn btn-success form-control-sm']
+                ])
         ;
-    }/**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'PlanillaBundle\Entity\Afp'
-        ));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
-    {
+    public function configureOptions(OptionsResolver $resolver) {
+        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Afp']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix() {
         return 'planillabundle_afp';
     }
-
 
 }
