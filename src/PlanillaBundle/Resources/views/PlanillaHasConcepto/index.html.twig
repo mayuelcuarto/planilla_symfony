@@ -1,0 +1,36 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-6">
+        <h3>Conceptos de Planilla</h3>
+        <hr/>
+        {{form_start(form)}}
+        {{form_end(form,{'action':'planilla_index', 'method':'POST'})}}
+        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":tipoConcepto}) }}" class="btn btn-success">Agregar Concepto</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table class="table-sm table-bordered table-responsive" height="430px">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo de Concepto</th>
+                    <th>Nombre</th>
+                    <th>Monto</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for planillaHasConcepto in planillaHasConceptos %}
+                    <tr>
+                        <td><a href="" class="btn btn-warning">{{ planillaHasConcepto.concepto.id }}</a></td>
+                        <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
+                        <td>{{ planillaHasConcepto.concepto.concepto }}</td>
+                        <td>{{ planillaHasConcepto.monto }}</td>
+                        <td><a href="" class="btn btn-danger">ELIMINAR</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

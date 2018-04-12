@@ -377,3 +377,15 @@ planilla_add:
 planilla_edit:
     path: /planilla/edit/{id}
     defaults: { _controller: PlanillaBundle:Planilla:edit }
+    
+planillaHasConcepto_index:
+    path: /planillaHasConcepto/index/{planillaId}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:index }
+    
+planillaHasConcepto_add:
+    path: /planillaHasConcepto/add/{planillaId}{tipoConcepto}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:add }
+    
+planillaHasConcepto_edit:
+    path: /planillaHasConcepto/edit/{id}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:edit }

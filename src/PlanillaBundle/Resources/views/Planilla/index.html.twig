@@ -33,7 +33,7 @@
                             <td>{{ planilla.mesEje.nombre }}</td>
                             <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
                             <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
-                            <td><a href="" class="btn btn-info">MOSTRAR</a></td>
+                            <td><a href="{{path("planillaHasConcepto_index",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
                             <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>   
                         </tr>
                     {% endfor %}
