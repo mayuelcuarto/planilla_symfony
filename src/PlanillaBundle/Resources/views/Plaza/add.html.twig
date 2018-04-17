@@ -1,12 +1,44 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
+
     <div class="col-lg-4">
         <h4>Agregar Plaza</h4>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        {{form_start(form)}}
-        {{form_end(form,{'action':'', 'method':'POST'})}}
+        {{ form_start(form) }}
+        {{ form_row(form.tipoPlanilla) }}    {# <select id="user_country" ... #}
+        {{ form_row(form.numPlaza) }} {# <select id="user_state" ... #}
+        {{ form_end(form) }}
     </div>
+    <script type="text/javascript">
+        var $tipoPlanilla = $('#tipoPlanilla');
+        var $form = $tipoPlanilla.closest('form');
+
+        // cada vez que el usuario cambie el pais en el select
+        $tipoPlanilla.on('change', function () {
+
+            // creamos la data, solo con el campo del pais,
+            // ya que es el dato relevante en este caso.
+            var data = $tipoPlanilla.serialize();
+
+            // Hacemos un envío del formulario, lo que ejecutará el evento preSubmit
+            // del listener AddStateFieldSubscriber,
+            // y actualizará el campo state, con los estados del pais seleccionado.
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: $form.attr('method'),
+                data: data,
+                success: function (html) {
+
+                    // la variable html representa toda la página junto con el select de estados.
+                    // el cual tomamos y colocamos para reemplazar el select actual.
+
+                    $('#numPlaza').replaceWith($(html).find('#numPlaza'));
+                }
+            });
+        });
+    </script>        
 {% endblock %}

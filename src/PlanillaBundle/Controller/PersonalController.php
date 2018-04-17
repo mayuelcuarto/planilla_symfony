@@ -20,50 +20,10 @@ class PersonalController extends Controller {
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $personal_repo = $em->getRepository("PlanillaBundle:Personal");
-        $personales = $personal_repo->findBy([], ['estado' => 'DESC', 'apellidoPaterno' => 'ASC']);
-
-        $personal = new Personal();
-        $form = $this->createForm(PersonalSearchType::class, $personal);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $apellidoPaterno = $form->get("apellidoPaterno")->getData();
-                $apellidoMaterno = $form->get("apellidoMaterno")->getData();
-                $nombre = $form->get("nombre")->getData();
-
-                $em = $this->getDoctrine()->getManager();
-                $personal_repo = $em->getRepository("PlanillaBundle:Personal")->createQueryBuilder('p')
-                        ->where('p.apellidoPaterno LIKE :apellidoPaterno')
-                        ->andWhere('p.apellidoMaterno LIKE :apellidoMaterno')
-                        ->andWhere('p.nombre LIKE :nombre')
-                        ->setParameter('apellidoPaterno', '%' . $apellidoPaterno . '%')
-                        ->setParameter('apellidoMaterno', '%' . $apellidoMaterno . '%')
-                        ->setParameter('nombre', '%' . $nombre . '%')
-                        ->addOrderBy('p.estado', 'DESC')
-                        ->addOrderBy('p.apellidoPaterno', 'ASC')
-                        ->getQuery()
-                        ->getResult();
-                $personales = $personal_repo;
-                if (count($personales) == 0) {
-                    $status = "La búsqueda no encontró coincidencias";
-                } else {
-                    $status = "Resultados de la búsqueda, listando " . count($personales) . " persona(s)";
-                }
-            } else {
-                $status = "No te has registrado correctamente";
-            }
-
-            $this->session->getFlashBag()->add("status", $status);
-            return $this->render("@Planilla/personal/index.html.twig", [
-                        "personales" => $personales,
-                        "form" => $form->createView()
-            ]);
-        }
+        $personales = $personal_repo->findAll();
 
         return $this->render("@Planilla/personal/index.html.twig", [
-                    "personales" => $personales,
-                    "form" => $form->createView()
+                    "personales" => $personales
         ]);
     }
 

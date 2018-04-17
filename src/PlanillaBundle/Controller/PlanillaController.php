@@ -46,27 +46,7 @@ class PlanillaController extends Controller {
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $tipoPlanilla = $form->get("tipoPlanilla")->getData();
-                $var_personal = $form->get("personal")->getData();
 
-                if ($var_personal != null) {
-                    $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Planilla pl 
-                                        INNER JOIN pl.plazaHistorial ph
-                                        INNER JOIN ph.codPersonal pe 
-                                        INNER JOIN ph.plaza pla
-                                        WHERE 
-                                        ((pe.apellidoPaterno LIKE :var_personal) 
-                                        OR (pe.apellidoMaterno LIKE :var_personal) 
-                                        OR (pe.nombre LIKE :var_personal)) AND
-                                        pla.tipoPlanilla = :tipoPlanilla AND 
-                                        pl.anoEje = :anoEje AND
-                                        pl.mesEje = :mesEje
-                                        ORDER BY pl.id")
-                            ->setParameter('tipoPlanilla', $tipoPlanilla)
-                            ->setParameter('anoEje', $anoEje)
-                            ->setParameter('mesEje', $mesEje)
-                            ->setParameter('var_personal', "%" . $var_personal . "%");
-                    $planillas = $dql->getResult();
-                } else {
                     $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Planilla pl 
                                         INNER JOIN pl.plazaHistorial ph
                                         INNER JOIN ph.plaza pla
@@ -79,7 +59,7 @@ class PlanillaController extends Controller {
                             ->setParameter('anoEje', $anoEje)
                             ->setParameter('mesEje', $mesEje);
                     $planillas = $dql->getResult();
-                }
+                
                 if (count($planillas) == 0) {
                     $status = "La búsqueda no encontró coincidencias";
                 } else {
@@ -109,7 +89,6 @@ class PlanillaController extends Controller {
         $em = $this->getDoctrine()->getManager();
         //$anoEje = 2017;
         $anoEje = \date("Y");
-        $fechaSimple = \date("Y-m-d");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
         //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);

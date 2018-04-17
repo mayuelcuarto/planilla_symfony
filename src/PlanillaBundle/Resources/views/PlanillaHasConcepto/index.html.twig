@@ -1,20 +1,19 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-6">
-        <h3>Conceptos de Planilla</h3>
+        <h3>Conceptos de Planilla {{ personal.cadena }}</h3>
         <hr/>
-        {{form_start(form)}}
-        {{form_end(form,{'action':'planilla_index', 'method':'POST'})}}
-        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":tipoConcepto}) }}" class="btn btn-success">Agregar Concepto</a>
+        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":1}) }}" class="btn btn-success">Agregar Ingreso</a>
+        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":2}) }}" class="btn btn-success">Agregar Egreso</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
+        <table id="myTable" class="table-sm table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tipo de Concepto</th>
+                    <th>Tipo</th>
                     <th>Nombre</th>
                     <th>Monto</th>
                     <th>Eliminar</th>
@@ -33,4 +32,14 @@
             </tbody>
         </table>
     </div>
+    <script>
+        //Función para implementar datatables
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 4,
+                "bLengthChange": false,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

@@ -31,24 +31,7 @@ class PlazaController extends Controller {
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $tipoPlanilla = $form->get("tipoPlanilla")->getData();
-                $var_personal = $form->get("personal")->getData();
-
-                if ($var_personal != null) {
-                    $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Plaza pl 
-                                        INNER JOIN pl.plazaHistorial ph
-                                        INNER JOIN ph.codPersonal pe 
-                                        WHERE  
-                                        ((pe.apellidoPaterno LIKE :var_personal) 
-                                        OR (pe.apellidoMaterno LIKE :var_personal) 
-                                        OR (pe.nombre LIKE :var_personal))
-                                        AND pl.tipoPlanilla = :tipoPlanilla 
-                                        ORDER BY ph.estado DESC")
-                            ->setParameter('tipoPlanilla', $tipoPlanilla)
-                            ->setParameter('var_personal', "%" . $var_personal . "%");
-                    $plazas = $dql->getResult();
-                } else {
-                    $plazas = $plaza_repo->findBy(["tipoPlanilla" => $tipoPlanilla], ['estado' => 'DESC', 'tipoPlanilla' => 'ASC']);
-                }
+                $plazas = $plaza_repo->findBy(["tipoPlanilla" => $tipoPlanilla]);
                 if (count($plazas) == 0) {
                     $status = "La búsqueda no encontró coincidencias";
                 } else {

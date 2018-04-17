@@ -25,12 +25,15 @@ class PlanillaHasConceptoController extends Controller {
         $dql = $em->createQuery("SELECT phc FROM PlanillaBundle:PlanillaHasConcepto phc 
                                         INNER JOIN phc.concepto c
                                         WHERE  
-                                        c.tipoConcepto = :tipoConcepto AND 
                                         phc.planilla = :planillaId
                                         ORDER BY phc.id")
-                            ->setParameter('tipoConcepto', 1)
                             ->setParameter('planillaId', $planillaId);
                     $planillaHasConceptos = $dql->getResult();
+                    
+        $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+        //$planilla = new \PlanillaBundle\Entity\Planilla;
+        $planilla = $planilla_repo->find($planillaId);
+        $personal = $planilla->getPlazaHistorial()->getCodPersonal();
         
         $planillaHasConcepto = new PlanillaHasConcepto();
         $form = $this->createForm(PlanillaHasConceptoSearchType::class, $planillaHasConcepto);
@@ -43,12 +46,12 @@ class PlanillaHasConceptoController extends Controller {
                     $dql = $em->createQuery("SELECT phc FROM PlanillaBundle:PlanillaHasConcepto phc 
                                         INNER JOIN phc.concepto c
                                         WHERE  
-                                        c.tipoConcepto = :tipoConcepto AND 
                                         phc.planilla = :planillaId
                                         ORDER BY phc.id")
-                            ->setParameter('tipoConcepto', $tipoConcepto)
                             ->setParameter('planillaId', $planillaId);
                     $planillaHasConceptos = $dql->getResult();
+                    
+                    
                 
                 if (count($planillaHasConceptos) == 0) {
                     $status = "La búsqueda no encontró coincidencias";
@@ -64,7 +67,7 @@ class PlanillaHasConceptoController extends Controller {
                         "planillaHasConceptos" => $planillaHasConceptos,
                         "planillaId" => $planillaId,
                         "form" => $form->createView(),
-                        "tipoConcepto" => $tipoConcepto->getId()
+                        "personal" => $personal
             ]);
         }
         
@@ -72,7 +75,7 @@ class PlanillaHasConceptoController extends Controller {
                     "planillaHasConceptos" => $planillaHasConceptos,
                     "planillaId" => $planillaId,
                     "form" => $form->createView(),
-                    "tipoConcepto" => 1
+                    "personal" => $personal
         ]);
     }
 

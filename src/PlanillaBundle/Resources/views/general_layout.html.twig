@@ -2,15 +2,18 @@
 <html>
     <header>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
         <title>
             {% block title %} Sistema de Planilla 3.0 {% endblock %}
         </title>
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/submenu.css') }}">
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <!-- Importando Bootstrap y Jquery -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <!-- Importando Datatables -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('DataTables/datatables.min.css') }}"/>
+        <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"></script>
     </header>
     <body>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')%}

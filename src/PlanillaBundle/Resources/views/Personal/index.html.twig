@@ -1,24 +1,32 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="row">
-        <div class="col-lg-4">
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": true,
+                "order": [[ 3, 'desc' ]],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [3] }]
+            });
+        });
+    </script>
+        <div>
             <h3>Listado de Personal</h3>
             <hr/>
-            {{form_start(form)}}
-            {{form_end(form,{'action':'personal_index', 'method':'POST'})}}
             <a href="{{ path("personal_add") }}" class="btn btn-success">Agregar personal</a>
             <hr/>
             {% for message in app.session.flashbag().get('status') %}
                 <div class="alert alert-success">{{message}}</div>
             {% endfor %}
         </div>
-        <aside class="col-lg-8 blog-sidebar">
-            <table class="table-sm table-bordered table-responsive" height="430px">
+            <table id="myTable" class="table-sm table-bordered table-responsive">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Apellidos</th>
                         <th>Nombres</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,10 +35,9 @@
                             <td><a href="{{path("personal_edit",{"codPersonal":personal.codPersonal})}}" class="btn btn-warning ">{{ personal.codPersonal }}</a></td>
                             <td>{{ personal.apellidoPaterno }} {{ personal.apellidoMaterno }}</td>
                             <td>{{ personal.nombre }}</td>
+                            <td>{{ personal.estado }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </aside>
-    </div>
 {% endblock %}

@@ -4,7 +4,8 @@
         <div class="col-lg-4">
             <h3>Procesamiento de Planillas</h3>
             <hr/>
-            {{form_start(form)}}
+            {{form_start(form) }}
+            {{form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' }) }}
             {{form_end(form,{'action':'planilla_index', 'method':'POST'})}}
             <a href="{{ path("planilla_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Agregar Planilla</a>
             <hr/>
@@ -12,8 +13,8 @@
                 <div class="alert alert-success">{{message}}</div>
             {% endfor %}
         </div>
-        <aside class="col-lg-8 blog-sidebar">
-            <table class="table-sm table-bordered table-responsive" height="430px">
+        <div class="col-lg-8 blog-sidebar">
+            <table id="myTable" class="table-sm table-bordered table-responsive" height="430px">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -39,6 +40,21 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </aside>
+        </div>
     </div>
+    <script>
+        //Función para enviar formulario al cambiar de tipo de planilla
+        $( "#tipoPlanilla" ).change(function() {
+            jQuery("#tipoPlanilla").closest("form").submit();
+        });
+        
+        //Función para implementar datatables
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 6,
+                "bLengthChange": false,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

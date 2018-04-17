@@ -24,15 +24,6 @@ class PlazaSearchType extends AbstractType {
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('personal', TextType::class, [
-                    "label" => "Personal",
-                    "mapped" => false,
-                    "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
-                ->add('Buscar', SubmitType::class, [
-                    "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
-                ])
         ;
     }
 

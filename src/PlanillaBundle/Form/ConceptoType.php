@@ -37,6 +37,7 @@ class ConceptoType extends AbstractType {
                 ])
                 ->add('mcppConcepto', TextType::class, [
                     "label" => "Código MCPP",
+                    "required" => false,
                     "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4]
                 ])
                 ->add('estado', CheckboxType::class, [
