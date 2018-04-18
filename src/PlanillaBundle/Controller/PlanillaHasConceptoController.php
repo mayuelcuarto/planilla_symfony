@@ -10,7 +10,6 @@ use PlanillaBundle\Form\PlanillaHasConceptoType;
 use PlanillaBundle\Form\PlanillaHasConceptoEditType;
 use PlanillaBundle\Form\PlanillaHasConceptoSearchType;
 use PlanillaBundle\Form\PlanillaHasConceptoBajaType;
-use PDO;
 
 class PlanillaHasConceptoController extends Controller {
 
@@ -27,14 +26,14 @@ class PlanillaHasConceptoController extends Controller {
                                         WHERE  
                                         phc.planilla = :planillaId
                                         ORDER BY phc.id")
-                            ->setParameter('planillaId', $planillaId);
-                    $planillaHasConceptos = $dql->getResult();
-                    
+                ->setParameter('planillaId', $planillaId);
+        $planillaHasConceptos = $dql->getResult();
+
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
         //$planilla = new \PlanillaBundle\Entity\Planilla;
         $planilla = $planilla_repo->find($planillaId);
         $personal = $planilla->getPlazaHistorial()->getCodPersonal();
-        
+
         $planillaHasConcepto = new PlanillaHasConcepto();
         $form = $this->createForm(PlanillaHasConceptoSearchType::class, $planillaHasConcepto);
         $form->handleRequest($request);
@@ -43,16 +42,14 @@ class PlanillaHasConceptoController extends Controller {
             if ($form->isValid()) {
                 $tipoConcepto = $form->get("tipoConcepto")->getData();
 
-                    $dql = $em->createQuery("SELECT phc FROM PlanillaBundle:PlanillaHasConcepto phc 
+                $dql = $em->createQuery("SELECT phc FROM PlanillaBundle:PlanillaHasConcepto phc 
                                         INNER JOIN phc.concepto c
                                         WHERE  
                                         phc.planilla = :planillaId
                                         ORDER BY phc.id")
-                            ->setParameter('planillaId', $planillaId);
-                    $planillaHasConceptos = $dql->getResult();
-                    
-                    
-                
+                        ->setParameter('planillaId', $planillaId);
+                $planillaHasConceptos = $dql->getResult();
+
                 if (count($planillaHasConceptos) == 0) {
                     $status = "La búsqueda no encontró coincidencias";
                 } else {
@@ -70,7 +67,7 @@ class PlanillaHasConceptoController extends Controller {
                         "personal" => $personal
             ]);
         }
-        
+
         return $this->render("@Planilla/planillaHasConcepto/index.html.twig", [
                     "planillaHasConceptos" => $planillaHasConceptos,
                     "planillaId" => $planillaId,
@@ -83,20 +80,20 @@ class PlanillaHasConceptoController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $tipoConcepto_repo = $em->getRepository("PlanillaBundle:TipoConcepto");
         $tipoConceptoEn = $tipoConcepto_repo->findOneBy(["id" => $tipoConcepto]);
-        
+
         $dql = $em->createQuery("SELECT c FROM PlanillaBundle:Concepto c 
                                         WHERE 
                                         c.tipoConcepto = :tipoConcepto  
                                         ORDER BY c.id ")
                 ->setParameter('tipoConcepto', $tipoConcepto);
         $conceptos = $dql->getResult();
-        
+
         $planillaHasConcepto = new PlanillaHasConcepto();
         $form = $this->createForm(PlanillaHasConceptoType::class, $planillaHasConcepto, [
-            "conceptos" => $conceptos, 
+            "conceptos" => $conceptos,
             "tipoConcepto" => $tipoConceptoEn]);
-        
-        
+
+
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
