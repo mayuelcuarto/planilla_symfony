@@ -62,9 +62,14 @@ plaza_edit:
     path: /plaza/edit/{id}
     defaults: { _controller: PlanillaBundle:Plaza:edit }
     
-plaza_numPlaza:
+plaza_ajax_numPlaza:
     path:     /plaza/numPlaza
     defaults: { _controller: "PlanillaBundle:Plaza:modifyNumPlaza" }
+    methods:  GET
+    
+plaza_ajax_categoria:
+    path:     /plaza/categoria
+    defaults: { _controller: "PlanillaBundle:Plaza:modifyCategoria" }
     methods:  GET
     
 especifica_index:
