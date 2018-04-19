@@ -28,7 +28,7 @@ class PlazaEditType extends AbstractType {
                 ->add('numPlaza', TextType::class, [
                     "label" => "Plaza",
                     "required" => "required",
-                    "attr" => ["class" => 'form-control form-control-sm', "maxlength" => 6]
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 6, "disabled" => true]
                 ])
                 ->add('secFunc', EntityType::class, [
                     "label" => "Meta",
