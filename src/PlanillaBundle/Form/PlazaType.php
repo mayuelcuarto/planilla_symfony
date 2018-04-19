@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use PlanillaBundle\Entity\TipoPlanilla;
+use PlanillaBundle\Entity\CategoriaOcupacional;
 use PDO;
 
 class PlazaType extends AbstractType {
@@ -37,7 +38,6 @@ class PlazaType extends AbstractType {
                     "class" => "PlanillaBundle:TipoPlanilla",
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm", "disabled" => false],
-                    "data" => $options["tipoPlanilla"]
                 ])
                 ->add('numPlaza', TextType::class, [
                     "label" => "Plaza",
@@ -66,13 +66,27 @@ class PlazaType extends AbstractType {
                     "choice_label" => "cadena",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
+                ->add('grupo', EntityType::class, [
+                    "label" => "Grupo Ocupacional",
+                    "required" => "required",
+                    "mapped" => false,
+                    "class" => "PlanillaBundle:GrupoOcupacional",
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('g')
+                                ->where('g.estado = 1');
+                    },
+                    "choice_label" => "nombre",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
                 ->add('categoria', EntityType::class, [
-                    "label" => "Categoría",
+                    "label" => "Categoría Ocupacional",
                     "required" => "required",
                     "class" => "PlanillaBundle:CategoriaOcupacional",
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
-                                ->where('c.estado = 1');
+                                ->where('c.estado = 1')
+                                ->andWhere('c.grupoOcupacional = :grupo')
+                                ->setParameter('grupo', '01');
                     },
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm"]
@@ -88,28 +102,50 @@ class PlazaType extends AbstractType {
                 ])
         ;
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
     
-    /*function onPreSubmit(FormEvent $event) {
+    function onPreSubmit(FormEvent $event) {
+        $em = $this->entityManager;
         $form = $event->getForm();
         $data = $event->getData();
-        $tipoPlanilla= $this->entityManager->getRepository('PlanillaBundle:TipoPlanilla')->find($data['tipoPlanilla']);
-        $this->addElements($form, $tipoPlanilla);
-    }*/
+        $categoria= $em->getRepository('PlanillaBundle:CategoriaOcupacional')->find($data['categoria']);
+        $this->seteandoCategoria($form, $categoria);
+    }
 
     function onPreSetData(FormEvent $event) {
         $form = $event->getForm();
-        $tipoPlanilla= $this->entityManager->getRepository('PlanillaBundle:TipoPlanilla')->find(['id' => 1]);
-        $this->addElements($form, $tipoPlanilla);
+        $em = $this->entityManager;
+        $tipoPlanilla= $em->getRepository('PlanillaBundle:TipoPlanilla')->find(["id" => 1]);
+        $this->setNumPlazaInicio($form, $tipoPlanilla);
     }
     
-    protected function addElements(FormInterface $form, TipoPlanilla $tipoPlanilla= null) {
+    protected function seteandoCategoria(FormInterface $form, CategoriaOcupacional $categoria) {
+                $em = $this->entityManager;
+                $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->find(["grupoOcupacional" => $categoria->getGrupoOcupacional()]);
+                $query = $em->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
+                                   WHERE c.grupoOcupacional = :grupo ")
+                ->setParameter('grupo', $grupo);
+                $categorias = $query->getResult();
+                
+                $form->add('categoria', EntityType::class, [
+                    "label" => "Categoría Ocupacional",
+                    "required" => "required",
+                    "class" => "PlanillaBundle:CategoriaOcupacional",
+                    "choice_label" => "nombre",
+                    "choices" => $categorias,
+                    "data" => $categoria,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ]);
+    }
+    
+    protected function setNumPlazaInicio(FormInterface $form, TipoPlanilla $tipoPlanilla= null) {
                 $em = $this->entityManager;
                 $sth1 = $em->getConnection()->prepare("SELECT SugerirPlaza(:tipoPlanilla)");
                 $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
                 $sth1->execute();
                 while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {$numPlaza = $fila[0];}
-                //var_dump($numPlaza);
+                
                 $form->add('numPlaza', TextType::class, [
                     "label" => "Plaza",
                     "required" => "required",
@@ -124,7 +160,6 @@ class PlazaType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Plaza',
-            'tipoPlanilla' => null,
             'estado' => true]);
     }
 
