@@ -7,13 +7,17 @@
         {{ form_start(form) }} 
         {{ form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' }) }} 
         {{ form_row(form.numPlaza, {'id': 'numPlaza' }) }} 
+        {{ form_row(form.secFunc, {'id': 'secFunc' }) }} 
+        {{ form_row(form.especifica, {'id': 'especifica' }) }} 
+        {{ form_row(form.grupo, {'id': 'grupo' }) }} 
+        {{ form_row(form.categoria, {'id': 'categoria' }) }} 
         {{ form_end(form) }}
     </div>
     <script type="text/javascript">
         $('#tipoPlanilla').change(function () {
             var tipoPlanilla = $(this);
             $.ajax({
-                url: "{{ path('plaza_numPlaza') }}",
+                url: "{{ path('plaza_ajax_numPlaza') }}",
                 type: "GET",
                 dataType: "JSON",
                 data: {
@@ -25,6 +29,35 @@
                 },
                 error: function (err) {
                     alert("An error ocurred while loading data ...");
+                }
+            });
+        });
+        
+        $('#grupo').change(function () {
+            var grupo = $(this);
+            $.ajax({
+                url: "{{ path('plaza_ajax_categoria') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    grupo: grupo.val()
+                },
+                success: function (categorias) {
+                    var categoria = $("#categoria");
+                    categoria.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for(var i=0; i < categorias.length; i++){ 
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(categorias[i]); //Escribes en él el nombre de la provincia
+                        $(option).val(categorias[i].id);
+                        $(option).text(categorias[i].nombre);
+                        $(option).addClass('PlanillaBundle:CategoriaOcupacional');
+                        $(option).appendTo("#categoria"); //Lo metes en el select con id provincias
+                    }
+                    
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ... ");
                 }
             });
         });
