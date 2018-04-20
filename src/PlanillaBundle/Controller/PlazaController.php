@@ -54,11 +54,11 @@ class PlazaController extends Controller {
                     if ($flush == null) {
                         $status = "La plaza se ha creado correctamente";
                     } else {
-                        $status = "Error de persistencia de datos";
+                        $status = "Error al agregar plaza";
                     }
                 }
             } else {
-                $status = "El formulario no es válido";
+                $status = "La plaza no se agregó, porque el formulario no es válido";
             }
 
             $this->session->getFlashBag()->add("status", $status);
