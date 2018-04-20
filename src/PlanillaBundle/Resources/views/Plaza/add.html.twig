@@ -4,41 +4,62 @@
     <div class="col-lg-4">
         <h4>Agregar Plaza</h4>
         <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
-        {{ form_start(form) }}
-        {{ form_row(form.tipoPlanilla) }}    {# <select id="user_country" ... #}
-        {{ form_row(form.numPlaza) }} {# <select id="user_state" ... #}
+        {{ form_start(form) }} 
+        {{ form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' }) }} 
+        {{ form_row(form.numPlaza, {'id': 'numPlaza' }) }} 
+        {{ form_row(form.secFunc, {'id': 'secFunc' }) }} 
+        {{ form_row(form.especifica, {'id': 'especifica' }) }} 
+        {{ form_row(form.grupo, {'id': 'grupo' }) }} 
+        {{ form_row(form.categoria, {'id': 'categoria' }) }} 
         {{ form_end(form) }}
     </div>
     <script type="text/javascript">
-        var $tipoPlanilla = $('#tipoPlanilla');
-        var $form = $tipoPlanilla.closest('form');
-
-        // cada vez que el usuario cambie el pais en el select
-        $tipoPlanilla.on('change', function () {
-
-            // creamos la data, solo con el campo del pais,
-            // ya que es el dato relevante en este caso.
-            var data = $tipoPlanilla.serialize();
-
-            // Hacemos un envío del formulario, lo que ejecutará el evento preSubmit
-            // del listener AddStateFieldSubscriber,
-            // y actualizará el campo state, con los estados del pais seleccionado.
-
+        $('#tipoPlanilla').change(function () {
+            var tipoPlanilla = $(this);
             $.ajax({
-                url: $form.attr('action'),
-                type: $form.attr('method'),
-                data: data,
+                url: "{{ path('plaza_ajax_numPlaza') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    tipoPlanilla: tipoPlanilla.val()
+                },
                 success: function (html) {
-
-                    // la variable html representa toda la página junto con el select de estados.
-                    // el cual tomamos y colocamos para reemplazar el select actual.
-
-                    $('#numPlaza').replaceWith($(html).find('#numPlaza'));
+                    var numPlaza = $("#numPlaza");
+                    numPlaza.val(html.numPlaza);
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
                 }
             });
         });
-    </script>        
+        
+        $('#grupo').change(function () {
+            var grupo = $(this);
+            $.ajax({
+                url: "{{ path('plaza_ajax_categoria') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    grupo: grupo.val()
+                },
+                success: function (categorias) {
+                    var categoria = $("#categoria");
+                    categoria.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for(var i=0; i < categorias.length; i++){ 
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(categorias[i]); //Escribes en él el nombre de la provincia
+                        $(option).val(categorias[i].id);
+                        $(option).text(categorias[i].nombre);
+                        $(option).addClass('PlanillaBundle:CategoriaOcupacional');
+                        $(option).appendTo("#categoria"); //Lo metes en el select con id provincias
+                    }
+                    
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ... ");
+                }
+            });
+        });
+    </script>  
 {% endblock %}

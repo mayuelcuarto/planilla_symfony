@@ -33,3 +33,10 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    PlanillaBundle\Form\PlazaType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
+        
+    PlanillaBundle\Form\PlazaEditType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]

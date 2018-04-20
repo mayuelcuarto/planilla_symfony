@@ -32,7 +32,9 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{{path("personal_index")}}"><strong>Personal</strong></a></li>
                                 <li><a class="dropdown-item" href="{{path("tipoDoc_index")}}">&nbsp;Tipo de Documento</a><li>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a class="dropdown-item" href="{{path("sexo_index")}}">&nbsp;Sexo</a><li>
+                                {% endif %}
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{path("plaza_index")}}"><strong>Plazas</strong></a></li>
                                 <li><a class="dropdown-item" href="{{path("afp_index")}}">&nbsp;AFP</a><li>
@@ -46,8 +48,8 @@
                                 <li><a class="dropdown-item" href="{{path("categoriaOcupacional_index")}}">&nbsp;Categoría Ocupacional</a><li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{path("concepto_index")}}"><strong>Conceptos</strong></a></li>
-                                <li><a class="dropdown-item" href="{{path("tipoConcepto_index")}}">&nbsp;Tipo de Concepto</a><li>
-                                    {% if is_granted('ROLE_ADMIN') %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a class="dropdown-item" href="{{path("tipoConcepto_index")}}">&nbsp;Tipo de Concepto</a><li>
                                     <li class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="{{path("ejecutora_index")}}"><strong>Ejecutora</strong></a></li>
                                     <li><a class="dropdown-item" href="{{path("pliego_index")}}">&nbsp;Pliego</a></li>

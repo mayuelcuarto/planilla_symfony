@@ -54,13 +54,23 @@ plaza_index:
     defaults: { _controller: PlanillaBundle:Plaza:index }
 
 plaza_add:
-    path: /plaza/add/{tipoPlanilla}
+    path: /plaza/add/
     defaults: { _controller: PlanillaBundle:Plaza:add }
     
     
 plaza_edit:
     path: /plaza/edit/{id}
     defaults: { _controller: PlanillaBundle:Plaza:edit }
+    
+plaza_ajax_numPlaza:
+    path:     /plaza/numPlaza
+    defaults: { _controller: "PlanillaBundle:Plaza:modifyNumPlaza" }
+    methods:  GET
+    
+plaza_ajax_categoria:
+    path:     /plaza/categoria
+    defaults: { _controller: "PlanillaBundle:Plaza:modifyCategoria" }
+    methods:  GET
     
 especifica_index:
     path: /especifica/index

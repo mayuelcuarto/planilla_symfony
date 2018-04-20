@@ -1,72 +1,68 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="row">
-        <div class="col-lg-3">
-            <h3>Lista de Plazas</h3>
+    <div>
+        <h3>Lista de Plazas</h3>
+        <hr/>
+            <div class="align-content-sm-start align-content-lg-start">
+                <a href="{{ path("plaza_add") }}" class="btn btn-success">Agregar Plaza</a>
+            </div>
+        {% for message in app.session.flashbag().get('status') %}
             <hr/>
-            {{form_start(form) }}
-            {{form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' }) }}
-            {{form_end(form,{'action':'plaza_index', 'method':'POST'})}}
-            <a href="{{ path("plaza_add",{"tipoPlanilla":tipoPlanilla}) }}" class="btn btn-success">Agregar Plaza</a>
-            <hr/>
-            {% for message in app.session.flashbag().get('status') %}
-                <div class="alert alert-success">{{message}}</div>
-            {% endfor %}
-        </div>
-        <div class="col-lg-9">
-            <table id="myTable" class="table-sm table-bordered table-responsive col-xs-3">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Historial</th>
-                        <th>Personal</th>
-                        <th>Plaza</th>
-                        <th>Categoría</th>
-                        <th>Estado</th>
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <hr/>
+        <table id="myTable" class="table-sm table-bordered table-responsive col-xs-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Historial</th>
+                    <th>Tipo</th>
+                    <th>Plaza</th>
+                    <th>Personal</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plaza in plazas %}
+                    <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
+                        <td><a href="{{path("plazaHistorial_index",{"id":plaza.id})}}" class="btn btn-info">MOSTRAR</a></td>
+                        <td>{{ plaza.tipoPlanilla.nombre }}</td>
+                        <td>{{ plaza.numPlaza }}</td>
+                        <td>
+                            {% if plaza.plazaHistorial|length > 0 %}
+                                {% for plazaHistorial in plaza.plazaHistorial %}
+                                    {% if plazaHistorial.estado == 1 %}
+                                        {{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                PLAZA VACANTE
+                            {% endif %}
+                        </td>
+                        <td>{{ plaza.categoria.nombre }}</td>
+                        <td>{{ plaza.estado }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for plaza in plazas %}
-                        <tr {% if plaza.estado == false %} class="table-secondary" {% endif%} >
-                            <td><a href="{{path("plaza_edit",{"id":plaza.id})}}" class="btn btn-warning ">{{ plaza.id }}</a></td>
-                            <td><a href="{{path("plazaHistorial_index",{"id":plaza.id})}}" class="btn btn-info">MOSTRAR</a></td>
-                            <td>
-                                {% if plaza.plazaHistorial|length > 0 %}
-                                    {% for plazaHistorial in plaza.plazaHistorial %}
-                                        {% if plazaHistorial.estado == 1 %}
-                                            {{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    PLAZA VACANTE
-                                {% endif %}
-                            </td>
-                            <td>{{ plaza.numPlaza }}</td>
-                            <td>{{ plaza.categoria.nombre }}</td>
-                            <td>{{ plaza.estado }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-                </div>
-        
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     <script>
         //Función para enviar formulario al cambiar de tipo de planilla
-        $( "#tipoPlanilla" ).change(function() {
+        $("#tipoPlanilla").change(function () {
             jQuery("#tipoPlanilla").closest("form").submit();
         });
-        
+
         //Función para implementar datatables
         $(document).ready(function () {
             $('#myTable').DataTable({
-                "pageLength": 6,
+                "pageLength": 5,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[ 5, 'desc' ]],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [5] }]
+                "order": [[6, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [6]}]
             });
         });
-        
     </script>
 {% endblock %}
