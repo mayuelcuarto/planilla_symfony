@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Personal;
 use PlanillaBundle\Form\PersonalType;
-use PlanillaBundle\Form\PersonalSearchType;
 
 class PersonalController extends Controller {
 
