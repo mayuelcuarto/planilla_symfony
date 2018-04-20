@@ -18,15 +18,7 @@ class ActProyController extends Controller {
 
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $actividad_repo = $em->getRepository("PlanillaBundle:ActProy")->createQueryBuilder('a')
-                ->where('a.anoEje > :anoEje')
-                ->setParameter('anoEje', 2010)
-                ->addOrderBy('a.estado', 'DESC')
-                ->addOrderBy('a.id', 'ASC')
-                ->getQuery()
-                ->getResult();
-        $actividades = $actividad_repo;
-
+        $actividades = $em->getRepository("PlanillaBundle:ActProy")->findByMajorToAnoEje(2010);
         return $this->render("@Planilla/actividad/index.html.twig", ["actividades" => $actividades]);
     }
 
