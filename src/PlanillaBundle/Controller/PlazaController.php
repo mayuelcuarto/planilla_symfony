@@ -9,7 +9,6 @@ use PlanillaBundle\Entity\Plaza;
 use PlanillaBundle\Form\PlazaType;
 use PlanillaBundle\Form\PlazaEditType;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use PDO;
 
 class PlazaController extends Controller {
 
@@ -19,14 +18,11 @@ class PlazaController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
         $plazas = $plaza_repo->findAll();
-
-        return $this->render("@Planilla/plaza/index.html.twig", [
-                    "plazas" => $plazas
-        ]);
+        return $this->render("@Planilla/plaza/index.html.twig", ["plazas" => $plazas]);
     }
 
     public function addAction(Request $request) {
@@ -79,35 +75,17 @@ class PlazaController extends Controller {
         $tipoPlanilla = $plaza->getTipoPlanilla();
         $numPlaza = $plaza->getNumPlaza();
         //Obteniendo datos de grupos ocupacionales
-        $dql = $em->createQuery("SELECT g FROM PlanillaBundle:GrupoOcupacional g 
-                                        WHERE 
-                                        g.estado = 1 OR 
-                                        g.grupoOcupacional = :grupo")
-                ->setParameter('grupo', $plaza->getCategoria()->getGrupoOcupacional());
-        $grupoOcupacional = $dql->getResult();
-        
+        $grupo_repo = $em->getRepository("PlanillaBundle:GrupoOcupacional");
+        $grupoOcupacional = $grupo_repo->findByGrupoEstado($plaza->getCategoria()->getGrupoOcupacional(),1);
         //Obteniendo datos de categorias ocupacionales
-        $dql2 = $em->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
-                                        WHERE c.grupoOcupacional = :grupo")
-                ->setParameter('grupo', $plaza->getCategoria()->getGrupoOcupacional());
-        $categoriaOcupacional = $dql2->getResult();
-        
+        $categoria_repo = $em->getRepository("PlanillaBundle:CategoriaOcupacional");
+        $categoriaOcupacional = $categoria_repo->findBy(["grupoOcupacional" => $plaza->getCategoria()->getGrupoOcupacional()]);
         //Obteniendo datos de metas
-        $dql3 = $em->createQuery("SELECT m FROM PlanillaBundle:Meta m 
-                                        WHERE 
-                                        m.estado = 1 OR 
-                                        m.secFunc = :meta")
-                ->setParameter('meta', $plaza->getSecFunc());
-        $meta = $dql3->getResult();
-        
+        $meta_repo = $em->getRepository("PlanillaBundle:Meta");
+        $meta = $meta_repo->findBySecfuncEstado($plaza->getSecFunc(),1);
         //Obteniendo datos de especificas
-        $dql4 = $em->createQuery("SELECT e FROM PlanillaBundle:Especifica e 
-                                        WHERE 
-                                        e.estado = 1 OR 
-                                        e.id = :especifica")
-                ->setParameter('especifica', $plaza->getEspecifica());
-        $especifica = $dql4->getResult();
-        
+        $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
+        $especifica = $especifica_repo->findByIdEstado($plaza->getEspecifica(),1);
         //Construyendo form y enviando parámetros de inicialización
         $form = $this->createForm(PlazaEditType::class, $plaza, [
             "grupoOcupacional" => $grupoOcupacional,
@@ -151,12 +129,7 @@ class PlazaController extends Controller {
 
     public function modifyNumPlazaAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()->prepare("SELECT SugerirPlaza(:tipoPlanilla)");
-        $sth1->bindValue(':tipoPlanilla', $request->query->get("tipoPlanilla"));
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $numPlaza = $fila[0];
-        }
+        $numPlaza = $em->getRepository('PlanillaBundle:Plaza')->sugerirNumPlaza($request->query->get("tipoPlanilla"));
         $responseArray = ["numPlaza" => $numPlaza];
         return new JsonResponse($responseArray);
     }
@@ -165,10 +138,7 @@ class PlazaController extends Controller {
         $grupo_id = $request->query->get("grupo");
         $em = $this->getDoctrine()->getManager();
         $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->find(['grupoOcupacional' => $grupo_id]);
-        $query = $em->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
-                                   WHERE c.grupoOcupacional = :grupo ")
-                ->setParameter('grupo', $grupo);
-        $categorias = $query->getArrayResult();
+        $categorias = $em->getRepository('PlanillaBundle:CategoriaOcupacional')->findArrayByGrupo($grupo);
         return new JsonResponse($categorias);
     }
 
