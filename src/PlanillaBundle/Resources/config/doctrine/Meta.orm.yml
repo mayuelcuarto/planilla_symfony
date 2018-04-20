@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Meta:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\MetaRepository
     table: meta
     indexes:
         fk_meta_ejecutora1_idx:
