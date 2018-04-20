@@ -104,6 +104,15 @@ class PlazaType extends AbstractType {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
+
+    function onPreSetData(FormEvent $event) {
+        $form = $event->getForm();
+        $em = $this->entityManager;
+        $tipoPlanilla= $em->getRepository('PlanillaBundle:TipoPlanilla')->find(["id" => 1]);
+        $this->setNumPlazaInicio($form, $tipoPlanilla);
+        $categoria= $em->getRepository('PlanillaBundle:CategoriaOcupacional')->findOneBy(["grupoOcupacional" => '00']);
+        $this->seteandoCategoria($form, $categoria);
+    }
     
     function onPreSubmit(FormEvent $event) {
         $em = $this->entityManager;
@@ -111,13 +120,6 @@ class PlazaType extends AbstractType {
         $data = $event->getData();
         $categoria= $em->getRepository('PlanillaBundle:CategoriaOcupacional')->find($data['categoria']);
         $this->seteandoCategoria($form, $categoria);
-    }
-
-    function onPreSetData(FormEvent $event) {
-        $form = $event->getForm();
-        $em = $this->entityManager;
-        $tipoPlanilla= $em->getRepository('PlanillaBundle:TipoPlanilla')->find(["id" => 1]);
-        $this->setNumPlazaInicio($form, $tipoPlanilla);
     }
     
     protected function seteandoCategoria(FormInterface $form, CategoriaOcupacional $categoria) {
