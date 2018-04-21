@@ -1,43 +1,44 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
+    <div>
+        <h3>Listado de Personal</h3>
+        <hr/>
+        <a href="{{ path("personal_add") }}" class="btn btn-success">Agregar personal</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+
+        <table id="myTable" class="table-sm table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Apellidos</th>
+                    <th>Nombres</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for personal in personales %}
+                    <tr {% if personal.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("personal_edit",{"codPersonal":personal.codPersonal})}}" class="btn btn-warning ">{{ personal.codPersonal }}</a></td>
+                        <td>{{ personal.apellidoPaterno }} {{ personal.apellidoMaterno }}</td>
+                        <td>{{ personal.nombre }}</td>
+                        <td>{{ personal.estado }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
                 "pageLength": 5,
                 "bLengthChange": false,
-                "autoWidth": true,
-                "order": [[ 3, 'desc' ]],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [3] }]
+                "autoWidth": false,
+                "order": [[3, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [3]}]
             });
         });
     </script>
-        <div>
-            <h3>Listado de Personal</h3>
-            <hr/>
-            <a href="{{ path("personal_add") }}" class="btn btn-success">Agregar personal</a>
-            <hr/>
-            {% for message in app.session.flashbag().get('status') %}
-                <div class="alert alert-success">{{message}}</div>
-            {% endfor %}
-        </div>
-            <table id="myTable" class="table-sm table-bordered table-responsive">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Apellidos</th>
-                        <th>Nombres</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for personal in personales %}
-                        <tr {% if personal.estado == false %} class="table-secondary" {% endif%} >
-                            <td><a href="{{path("personal_edit",{"codPersonal":personal.codPersonal})}}" class="btn btn-warning ">{{ personal.codPersonal }}</a></td>
-                            <td>{{ personal.apellidoPaterno }} {{ personal.apellidoMaterno }}</td>
-                            <td>{{ personal.nombre }}</td>
-                            <td>{{ personal.estado }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
 {% endblock %}

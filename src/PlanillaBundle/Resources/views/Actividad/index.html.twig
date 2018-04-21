@@ -31,14 +31,14 @@
             </tbody>
         </table>
     </div>
-<script>
+    <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
                 "pageLength": 5,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[ 0, 'desc' ]],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [4] }]
+                "order": [[0, 'desc'], [4, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [4]}]
             });
         });
     </script>

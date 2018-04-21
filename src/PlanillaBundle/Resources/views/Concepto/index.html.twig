@@ -7,7 +7,7 @@
             {% for message in app.session.flashbag().get('status') %}
                 <div class="alert alert-success">{{message}}</div>
             {% endfor %}
-        </div>
+        
         <hr/>
             <table id="myTable" class="table-sm table-bordered table-responsive">
                 <thead>
@@ -33,6 +33,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+                </div>
 <script>
         $(document).ready(function () {
             $('#myTable').DataTable({

@@ -1,6 +1,6 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
+    <div>
         <h3>Lista de Categorías Ocupacionales</h3>
         <hr/>
         <a href="{{ path("categoriaOcupacional_add") }}" class="btn btn-success">Agregar Categoría Ocupacional</a>
@@ -8,12 +8,13 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
+        <table id="myTable" class="table-sm table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Categoría</th>
                     <th>Nombre</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,9 +23,21 @@
                         <td><a href="{{path("categoriaOcupacional_edit",{"id":categoriaOcupacional.id})}}" class="btn btn-warning ">{{ categoriaOcupacional.id }}</a></td>
                         <td>{{ categoriaOcupacional.categoriaOcupacional }}</td>
                         <td>{{ categoriaOcupacional.nombre }}</td>
+                        <td>{{ categoriaOcupacional.estado }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "order": [[3, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [3]}]
+            });
+        });
+    </script>
 {% endblock %}
