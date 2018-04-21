@@ -64,11 +64,11 @@ class MetaController extends Controller {
                     if ($flush == null) {
                         $status = "La meta se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar meta!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La meta no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
