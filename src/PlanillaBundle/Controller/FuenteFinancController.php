@@ -16,17 +16,15 @@ class FuenteFinancController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
-        $fuentes = $fuente_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $fuentes = $em->getRepository("PlanillaBundle:FuenteFinanc")->findAll();
         return $this->render("@Planilla/fuente/index.html.twig", ["fuentes" => $fuentes]);
     }
 
     public function addAction(Request $request) {
         $fuente = new FuenteFinanc();
-        $form = $this->createForm(FuenteFinancType::class, $fuente);
+        $form = $this->createForm(FuenteFinancType::class, $fuente, ["estado" => true]);
         $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -52,11 +50,11 @@ class FuenteFinancController extends Controller {
                     if ($flush == null) {
                         $status = "La fuente de financiamiento se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar fuente de financiamiento!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La fuente de financiamiento no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -69,9 +67,7 @@ class FuenteFinancController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
         $fuente = $fuente_repo->find($id);
-
-        $form = $this->createForm(FuenteFinancType::class, $fuente);
-
+        $form = $this->createForm(FuenteFinancType::class, $fuente, ["estado" => $fuente->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

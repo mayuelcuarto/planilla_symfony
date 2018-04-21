@@ -16,17 +16,15 @@ class GrpfController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $grpf_repo = $em->getRepository("PlanillaBundle:Grpf");
-        $grpfs = $grpf_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $grpfs = $em->getRepository("PlanillaBundle:Grpf")->findAll();
         return $this->render("@Planilla/grpf/index.html.twig", ["grpfs" => $grpfs]);
     }
 
     public function addAction(Request $request) {
         $grpf = new Grpf();
-        $form = $this->createForm(GrpfType::class, $grpf);
+        $form = $this->createForm(GrpfType::class, $grpf, ["estado" => true]);
         $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -52,11 +50,11 @@ class GrpfController extends Controller {
                     if ($flush == null) {
                         $status = "El grupo funcional se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar grupo funcional!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El grupo funcional no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -69,9 +67,7 @@ class GrpfController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $grpf_repo = $em->getRepository("PlanillaBundle:Grpf");
         $grpf = $grpf_repo->find($id);
-
-        $form = $this->createForm(GrpfType::class, $grpf);
-
+        $form = $this->createForm(GrpfType::class, $grpf, ["estado" => $grpf->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

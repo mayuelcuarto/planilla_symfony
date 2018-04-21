@@ -16,18 +16,15 @@ class EspecificaController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
-        $especificas = $especifica_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $especificas = $em->getRepository("PlanillaBundle:Especifica")->findAll();
         return $this->render("@Planilla/especifica/index.html.twig", ["especificas" => $especificas]);
     }
 
     public function addAction(Request $request) {
         $especifica = new Especifica();
-        $form = $this->createForm(EspecificaType::class, $especifica);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(EspecificaType::class, $especifica, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -52,11 +49,11 @@ class EspecificaController extends Controller {
                     if ($flush == null) {
                         $status = "La específica se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar específica!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La específica no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -69,9 +66,7 @@ class EspecificaController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
         $especifica = $especifica_repo->find($id);
-
-        $form = $this->createForm(EspecificaType::class, $especifica);
-
+        $form = $this->createForm(EspecificaType::class, $especifica, ["estado" => $especifica->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

@@ -17,18 +17,15 @@ class EjecutoraController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $ejecutora_repo = $em->getRepository("PlanillaBundle:Ejecutora");
-        $ejecutoras = $ejecutora_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $ejecutoras = $em->getRepository("PlanillaBundle:Ejecutora")->findAll();
         return $this->render("@Planilla/ejecutora/index.html.twig", ["ejecutoras" => $ejecutoras]);
     }
 
     public function addAction(Request $request) {
         $ejecutora = new Ejecutora();
-        $form = $this->createForm(EjecutoraType::class, $ejecutora);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(EjecutoraType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -53,11 +50,11 @@ class EjecutoraController extends Controller {
                     if ($flush == null) {
                         $status = "La ejecutora se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar ejecutora!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La ejecutora no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -70,9 +67,7 @@ class EjecutoraController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $ejecutora_repo = $em->getRepository("PlanillaBundle:Ejecutora");
         $ejecutora = $ejecutora_repo->find($id);
-
         $form = $this->createForm(EjecutoraEditType::class, $ejecutora);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

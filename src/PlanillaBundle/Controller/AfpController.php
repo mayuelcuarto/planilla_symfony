@@ -27,7 +27,7 @@ class AfpController extends Controller {
         $afp = new Afp();
         $em = $this->getDoctrine()->getManager();
         $id = $em->getRepository("PlanillaBundle:Afp")->sugerirAfp();
-        $form = $this->createForm(AfpType::class, $afp, ['id' => $id, 'estado' => true]);
+        $form = $this->createForm(AfpType::class, $afp, ['id' => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {

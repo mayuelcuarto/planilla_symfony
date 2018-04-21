@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\CondicionLaboral;
 use PlanillaBundle\Form\CondicionLaboralType;
 use PlanillaBundle\Form\CondicionLaboralEditType;
-use PDO;
 
 class CondicionLaboralController extends Controller {
 
@@ -30,7 +29,7 @@ class CondicionLaboralController extends Controller {
         $condicionLaboral = new CondicionLaboral();
         $em = $this->getDoctrine()->getManager();
         $id = $em->getRepository("PlanillaBundle:CondicionLaboral")->sugerirCondicionLaboral();
-        $form = $this->createForm(CondicionLaboralType::class, $condicionLaboral,["id" => $id, "estado" => true]);
+        $form = $this->createForm(CondicionLaboralType::class, $condicionLaboral,["id" => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -65,7 +64,6 @@ class CondicionLaboralController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $condicionLaboral_repo = $em->getRepository("PlanillaBundle:CondicionLaboral");
         $condicionLaboral = $condicionLaboral_repo->find($id);
-
         $form = $this->createForm(CondicionLaboralEditType::class, $condicionLaboral);
 
         $form->handleRequest($request);

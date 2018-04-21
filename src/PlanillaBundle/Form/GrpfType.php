@@ -46,7 +46,10 @@ class GrpfType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Grpf']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Grpf',
+            'estado' => null
+            ]);
     }
 
     /**

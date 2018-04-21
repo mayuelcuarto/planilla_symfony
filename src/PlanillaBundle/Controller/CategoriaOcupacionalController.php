@@ -27,7 +27,6 @@ class CategoriaOcupacionalController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $categoriaOcupacional = new CategoriaOcupacional();
         $form = $this->createForm(CategoriaOcupacionalType::class, $categoriaOcupacional);
-        $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {

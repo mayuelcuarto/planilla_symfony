@@ -19,15 +19,12 @@ class ConceptoController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $conceptos = $em->getRepository("PlanillaBundle:Concepto")->findAll();
-        return $this->render("@Planilla/concepto/index.html.twig", [
-                    "conceptos" => $conceptos
-        ]);
+        return $this->render("@Planilla/concepto/index.html.twig", ["conceptos" => $conceptos]);
     }
 
     public function addAction(Request $request) {
         $concepto = new Concepto();
-        $form = $this->createForm(ConceptoType::class, $concepto);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(ConceptoType::class, $concepto, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -72,9 +69,7 @@ class ConceptoController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
         $concepto = $concepto_repo->find($id);
-
-        $form = $this->createForm(ConceptoType::class, $concepto);
-
+        $form = $this->createForm(ConceptoType::class, $concepto, ["estado" => $concepto->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

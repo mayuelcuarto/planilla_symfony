@@ -24,8 +24,7 @@ class ActProyController extends Controller {
 
     public function addAction(Request $request) {
         $actividad = new ActProy();
-        $form = $this->createForm(ActProyType::class, $actividad);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -67,8 +66,7 @@ class ActProyController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $actividad_repo = $em->getRepository("PlanillaBundle:ActProy");
         $actividad = $actividad_repo->find($id);
-
-        $form = $this->createForm(ActProyType::class, $actividad);
+        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => $actividad->getEstado()]);
 
         $form->handleRequest($request);
 
