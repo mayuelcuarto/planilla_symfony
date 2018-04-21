@@ -8,9 +8,7 @@ class CategoriaOcupacionalRepository extends EntityRepository {
 
     public function findArrayByGrupo($grupo) {
         return $this->getEntityManager()
-                        ->createQuery(
-                                "SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
-                                   WHERE c.grupoOcupacional = :grupo ")
+                        ->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c WHERE c.grupoOcupacional = :grupo ")
                         ->setParameter('grupo', $grupo)
                         ->getArrayResult();
     }
