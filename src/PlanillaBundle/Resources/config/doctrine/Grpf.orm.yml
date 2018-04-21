@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Grpf:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\GrpfRepository
     table: grpf
     id:
         id:

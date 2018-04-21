@@ -13,4 +13,14 @@ class ActProyRepository extends EntityRepository {
                         ->getResult();
     }
 
+    public function findByIdEstado($id, $estado) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT a FROM PlanillaBundle:ActProy a 
+                                       WHERE 
+                                       a.estado = :estado OR 
+                                       a.id = :id")
+                        ->setParameter('id', $id)
+                        ->setParameter('estado', $estado)
+                        ->getResult();
+    }
 }

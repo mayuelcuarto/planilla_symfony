@@ -17,18 +17,15 @@ class MetaController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $meta_repo = $em->getRepository("PlanillaBundle:Meta");
-        $metas = $meta_repo->findBy([], ['estado' => 'DESC', 'secFunc' => 'ASC']);
-
+        $metas = $em->getRepository("PlanillaBundle:Meta")->findAll();
         return $this->render("@Planilla/meta/index.html.twig", ["metas" => $metas]);
     }
 
     public function addAction(Request $request) {
         $meta = new Meta();
         $form = $this->createForm(MetaType::class, $meta);
-        $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -82,11 +79,47 @@ class MetaController extends Controller {
 
     public function editAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
+        //$meta = new Meta();
         $meta_repo = $em->getRepository("PlanillaBundle:Meta");
         $meta = $meta_repo->find($id);
-
-        $form = $this->createForm(MetaEditType::class, $meta);
-
+        //Obteniendo datos de programas
+        $programa_repo = $em->getRepository("PlanillaBundle:Programa");
+        $programa = $programa_repo->findByIdEstado($meta->getPrograma(),1);
+        //Obteniendo datos de productos
+        $producto_repo = $em->getRepository("PlanillaBundle:Producto");
+        $producto = $producto_repo->findByIdEstado($meta->getProducto(),1);
+        //Obteniendo datos de actividades
+        $actividad_repo = $em->getRepository("PlanillaBundle:ActProy");
+        $actividad = $actividad_repo->findByIdEstado($meta->getActProy(),1);
+        //Obteniendo datos de funciones
+        $funcion_repo = $em->getRepository("PlanillaBundle:Funcion");
+        $funcion = $funcion_repo->findByIdEstado($meta->getFuncion(),1);
+        //Obteniendo datos de divisiones funcionales
+        $divfunc_repo = $em->getRepository("PlanillaBundle:Divfunc");
+        $divfunc = $divfunc_repo->findByIdEstado($meta->getDivfunc(),1);
+        //Obteniendo datos de grupos funcionales
+        $grpf_repo = $em->getRepository("PlanillaBundle:Grpf");
+        $grpf = $grpf_repo->findByIdEstado($meta->getGrpf(),1);
+        //Obteniendo datos de ejecutoras
+        $ejecutora_repo = $em->getRepository("PlanillaBundle:Ejecutora");
+        $ejecutora = $ejecutora_repo->findByIdEstado($meta->getEjecutora(),1);
+        
+        $form = $this->createForm(MetaEditType::class, $meta,[
+            "programa" => $programa,
+            "programaSeleccion" => $meta->getPrograma(),
+            "producto" => $producto,
+            "productoSeleccion" => $meta->getProducto(),
+            "actividad" => $actividad,
+            "actividadSeleccion" => $meta->getActProy(),
+            "funcion" => $funcion,
+            "funcionSeleccion" => $meta->getFuncion(),
+            "divfunc" => $divfunc,
+            "divfuncSeleccion" => $meta->getDivfunc(),
+            "grpf" => $grpf,
+            "grpfSeleccion" => $meta->getGrpf(),
+            "ejecutora" => $ejecutora,
+            "ejecutoraSeleccion" => $meta->getEjecutora()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

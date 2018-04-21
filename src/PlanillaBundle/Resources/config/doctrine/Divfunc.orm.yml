@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Divfunc:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\DivfuncRepository
     table: divfunc
     id:
         id:
