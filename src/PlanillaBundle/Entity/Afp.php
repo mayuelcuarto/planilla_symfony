@@ -58,6 +58,20 @@ class Afp
     private $regimenPensionario;
     
     /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Afp
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
+    /**
      * Get id
      *
      * @return string
