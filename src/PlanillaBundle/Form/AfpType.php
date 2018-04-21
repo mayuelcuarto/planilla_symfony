@@ -22,6 +22,7 @@ class AfpType extends AbstractType {
                     "label" => "ID",
                     "mapped" => false,
                     "required" => "required",
+                    "data" => $options['id'],
                     "attr" => ["class" => "form-control form-control-sm", "maxlength" => 2]
                 ])
                 ->add('regimenPensionario', EntityType::class, [
@@ -69,6 +70,7 @@ class AfpType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
+                    "data" => $options['estado'],
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('Guardar', SubmitType::class, [
@@ -81,7 +83,11 @@ class AfpType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Afp']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Afp',
+            'id' => null,
+            'estado' => null
+            ]);
     }
 
     /**

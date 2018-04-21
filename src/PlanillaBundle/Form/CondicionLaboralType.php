@@ -20,6 +20,7 @@ class CondicionLaboralType extends AbstractType {
                     "label" => "ID",
                     "mapped" => false,
                     "required" => "required",
+                    "data" => $options['id'],
                     "attr" => ["class" => "form-control form-control-sm", "maxlength" => 2]
                 ])
                 ->add('nombre', TextType::class, [
@@ -30,6 +31,7 @@ class CondicionLaboralType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
+                    "data" => $options['estado'],
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('Guardar', SubmitType::class, [
@@ -42,7 +44,11 @@ class CondicionLaboralType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\CondicionLaboral']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\CondicionLaboral',
+            'id' => null,
+            'estado' => null
+            ]);
     }
 
     /**
