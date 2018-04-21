@@ -16,7 +16,7 @@ class ActProyController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $actividades = $em->getRepository("PlanillaBundle:ActProy")->findByMajorToAnoEje(2010);
         return $this->render("@Planilla/actividad/index.html.twig", ["actividades" => $actividades]);
