@@ -50,11 +50,11 @@ class ActProyController extends Controller {
                     if ($flush == null) {
                         $status = "La actividad se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar actividad!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La actividad no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

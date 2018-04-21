@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Concepto;
 use PlanillaBundle\Form\ConceptoType;
-use PlanillaBundle\Form\ConceptoSearchType;
 
 class ConceptoController extends Controller {
 
@@ -17,11 +16,9 @@ class ConceptoController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
-        $conceptos = $concepto_repo->findAll();
-
+        $conceptos = $em->getRepository("PlanillaBundle:Concepto")->findAll();
         return $this->render("@Planilla/concepto/index.html.twig", [
                     "conceptos" => $conceptos
         ]);
@@ -58,11 +55,11 @@ class ConceptoController extends Controller {
                     if ($flush == null) {
                         $status = "El concepto se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar concepto!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El concepto no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

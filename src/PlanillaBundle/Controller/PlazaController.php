@@ -20,8 +20,7 @@ class PlazaController extends Controller {
 
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
-        $plazas = $plaza_repo->findAll();
+        $plazas = $em->getRepository("PlanillaBundle:Plaza")->findAll();
         return $this->render("@Planilla/plaza/index.html.twig", ["plazas" => $plazas]);
     }
 
@@ -54,11 +53,11 @@ class PlazaController extends Controller {
                     if ($flush == null) {
                         $status = "La plaza se ha creado correctamente";
                     } else {
-                        $status = "Error al agregar plaza";
+                        $status = "Error al agregar plaza!!";
                     }
                 }
             } else {
-                $status = "La plaza no se agregó, porque el formulario no es válido";
+                $status = "La plaza no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Afp;
 use PlanillaBundle\Form\AfpType;
 use PlanillaBundle\Form\AfpEditType;
-use PDO;
 
 class AfpController extends Controller {
 
@@ -18,26 +17,17 @@ class AfpController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $afp_repo = $em->getRepository("PlanillaBundle:Afp");
-        $afps = $afp_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $afps = $em->getRepository("PlanillaBundle:Afp")->findAll();
         return $this->render("@Planilla/afp/index.html.twig", ["afps" => $afps]);
     }
 
     public function addAction(Request $request) {
         $afp = new Afp();
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()->prepare("SELECT SugerirAfp()");
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $id = $fila[0];
-        }
-
-        $form = $this->createForm(AfpType::class, $afp);
-        $form->get("id")->setData($id);
-        $form->get("estado")->setData(true);
+        $id = $em->getRepository("PlanillaBundle:Afp")->sugerirAfp();
+        $form = $this->createForm(AfpType::class, $afp, ['id' => $id, 'estado' => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -47,6 +37,7 @@ class AfpController extends Controller {
                     $status = "La afp ya existe!!!";
                 } else {
                     $afp = new Afp();
+                    $afp->setId($form->get("id")->getData());
                     $afp->setNombre($form->get("nombre")->getData());
                     $afp->setEstado($form->get("estado")->getData());
                     $afp->setRegimenPensionario($form->get("regimenPensionario")->getData());
@@ -56,41 +47,18 @@ class AfpController extends Controller {
                     $afp->setRa($form->get("ra")->getData());
                     $afp->setPension($form->get("pension")->getData());
                     $afp->setRaMixta($form->get("raMixta")->getData());
-
-                    $id = $form->get("id")->getData();
-                    $nombre = $afp->getNombre();
-                    $regimenPensionario = $afp->getRegimenPensionario()->getId();
-                    $estado = $afp->getEstado();
-                    $snp = $afp->getSnp();
-                    $jubilacion = $afp->getJubilacion();
-                    $seguros = $afp->getSeguros();
-                    $ra = $afp->getRa();
-                    $pension = $afp->getPension();
-                    $raMixta = $afp->getRaMixta();
-
-                    $sth = $em->getConnection()->prepare("CALL AgregarAFP(:id, :nombre, :regimenPensionario, :estado, :snp, :jubilacion, :seguros, :ra, :pension, :raMixta)");
-
-                    $sth->bindValue(':id', $id);
-                    $sth->bindValue(':nombre', $nombre);
-                    $sth->bindValue(':regimenPensionario', $regimenPensionario);
-                    $sth->bindValue(':estado', $estado);
-                    $sth->bindValue(':snp', $snp);
-                    $sth->bindValue(':jubilacion', $jubilacion);
-                    $sth->bindValue(':seguros', $seguros);
-                    $sth->bindValue(':ra', $ra);
-                    $sth->bindValue(':pension', $pension);
-                    $sth->bindValue(':raMixta', $raMixta);
-                    $sth->execute();
-                    //$em->persist($afp);
+                    $afp->setEstado($form->get("estado")->getData());
+                    
+                    $afp_repo->AgregarAfp($afp);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "La afp se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar afp!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La afp no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -120,7 +88,6 @@ class AfpController extends Controller {
                 $afp->setPension($form->get("pension")->getData());
                 $afp->setRaMixta($form->get("raMixta")->getData());
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($afp);
                 $flush = $em->flush();
                 if ($flush == null) {
