@@ -18,27 +18,17 @@ class GrupoOcupacionalController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $grupoOcupacional_repo = $em->getRepository("PlanillaBundle:GrupoOcupacional");
-        $grupoOcupacionals = $grupoOcupacional_repo->findBy([], ['estado' => 'DESC', 'grupoOcupacional' => 'ASC']);
-
+        $grupoOcupacionals = $em->getRepository("PlanillaBundle:GrupoOcupacional")->findAll();
         return $this->render("@Planilla/grupoOcupacional/index.html.twig", ["grupoOcupacionals" => $grupoOcupacionals]);
     }
 
     public function addAction(Request $request) {
         $grupoOcupacional = new GrupoOcupacional();
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()
-                ->prepare("SELECT SugerirGrupoOcupacional()");
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $id = $fila[0];
-        }
-        $form = $this->createForm(GrupoOcupacionalType::class, $grupoOcupacional);
-
-        $form->get("id")->setData($id);
-        $form->get("estado")->setData(true);
+        $id = $em->getRepository("PlanillaBundle:GrupoOcupacional")->sugerirGrupoOcupacional();
+        $form = $this->createForm(GrupoOcupacionalType::class, $grupoOcupacional, ["id" => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -48,27 +38,20 @@ class GrupoOcupacionalController extends Controller {
                     $status = "El grupo ocupacional ya existe!!!";
                 } else {
                     $grupoOcupacional = new GrupoOcupacional();
+                    $grupoOcupacional->setGrupoOcupacional($form->get("id")->getData());
                     $grupoOcupacional->setNombre($form->get("nombre")->getData());
                     $grupoOcupacional->setEstado($form->get("estado")->getData());
 
-                    $id = $form->get("id")->getData();
-                    $nombre = $grupoOcupacional->getNombre();
-                    $estado = $grupoOcupacional->getEstado();
-
-                    $sth = $em->getConnection()->prepare("CALL AgregarGrupoOcupacional(:id, :nombre, :estado)");
-                    $sth->bindValue(':id', $id);
-                    $sth->bindValue(':nombre', $nombre);
-                    $sth->bindValue(':estado', $estado);
-                    $sth->execute();
+                    $grupoOcupacional_repo->AgregarGrupoOcupacional($grupoOcupacional);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "El grupo ocupacional se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar grupo ocupacional!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El grupo ocupacional no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -81,9 +64,7 @@ class GrupoOcupacionalController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $grupoOcupacional_repo = $em->getRepository("PlanillaBundle:GrupoOcupacional");
         $grupoOcupacional = $grupoOcupacional_repo->find($id);
-
         $form = $this->createForm(GrupoOcupacionalEditType::class, $grupoOcupacional);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
