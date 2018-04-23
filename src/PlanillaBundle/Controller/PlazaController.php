@@ -136,7 +136,7 @@ class PlazaController extends Controller {
     public function modifyCategoriaAction(Request $request) {
         $grupo_id = $request->query->get("grupo");
         $em = $this->getDoctrine()->getManager();
-        $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->find(['grupoOcupacional' => $grupo_id]);
+        $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->findBy(['grupoOcupacional' => $grupo_id]);
         $categorias = $em->getRepository('PlanillaBundle:CategoriaOcupacional')->findArrayByGrupo($grupo);
         return new JsonResponse($categorias);
     }
