@@ -3,9 +3,6 @@
     <div class="col-lg-4">
         <h4>Agregar Personal</h4>
         <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
         {{form_start(form)}}
         {{form_end(form,{'action':'', 'method':'POST'})}}
     </div>
