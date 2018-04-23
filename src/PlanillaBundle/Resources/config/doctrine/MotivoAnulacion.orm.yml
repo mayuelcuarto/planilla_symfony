@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\MotivoAnulacion:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\MotivoAnulacionRepository
     table: motivo_anulacion
     id:
         id:

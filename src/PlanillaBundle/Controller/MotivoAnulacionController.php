@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\MotivoAnulacion;
 use PlanillaBundle\Form\MotivoAnulacionType;
 use PlanillaBundle\Form\MotivoAnulacionEditType;
-use PDO;
 
 class MotivoAnulacionController extends Controller {
 
@@ -18,25 +17,17 @@ class MotivoAnulacionController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $motivoAnulacion_repo = $em->getRepository("PlanillaBundle:MotivoAnulacion");
-        $motivoAnulacions = $motivoAnulacion_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $motivoAnulacions = $em->getRepository("PlanillaBundle:MotivoAnulacion")->findAll();
         return $this->render("@Planilla/motivoAnulacion/index.html.twig", ["motivoAnulacions" => $motivoAnulacions]);
     }
 
     public function addAction(Request $request) {
         $motivoAnulacion = new MotivoAnulacion();
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()->prepare("SELECT SugerirMotivoAnulacion()");
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $id = $fila[0];
-        }
-        $form = $this->createForm(MotivoAnulacionType::class, $motivoAnulacion);
-        $form->get("id")->setData($id);
-        $form->get("estado")->setData(true);
+        $id = $em->getRepository("PlanillaBundle:MotivoAnulacion")->sugerirMotivoAnulacion();
+        $form = $this->createForm(MotivoAnulacionType::class, $motivoAnulacion, ["id" => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -46,26 +37,20 @@ class MotivoAnulacionController extends Controller {
                     $status = "El motivo de anulación ya existe!!!";
                 } else {
                     $motivoAnulacion = new MotivoAnulacion();
+                    $motivoAnulacion->setId($form->get("id")->getData());
                     $motivoAnulacion->setNombre($form->get("nombre")->getData());
                     $motivoAnulacion->setEstado($form->get("estado")->getData());
-                    $id = $form->get("id")->getData();
-                    $nombre = $motivoAnulacion->getNombre();
-                    $estado = $motivoAnulacion->getEstado();
 
-                    $sth = $em->getConnection()->prepare("CALL AgregarMotivoAnulacion(:id, :nombre, :estado)");
-                    $sth->bindValue(':id', $id);
-                    $sth->bindValue(':nombre', $nombre);
-                    $sth->bindValue(':estado', $estado);
-                    $sth->execute();
+                    $motivoAnulacion_repo->AgregarMotivoAnulacion($motivoAnulacion);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "El motivo de anulación se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar motivo de anulación!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El motivo de anulación no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
