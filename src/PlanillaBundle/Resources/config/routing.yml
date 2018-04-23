@@ -57,7 +57,6 @@ plaza_add:
     path: /plaza/add/
     defaults: { _controller: PlanillaBundle:Plaza:add }
     
-    
 plaza_edit:
     path: /plaza/edit/{id}
     defaults: { _controller: PlanillaBundle:Plaza:edit }
@@ -381,12 +380,17 @@ planilla_index:
     defaults: { _controller: PlanillaBundle:Planilla:index }
     
 planilla_add:
-    path: /planilla/add/{tipoPlanilla}
+    path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
     
 planilla_edit:
     path: /planilla/edit/{id}
     defaults: { _controller: PlanillaBundle:Planilla:edit }
+    
+planilla_ajax_plazaHistorial:
+    path:     /planilla/plazaHistorial
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
+    methods:  GET
     
 planillaHasConcepto_index:
     path: /planillaHasConcepto/index/{planillaId}
