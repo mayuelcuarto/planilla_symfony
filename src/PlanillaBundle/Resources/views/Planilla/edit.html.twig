@@ -3,10 +3,11 @@
     <div class="col-lg-4">
         <h4>Editar Planilla</h4>
         <hr/>
-        {% for message in app.session.flashbag().get('status') %}
-            <div class="alert alert-success">{{message}}</div>
-        {% endfor %}
         {{form_start(form)}}
+        {{form_row(form.anoEje)}}
+        {{form_row(form.mesEje)}}
+        {{form_row(form.tipoPlanilla, {'id': 'tipoPlanilla','attr':{'disabled':'true'} }) }}
+        {{form_row(form.plazaHistorial, {'id': 'plazaHistorial','attr':{'disabled':'true'} }) }}
         {{form_end(form,{'action':'', 'method':'POST'})}}
     </div>
 {% endblock %}
