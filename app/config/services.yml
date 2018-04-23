@@ -40,3 +40,7 @@ services:
     PlanillaBundle\Form\PlazaEditType:
         arguments: ['@doctrine.orm.entity_manager']
         tags: [form.type]
+        
+    PlanillaBundle\Form\PlanillaType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
