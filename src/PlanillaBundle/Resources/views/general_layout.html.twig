@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
         <title>
-            {% block title %} Sistema de Planilla 3.0 {% endblock %}
+            {% block title %} Sistema de Planilla 3.4 {% endblock %}
         </title>
         <!-- Importando Bootstrap y Jquery -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
@@ -18,7 +18,7 @@
     <body>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')%}
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="{{ path("planilla_homepage") }}">Sistema de Planillas 3.0</a>
+                <a class="navbar-brand" href="{{ path("planilla_homepage") }}">Sistema de Planillas 3.4</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
