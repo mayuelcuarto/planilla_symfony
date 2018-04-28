@@ -71,12 +71,12 @@ class PlazaHistorialController extends Controller {
                 $em->persist($plazaHistorial);
                 $flush = $em->flush();
                 if ($flush == null) {
-                    $status = "EL historial de plaza se ha creado correctamente";
+                    $status = "El historial de plaza se ha creado correctamente";
                 } else {
-                    $status = "No te has registrado correctamente";
+                    $status = "Error al agregar historial de plaza!!";
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El historial de plaza no se ha agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -115,12 +115,12 @@ class PlazaHistorialController extends Controller {
                 $em->persist($plazaHistorial);
                 $flush = $em->flush();
                 if ($flush == null) {
-                    $status = "EL historial de plaza se ha editado correctamente";
+                    $status = "El historial de plaza se ha editado correctamente";
                 } else {
-                    $status = "Error al editar plazaHistorial!!";
+                    $status = "Error al editar historial de plaza!!";
                 }
             } else {
-                $status = "EL historial de plaza no se ha editado, porque el formulario no es válido!!";
+                $status = "El historial de plaza no se ha editado, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
