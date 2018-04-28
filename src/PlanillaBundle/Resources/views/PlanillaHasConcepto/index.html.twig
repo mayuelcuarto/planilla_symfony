@@ -1,11 +1,12 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
-        <h3>Conceptos de Planilla {{ personal.cadena }}</h3>
+    <div>
+        <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
         <hr/>
-        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":1}) }}" class="btn btn-success">Agregar Ingreso</a>
-        <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId,"tipoConcepto":2}) }}" class="btn btn-success">Agregar Egreso</a>
-        <hr/>
+            <div>
+                <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button" class="btn btn-success">Agregar Concepto</a>
+            </div>
+            <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
@@ -22,23 +23,37 @@
             <tbody>
                 {% for planillaHasConcepto in planillaHasConceptos %}
                     <tr>
-                        <td><a href="" class="btn btn-warning">{{ planillaHasConcepto.concepto.id }}</a></td>
+                        <td><a href="{{ path("planillaHasConcepto_edit",{"id":planillaHasConcepto.id}) }}" class="btn btn-warning">{{ planillaHasConcepto.concepto.id }}</a></td>
                         <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
                         <td>{{ planillaHasConcepto.concepto.concepto }}</td>
                         <td>{{ planillaHasConcepto.monto }}</td>
-                        <td><a href="" class="btn btn-danger">ELIMINAR</a></td>
+                        <td><a href="{{ path("planillaHasConcepto_eliminar",{"id":planillaHasConcepto.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <div class="row mx-auto">
+            <div class="alert alert-info">
+                <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg }}</span>
+            </div>
+            <hr/>
+            <div class="alert alert-info">
+                <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg }}
+            </div>
+            <hr/>
+            <div class="alert alert-info">
+                <span >TOTAL EGRESOS: {{ planilla.totalEgreso }}
+            </div>
+        </div>
     <script>
         //Función para implementar datatables
         $(document).ready(function () {
             $('#myTable').DataTable({
                 "pageLength": 4,
                 "bLengthChange": false,
-                "autoWidth": false
+                "autoWidth": false,
+                "order": [[1, 'desc'], [0, 'asc']]
             });
         });
     </script>
