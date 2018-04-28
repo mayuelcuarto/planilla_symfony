@@ -397,9 +397,18 @@ planillaHasConcepto_index:
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:index }
     
 planillaHasConcepto_add:
-    path: /planillaHasConcepto/add/{planillaId}{tipoConcepto}
+    path: /planillaHasConcepto/add/{planillaId}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:add }
     
 planillaHasConcepto_edit:
     path: /planillaHasConcepto/edit/{id}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:edit }
+
+planillaHasConcepto_eliminar:
+    path: /planillaHasConcepto/eliminar/{id}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:eliminar }
+    
+planillaHasConcepto_ajax_concepto:
+    path:     /planillaHasConcepto/concepto
+    defaults: { _controller: "PlanillaBundle:PlanillaHasConcepto:modifyConcepto" }
+    methods:  GET
