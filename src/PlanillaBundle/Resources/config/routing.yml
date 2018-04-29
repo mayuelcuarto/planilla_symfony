@@ -351,6 +351,11 @@ plazaHistorial_baja:
     path: /plazaHistorial/baja/{id}
     defaults: { _controller: PlanillaBundle:PlazaHistorial:baja }
     
+plazaHistorial_ajax_afp:
+    path:     /plazaHistorial/afp
+    defaults: { _controller: "PlanillaBundle:PlazaHistorial:modifyAfp" }
+    methods:  GET
+    
 grupoOcupacional_index:
     path: /grupoOcupacional/index
     defaults: { _controller: PlanillaBundle:GrupoOcupacional:index }
