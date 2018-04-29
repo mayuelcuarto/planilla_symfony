@@ -9,7 +9,7 @@ use PlanillaBundle\Entity\PlazaHistorial;
 use PlanillaBundle\Form\PlazaHistorialType;
 use PlanillaBundle\Form\PlazaHistorialEditType;
 use PlanillaBundle\Form\PlazaHistorialBajaType;
-use PDO;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlazaHistorialController extends Controller {
 
@@ -39,19 +39,21 @@ class PlazaHistorialController extends Controller {
 
     public function addAction(Request $request, $plazaId) {
         $plazaHistorial = new PlazaHistorial();
-        $form = $this->createForm(PlazaHistorialType::class, $plazaHistorial);
+        $em = $this->getDoctrine()->getManager();
+        $regPen_repo = $em->getRepository("PlanillaBundle:RegimenPensionario");
+        $regPen = $regPen_repo->findBy(["estado"=> 1]);
+        $regPenSeleccion = $regPen_repo->findOneBy(["id" => 1]);
+        
+        $form = $this->createForm(PlazaHistorialType::class, $plazaHistorial, [
+            "accion" => 1,
+            "regPen" => $regPen,
+            "regPenSeleccion" => $regPenSeleccion
+            ]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $sth1 = $em->getConnection()->prepare("SELECT GenerarSecPlazaHistorial(:plazaId)");
-                $sth1->bindValue(':plazaId', $plazaId);
-                $sth1->execute();
-                while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-                    $secPersonal = $fila[0];
-                }
-                $plaza_repo = $em->getRepository("PlanillaBundle:Plaza");
-                $plaza = $plaza_repo->findOneBy(["id" => $plazaId]);
+                $secPersonal = $em->getRepository("PlanillaBundle:PlazaHistorial")->GenerarSecPlazaHistorial($plazaId);
+                $plaza = $em->getRepository("PlanillaBundle:Plaza")->findOneBy(["id" => $plazaId]);
                 $plazaHistorial = new PlazaHistorial();
                 $plazaHistorial->setSecPersonal($secPersonal);
                 $plazaHistorial->setPlaza($plaza);
@@ -92,8 +94,12 @@ class PlazaHistorialController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $plazaHistorial_repo = $em->getRepository("PlanillaBundle:PlazaHistorial");
         $plazaHistorial = $plazaHistorial_repo->find($id);
-
-        $form = $this->createForm(PlazaHistorialEditType::class, $plazaHistorial);
+        $regPen_repo = $em->getRepository("PlanillaBundle:RegimenPensionario");
+        $regPen = $regPen_repo->findByIdEstado($plazaHistorial->getRegimenPensionario()->getId(),1);
+        $form = $this->createForm(PlazaHistorialType::class, $plazaHistorial, [
+            "accion" => 2, 
+            "regPen" => $regPen,
+            "regPenSeleccion" => $plazaHistorial->getRegimenPensionario()]);
 
         $form->handleRequest($request);
 
@@ -169,4 +175,11 @@ class PlazaHistorialController extends Controller {
         ]);
     }
 
+    public function modifyAfpAction(Request $request) {
+        $regimenPensionario_id = $request->query->get("regimenPensionario");
+        $em = $this->getDoctrine()->getManager();
+        $regimenPensionario = $em->getRepository('PlanillaBundle:RegimenPensionario')->findOneBy(['id' => $regimenPensionario_id]);
+        $afps = $em->getRepository('PlanillaBundle:Afp')->findArrayByRegPen($regimenPensionario);
+        return new JsonResponse($afps);
+    }
 }
