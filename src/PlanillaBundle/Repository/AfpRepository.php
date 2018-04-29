@@ -4,6 +4,7 @@ namespace PlanillaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use PlanillaBundle\Entity\Afp;
+use PlanillaBundle\Entity\RegimenPensionario;
 use PDO;
 
 class AfpRepository extends EntityRepository {
@@ -32,6 +33,16 @@ class AfpRepository extends EntityRepository {
         $sth->bindValue(':pension', $afp->getPension());
         $sth->bindValue(':raMixta', $afp->getRaMixta());
         $sth->execute();
+    }
+
+    public function findArrayByRegPen(RegimenPensionario $regimenPensionario) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT a FROM PlanillaBundle:Afp a 
+                                       WHERE 
+                                       a.regimenPensionario = :regimenPensionario AND 
+                                       a.estado = 1")
+                        ->setParameter('regimenPensionario', $regimenPensionario)
+                        ->getArrayResult();
     }
 
 }
