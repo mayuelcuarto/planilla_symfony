@@ -48,3 +48,7 @@ services:
     PlanillaBundle\Form\PlanillaHasConceptoType:
         arguments: ['@doctrine.orm.entity_manager']
         tags: [form.type]
+        
+    PlanillaBundle\Form\PlazaHistorialType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
