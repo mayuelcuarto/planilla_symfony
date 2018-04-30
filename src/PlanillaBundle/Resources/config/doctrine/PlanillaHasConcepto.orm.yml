@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\PlanillaHasConcepto:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\PlanillaHasConceptoRepository
     table: planilla_has_concepto
     indexes:
         fk_planilla_idx:

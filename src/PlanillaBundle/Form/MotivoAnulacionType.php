@@ -20,7 +20,8 @@ class MotivoAnulacionType extends AbstractType {
                     "label" => "ID",
                     "mapped" => false,
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['id']
                 ])
                 ->add('nombre', TextType::class, [
                     "label" => "Nombre",
@@ -42,7 +43,10 @@ class MotivoAnulacionType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\MotivoAnulacion']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\MotivoAnulacion',
+            'id' => null
+            ]);
     }
 
     /**

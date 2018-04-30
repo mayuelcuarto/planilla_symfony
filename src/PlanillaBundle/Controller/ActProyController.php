@@ -16,24 +16,15 @@ class ActProyController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $actividad_repo = $em->getRepository("PlanillaBundle:ActProy")->createQueryBuilder('a')
-                ->where('a.anoEje > :anoEje')
-                ->setParameter('anoEje', 2010)
-                ->addOrderBy('a.estado', 'DESC')
-                ->addOrderBy('a.id', 'ASC')
-                ->getQuery()
-                ->getResult();
-        $actividades = $actividad_repo;
-
+        $actividades = $em->getRepository("PlanillaBundle:ActProy")->findByMajorToAnoEje(2010);
         return $this->render("@Planilla/actividad/index.html.twig", ["actividades" => $actividades]);
     }
 
     public function addAction(Request $request) {
         $actividad = new ActProy();
-        $form = $this->createForm(ActProyType::class, $actividad);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -58,11 +49,11 @@ class ActProyController extends Controller {
                     if ($flush == null) {
                         $status = "La actividad se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar actividad!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La actividad no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -75,8 +66,7 @@ class ActProyController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $actividad_repo = $em->getRepository("PlanillaBundle:ActProy");
         $actividad = $actividad_repo->find($id);
-
-        $form = $this->createForm(ActProyType::class, $actividad);
+        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => $actividad->getEstado()]);
 
         $form->handleRequest($request);
 

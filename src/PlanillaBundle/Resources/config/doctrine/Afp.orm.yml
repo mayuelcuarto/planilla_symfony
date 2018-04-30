@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Afp:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\AfpRepository
     table: afp
     indexes:
         fk_afp_regimen_pensionario1_idx:

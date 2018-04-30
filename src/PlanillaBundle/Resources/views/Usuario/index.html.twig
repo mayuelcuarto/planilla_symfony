@@ -1,6 +1,6 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
+    <div>
         <h3>Lista de Usuarios</h3>
         <hr/>
         <a href="{{ path("usuario_add") }}" class="btn btn-success">Agregar usuario</a>
@@ -8,23 +8,36 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
-            <tr>
-                <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Cargo</th>
-                <th>DNI</th>
-            </tr>
-            {% for usuario in usuarios %}
+        <table id="myTable" class="table-sm table-bordered table-responsive">
+            <thead>
                 <tr>
-                    <td><a href="{{path("usuario_edit",{"id":usuario.id})}}" class="btn btn-warning">{{ usuario.id }}</a></td>
-                    <td>{{ usuario.nombres }}</td>
-                    <td>{{ usuario.apellidos}}</td>
-                    <td>{{ usuario.cargo }}</td>
-                    <td>{{ usuario.dni }}</td>
+                    <th>ID</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Cargo</th>
+                    <th>DNI</th>
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td><a href="{{path("usuario_edit",{"id":usuario.id})}}" class="btn btn-warning">{{ usuario.id }}</a></td>
+                        <td>{{ usuario.nombres }}</td>
+                        <td>{{ usuario.apellidos}}</td>
+                        <td>{{ usuario.cargo }}</td>
+                        <td>{{ usuario.dni }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

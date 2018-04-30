@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Funcion:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\FuncionRepository
     table: funcion
     id:
         id:

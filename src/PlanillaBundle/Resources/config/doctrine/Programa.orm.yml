@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Programa:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\ProgramaRepository
     table: programa
     id:
         id:

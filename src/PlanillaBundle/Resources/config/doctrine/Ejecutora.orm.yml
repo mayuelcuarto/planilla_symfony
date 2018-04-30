@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Ejecutora:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\EjecutoraRepository
     table: ejecutora
     indexes:
         fk_ejecutora_pliego1_idx:

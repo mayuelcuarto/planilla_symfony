@@ -17,22 +17,19 @@ class CategoriaOcupacionalController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $categoriaOcupacional_repo = $em->getRepository("PlanillaBundle:CategoriaOcupacional");
-        $categoriaOcupacionals = $categoriaOcupacional_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $categoriaOcupacionals = $em->getRepository("PlanillaBundle:CategoriaOcupacional")->findAll();
         return $this->render("@Planilla/categoriaOcupacional/index.html.twig", ["categoriaOcupacionals" => $categoriaOcupacionals]);
     }
 
     public function addAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
         $categoriaOcupacional = new CategoriaOcupacional();
         $form = $this->createForm(CategoriaOcupacionalType::class, $categoriaOcupacional);
-        $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $categoriaOcupacional_repo = $em->getRepository("PlanillaBundle:CategoriaOcupacional");
                 $categoriaOcupacional = $categoriaOcupacional_repo->findOneBy([
                     "grupoOcupacional" => $form->get("grupoOcupacional")->getData(),
@@ -47,17 +44,16 @@ class CategoriaOcupacionalController extends Controller {
                     $categoriaOcupacional->setNombre($form->get("nombre")->getData());
                     $categoriaOcupacional->setEstado($form->get("estado")->getData());
 
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($categoriaOcupacional);
                     $flush = $em->flush();
                     if ($flush == null) {
-                        $status = "La categoría ocupacional se ha creado correctamente";
+                        $status = "La categoría ocupacional se ha creado correctamente!!";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar categoría ocupacional!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La categoría ocupacional no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);

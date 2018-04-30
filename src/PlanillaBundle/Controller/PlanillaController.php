@@ -7,84 +7,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Form\PlanillaType;
-use PlanillaBundle\Form\PlanillaEditType;
-use PlanillaBundle\Form\PlanillaSearchType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaController extends Controller {
 
     private $session;
-
+    
     public function __construct() {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         //$anoEje = 2017;
         $anoEje = date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
         //$mesEje = $mes_repo->findOneBy(["mesEje" => 10]);
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
-
-        $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Planilla pl 
-                                        INNER JOIN pl.plazaHistorial ph
-                                        INNER JOIN ph.plaza pla
-                                        WHERE  
-                                        pla.tipoPlanilla = :tipoPlanilla AND 
-                                        pl.anoEje = :anoEje AND 
-                                        pl.mesEje = :mesEje 
-                                        ORDER BY pl.id")
-                ->setParameter('tipoPlanilla', 1)
-                ->setParameter('anoEje', $anoEje)
-                ->setParameter('mesEje', $mesEje);
-        $planillas = $dql->getResult();
-
-        $planilla = new Planilla();
-        $form = $this->createForm(PlanillaSearchType::class, $planilla);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
-
-                    $dql = $em->createQuery("SELECT pl FROM PlanillaBundle:Planilla pl 
-                                        INNER JOIN pl.plazaHistorial ph
-                                        INNER JOIN ph.plaza pla
-                                        WHERE  
-                                        pla.tipoPlanilla = :tipoPlanilla AND 
-                                        pl.anoEje = :anoEje AND 
-                                        pl.mesEje = :mesEje 
-                                        ORDER BY pl.id")
-                            ->setParameter('tipoPlanilla', $tipoPlanilla)
-                            ->setParameter('anoEje', $anoEje)
-                            ->setParameter('mesEje', $mesEje);
-                    $planillas = $dql->getResult();
-                
-                if (count($planillas) == 0) {
-                    $status = "La búsqueda no encontró coincidencias";
-                } else {
-                    $status = "Resultados de la búsqueda, listando " . count($planillas) . " planilla(s)";
-                }
-            } else {
-                $status = "No te has registrado correctamente";
-            }
-
-            $this->session->getFlashBag()->add("status", $status);
-            return $this->render("@Planilla/planilla/index.html.twig", [
-                        "planillas" => $planillas,
-                        "form" => $form->createView(),
-                        "tipoPlanilla" => $tipoPlanilla->getId()
-            ]);
-        }
-
-        return $this->render("@Planilla/planilla/index.html.twig", [
-                    "planillas" => $planillas,
-                    "form" => $form->createView(),
-                    "tipoPlanilla" => 1
-        ]);
+        $planillas = $em->getRepository("PlanillaBundle:Planilla")->findBy(["anoEje" => $anoEje, "mesEje" => $mesEje]);
+        return $this->render("@Planilla/planilla/index.html.twig", ["planillas" => $planillas]);
     }
 
-    public function addAction(Request $request, $tipoPlanilla) {
+    public function addAction(Request $request) {
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
         //$anoEje = 2017;
@@ -93,23 +37,11 @@ class PlanillaController extends Controller {
         //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
 
-        $tipoPlanilla_repo = $em->getRepository("PlanillaBundle:TipoPlanilla");
-        $tipoPlanilla2 = $tipoPlanilla_repo->findOneBy(["id" => $tipoPlanilla]);
-
-        $dql = $em->createQuery("SELECT ph FROM PlanillaBundle:PlazaHistorial ph 
-                                        INNER JOIN ph.plaza pl 
-                                        INNER JOIN ph.codPersonal pe
-                                        WHERE 
-                                        ph.estado = 1 AND 
-                                        pl.tipoPlanilla = :tipoPlanilla  
-                                        ORDER BY pe.apellidoPaterno ")
-                ->setParameter('tipoPlanilla', $tipoPlanilla);
-        $plazas = $dql->getResult();
-
-        $form = $this->createForm(PlanillaType::class, $planilla, ['plazas' => $plazas,
+        $form = $this->createForm(PlanillaType::class, $planilla, [
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
-            'tipoPlanilla' => $tipoPlanilla2]);
+            'accion' => 1
+                ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -118,7 +50,7 @@ class PlanillaController extends Controller {
                 $planilla = $planilla_repo->findOneBy([
                     "plazaHistorial" => $form->get("plazaHistorial")->getData(),
                     "anoEje" => $anoEje,
-                    "mesEje" => $mesEje
+                    "mesEje" => $mesEje,
                 ]);
                 if ($planilla != null) {
                     $status = "La planilla ya existe!!!";
@@ -127,8 +59,8 @@ class PlanillaController extends Controller {
                     $planilla->setAnoEje($anoEje);
                     $planilla->setMesEje($mesEje);
                     $planilla->setFuente($form->get("fuente")->getData());
-                    $planilla->setEspecifica($form->get("especifica")->getData());
-                    $planilla->setSecFunc($form->get("secFunc")->getData());
+                    $planilla->setEspecifica($form->get("plazaHistorial")->getData()->getPlaza()->getEspecifica());
+                    $planilla->setSecFunc($form->get("plazaHistorial")->getData()->getPlaza()->getSecFunc());
                     $planilla->setPlazaHistorial($form->get("plazaHistorial")->getData());
                     $planilla->setNota($form->get("nota")->getData());
                     $planilla->setUsuario($this->getUser());
@@ -148,42 +80,37 @@ class PlanillaController extends Controller {
                     if ($flush == null) {
                         $status = "La planilla se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar planilla!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La planilla no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
             return $this->redirectToRoute("planilla_index");
         }
         return $this->render('@Planilla/planilla/add.html.twig', [
-                    "form" => $form->createView(),
-                    "tipoPlanilla" => $tipoPlanilla
+                    "form" => $form->createView()
         ]);
     }
 
     public function editAction(Request $request, $id) {
         //$planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
+        //$anoEje = 2017;
+        $anoEje = \date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
         $planilla = $planilla_repo->find($id);
-        $tipoPlanilla = $planilla->getPlazaHistorial()->getPlaza()->getTipoPlanilla();
-
-        $dql = $em->createQuery("SELECT ph FROM PlanillaBundle:PlazaHistorial ph 
-                                        INNER JOIN ph.plaza pl 
-                                        INNER JOIN ph.codPersonal pe
-                                        WHERE 
-                                        ph.estado = 1 AND 
-                                        pl.tipoPlanilla = :tipoPlanilla  
-                                        ORDER BY pe.apellidoPaterno ")
-                ->setParameter('tipoPlanilla', $tipoPlanilla);
-        $plazas = $dql->getResult();
-
-        $form = $this->createForm(PlanillaEditType::class, $planilla, ['plazas' => $plazas, 'tipoPlanilla' => $tipoPlanilla]);
-        $anoEje = $planilla->getAnoEje();
-        $mesEje = $planilla->getMesEje();
+        $plazaHistorial = $planilla->getPlazaHistorial();
+        $form = $this->createForm(PlanillaType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'accion' => 2
+                ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -191,9 +118,9 @@ class PlanillaController extends Controller {
                 $planilla->setAnoEje($anoEje);
                 $planilla->setMesEje($mesEje);
                 $planilla->setFuente($form->get("fuente")->getData());
-                $planilla->setEspecifica($form->get("especifica")->getData());
-                $planilla->setSecFunc($form->get("secFunc")->getData());
-                $planilla->setPlazaHistorial($form->get("plazaHistorial")->getData());
+                $planilla->setEspecifica($plazaHistorial->getPlaza()->getEspecifica());
+                $planilla->setSecFunc($plazaHistorial->getPlaza()->getSecFunc());
+                $planilla->setPlazaHistorial($plazaHistorial);
                 $planilla->setNota($form->get("nota")->getData());
                 $planilla->setUsuario($this->getUser());
 
@@ -212,9 +139,21 @@ class PlanillaController extends Controller {
             return $this->redirectToRoute("planilla_index");
         }
         return $this->render('@Planilla/planilla/edit.html.twig', [
-                    "form" => $form->createView(),
-                    "tipoPlanilla" => $tipoPlanilla
+                    "form" => $form->createView()
         ]);
     }
 
+    public function modifyPlazaHistorialAction(Request $request) {
+        $tipoPlanilla_id = $request->query->get("tipoPlanilla");
+        $em = $this->getDoctrine()->getManager();
+        //$anoEje = 2017;
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        //$mesEje = $mes_repo->findOneBy(["mesEje" => 10]);
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        
+        $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->find(['id' => $tipoPlanilla_id]);
+        $plazaHistoriales = $em->getRepository('PlanillaBundle:PlazaHistorial')->findArrayByTipoPlanillaAnoEjeMesEje($tipoPlanilla, $anoEje, $mesEje);
+        return new JsonResponse($plazaHistoriales);
+    }
 }

@@ -5,8 +5,8 @@ namespace PlanillaBundle\Entity;
 /**
  * PlazaHistorial
  */
-class PlazaHistorial
-{
+class PlazaHistorial {
+
     /**
      * @var integer
      */
@@ -116,24 +116,22 @@ class PlazaHistorial
      * @var string
      */
     private $cadena;
-    
+
     /**
      * Get cadena
      *
      * @return string
      */
-    public function getCadena()
-    {
+    public function getCadena() {
         return $this->getCodPersonal()->getCadena();
-    } 
+    }
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -144,8 +142,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setSecPersonal($secPersonal)
-    {
+    public function setSecPersonal($secPersonal) {
         $this->secPersonal = $secPersonal;
 
         return $this;
@@ -156,8 +153,7 @@ class PlazaHistorial
      *
      * @return integer
      */
-    public function getSecPersonal()
-    {
+    public function getSecPersonal() {
         return $this->secPersonal;
     }
 
@@ -168,8 +164,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setFechaIngreso($fechaIngreso)
-    {
+    public function setFechaIngreso($fechaIngreso) {
         $this->fechaIngreso = $fechaIngreso;
 
         return $this;
@@ -180,8 +175,7 @@ class PlazaHistorial
      *
      * @return \DateTime
      */
-    public function getFechaIngreso()
-    {
+    public function getFechaIngreso() {
         return $this->fechaIngreso;
     }
 
@@ -192,8 +186,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setFechaCese($fechaCese)
-    {
+    public function setFechaCese($fechaCese) {
         $this->fechaCese = $fechaCese;
 
         return $this;
@@ -204,8 +197,7 @@ class PlazaHistorial
      *
      * @return \DateTime
      */
-    public function getFechaCese()
-    {
+    public function getFechaCese() {
         return $this->fechaCese;
     }
 
@@ -216,8 +208,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setResolucion($resolucion)
-    {
+    public function setResolucion($resolucion) {
         $this->resolucion = $resolucion;
 
         return $this;
@@ -228,8 +219,7 @@ class PlazaHistorial
      *
      * @return string
      */
-    public function getResolucion()
-    {
+    public function getResolucion() {
         return $this->resolucion;
     }
 
@@ -240,8 +230,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setFechaAnulacion($fechaAnulacion)
-    {
+    public function setFechaAnulacion($fechaAnulacion) {
         $this->fechaAnulacion = $fechaAnulacion;
 
         return $this;
@@ -252,8 +241,7 @@ class PlazaHistorial
      *
      * @return \DateTime
      */
-    public function getFechaAnulacion()
-    {
+    public function getFechaAnulacion() {
         return $this->fechaAnulacion;
     }
 
@@ -264,8 +252,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setCargo($cargo)
-    {
+    public function setCargo($cargo) {
         $this->cargo = $cargo;
 
         return $this;
@@ -276,8 +263,7 @@ class PlazaHistorial
      *
      * @return string
      */
-    public function getCargo()
-    {
+    public function getCargo() {
         return $this->cargo;
     }
 
@@ -288,8 +274,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setFechaAfp($fechaAfp)
-    {
+    public function setFechaAfp($fechaAfp) {
         $this->fechaAfp = $fechaAfp;
 
         return $this;
@@ -300,8 +285,7 @@ class PlazaHistorial
      *
      * @return \DateTime
      */
-    public function getFechaAfp()
-    {
+    public function getFechaAfp() {
         return $this->fechaAfp;
     }
 
@@ -312,8 +296,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setEstado($estado)
-    {
+    public function setEstado($estado) {
         $this->estado = $estado;
 
         return $this;
@@ -324,8 +307,7 @@ class PlazaHistorial
      *
      * @return boolean
      */
-    public function getEstado()
-    {
+    public function getEstado() {
         return $this->estado;
     }
 
@@ -336,8 +318,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setDocAnulacion($docAnulacion)
-    {
+    public function setDocAnulacion($docAnulacion) {
         $this->docAnulacion = $docAnulacion;
 
         return $this;
@@ -348,8 +329,7 @@ class PlazaHistorial
      *
      * @return string
      */
-    public function getDocAnulacion()
-    {
+    public function getDocAnulacion() {
         return $this->docAnulacion;
     }
 
@@ -360,8 +340,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setAfpMix($afpMix)
-    {
+    public function setAfpMix($afpMix) {
         $this->afpMix = $afpMix;
 
         return $this;
@@ -372,8 +351,7 @@ class PlazaHistorial
      *
      * @return boolean
      */
-    public function getAfpMix()
-    {
+    public function getAfpMix() {
         return $this->afpMix;
     }
 
@@ -384,8 +362,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setAfp(\PlanillaBundle\Entity\Afp $afp = null)
-    {
+    public function setAfp(\PlanillaBundle\Entity\Afp $afp = null) {
         $this->afp = $afp;
 
         return $this;
@@ -396,8 +373,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\Afp
      */
-    public function getAfp()
-    {
+    public function getAfp() {
         return $this->afp;
     }
 
@@ -408,8 +384,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setCondicionLaboral(\PlanillaBundle\Entity\CondicionLaboral $condicionLaboral = null)
-    {
+    public function setCondicionLaboral(\PlanillaBundle\Entity\CondicionLaboral $condicionLaboral = null) {
         $this->condicionLaboral = $condicionLaboral;
 
         return $this;
@@ -420,8 +395,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\CondicionLaboral
      */
-    public function getCondicionLaboral()
-    {
+    public function getCondicionLaboral() {
         return $this->condicionLaboral;
     }
 
@@ -432,8 +406,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setModoIngreso(\PlanillaBundle\Entity\ModoIngreso $modoIngreso = null)
-    {
+    public function setModoIngreso(\PlanillaBundle\Entity\ModoIngreso $modoIngreso = null) {
         $this->modoIngreso = $modoIngreso;
 
         return $this;
@@ -444,8 +417,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\ModoIngreso
      */
-    public function getModoIngreso()
-    {
+    public function getModoIngreso() {
         return $this->modoIngreso;
     }
 
@@ -456,8 +428,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setMotivoAnulacion(\PlanillaBundle\Entity\MotivoAnulacion $motivoAnulacion = null)
-    {
+    public function setMotivoAnulacion(\PlanillaBundle\Entity\MotivoAnulacion $motivoAnulacion = null) {
         $this->motivoAnulacion = $motivoAnulacion;
 
         return $this;
@@ -468,8 +439,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\MotivoAnulacion
      */
-    public function getMotivoAnulacion()
-    {
+    public function getMotivoAnulacion() {
         return $this->motivoAnulacion;
     }
 
@@ -480,8 +450,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setCodPersonal(\PlanillaBundle\Entity\Personal $codPersonal = null)
-    {
+    public function setCodPersonal(\PlanillaBundle\Entity\Personal $codPersonal = null) {
         $this->codPersonal = $codPersonal;
 
         return $this;
@@ -492,8 +461,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\Personal
      */
-    public function getCodPersonal()
-    {
+    public function getCodPersonal() {
         return $this->codPersonal;
     }
 
@@ -504,8 +472,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setPlaza(\PlanillaBundle\Entity\Plaza $plaza = null)
-    {
+    public function setPlaza(\PlanillaBundle\Entity\Plaza $plaza = null) {
         $this->plaza = $plaza;
 
         return $this;
@@ -516,8 +483,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\Plaza
      */
-    public function getPlaza()
-    {
+    public function getPlaza() {
         return $this->plaza;
     }
 
@@ -528,8 +494,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setRegimenLaboral(\PlanillaBundle\Entity\RegimenLaboral $regimenLaboral = null)
-    {
+    public function setRegimenLaboral(\PlanillaBundle\Entity\RegimenLaboral $regimenLaboral = null) {
         $this->regimenLaboral = $regimenLaboral;
 
         return $this;
@@ -540,8 +505,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\RegimenLaboral
      */
-    public function getRegimenLaboral()
-    {
+    public function getRegimenLaboral() {
         return $this->regimenLaboral;
     }
 
@@ -552,8 +516,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setRegimenPensionario(\PlanillaBundle\Entity\RegimenPensionario $regimenPensionario = null)
-    {
+    public function setRegimenPensionario(\PlanillaBundle\Entity\RegimenPensionario $regimenPensionario = null) {
         $this->regimenPensionario = $regimenPensionario;
 
         return $this;
@@ -564,8 +527,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\RegimenPensionario
      */
-    public function getRegimenPensionario()
-    {
+    public function getRegimenPensionario() {
         return $this->regimenPensionario;
     }
 
@@ -576,8 +538,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setSituacionLaboral(\PlanillaBundle\Entity\SituacionLaboral $situacionLaboral = null)
-    {
+    public function setSituacionLaboral(\PlanillaBundle\Entity\SituacionLaboral $situacionLaboral = null) {
         $this->situacionLaboral = $situacionLaboral;
 
         return $this;
@@ -588,8 +549,7 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\SituacionLaboral
      */
-    public function getSituacionLaboral()
-    {
+    public function getSituacionLaboral() {
         return $this->situacionLaboral;
     }
 
@@ -600,8 +560,7 @@ class PlazaHistorial
      *
      * @return PlazaHistorial
      */
-    public function setUnidad(\PlanillaBundle\Entity\Unidad $unidad = null)
-    {
+    public function setUnidad(\PlanillaBundle\Entity\Unidad $unidad = null) {
         $this->unidad = $unidad;
 
         return $this;
@@ -612,8 +571,8 @@ class PlazaHistorial
      *
      * @return \PlanillaBundle\Entity\Unidad
      */
-    public function getUnidad()
-    {
+    public function getUnidad() {
         return $this->unidad;
     }
+
 }

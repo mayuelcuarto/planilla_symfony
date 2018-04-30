@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Personal;
 use PlanillaBundle\Form\PersonalType;
-use PlanillaBundle\Form\PersonalSearchType;
 
 class PersonalController extends Controller {
 
@@ -17,20 +16,15 @@ class PersonalController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $personal_repo = $em->getRepository("PlanillaBundle:Personal");
-        $personales = $personal_repo->findAll();
-
-        return $this->render("@Planilla/personal/index.html.twig", [
-                    "personales" => $personales
-        ]);
+        $personales = $em->getRepository("PlanillaBundle:Personal")->findAll();
+        return $this->render("@Planilla/personal/index.html.twig", ["personales" => $personales]);
     }
 
     public function addAction(Request $request) {
         $personal = new Personal();
-        $form = $this->createForm(PersonalType::class, $personal);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(PersonalType::class, $personal, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -53,17 +47,16 @@ class PersonalController extends Controller {
                     $personal->setNumAutogenerado($form->get("numAutogenerado")->getData());
                     $personal->setEstado($form->get("estado")->getData());
 
-                    $em = $this->getDoctrine()->getManager();
                     $em->persist($personal);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "Personal creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar personal!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "Personal no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -76,9 +69,7 @@ class PersonalController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $personal_repo = $em->getRepository("PlanillaBundle:Personal");
         $personal = $personal_repo->find($codPersonal);
-
-        $form = $this->createForm(PersonalType::class, $personal);
-
+        $form = $this->createForm(PersonalType::class, $personal, ["estado" => $personal->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

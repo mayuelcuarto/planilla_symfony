@@ -100,11 +100,7 @@ class PlazaEditType extends AbstractType {
     
     protected function seteandoCategoria(FormInterface $form, CategoriaOcupacional $categoria) {
                 $em = $this->entityManager;
-                $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->find(["grupoOcupacional" => $categoria->getGrupoOcupacional()]);
-                $query = $em->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
-                                   WHERE c.grupoOcupacional = :grupo ")
-                ->setParameter('grupo', $grupo);
-                $categorias = $query->getResult();
+                $categorias = $em->getRepository('PlanillaBundle:CategoriaOcupacional')->findBy(["grupoOcupacional" => $categoria->getGrupoOcupacional()]);
                 
                 $form->add('categoria', EntityType::class, [
                     "label" => "Categoría Ocupacional",

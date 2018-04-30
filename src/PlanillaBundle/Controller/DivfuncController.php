@@ -16,18 +16,15 @@ class DivfuncController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $divfunc_repo = $em->getRepository("PlanillaBundle:Divfunc");
-        $divfuncs = $divfunc_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $divfuncs = $em->getRepository("PlanillaBundle:Divfunc")->findAll();
         return $this->render("@Planilla/divfunc/index.html.twig", ["divfuncs" => $divfuncs]);
     }
 
     public function addAction(Request $request) {
         $divfunc = new Divfunc();
-        $form = $this->createForm(DivfuncType::class, $divfunc);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(DivfuncType::class, $divfunc, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -52,11 +49,11 @@ class DivfuncController extends Controller {
                     if ($flush == null) {
                         $status = "La división funcional se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar división funcional!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La división funcional no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -69,9 +66,7 @@ class DivfuncController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $divfunc_repo = $em->getRepository("PlanillaBundle:Divfunc");
         $divfunc = $divfunc_repo->find($id);
-
-        $form = $this->createForm(DivfuncType::class, $divfunc);
-
+        $form = $this->createForm(DivfuncType::class, $divfunc, ["estado" => $divfunc->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

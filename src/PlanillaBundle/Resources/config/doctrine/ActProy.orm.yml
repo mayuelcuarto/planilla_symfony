@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\ActProy:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\ActProyRepository
     table: act_proy
     id:
         id:

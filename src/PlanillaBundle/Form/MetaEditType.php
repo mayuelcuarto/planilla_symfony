@@ -9,7 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
 
 class MetaEditType extends AbstractType {
 
@@ -22,74 +21,64 @@ class MetaEditType extends AbstractType {
                     "label" => "Programa",
                     "required" => "required",
                     "class" => "PlanillaBundle:Programa",
-                    "query_builder" => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('p')
-                                ->where('p.anoEje > 2010');
-                    },
+                    "choices" => $options['programa'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['programaSeleccion']
                 ])
                 ->add('producto', EntityType::class, [
                     "label" => "Producto",
                     "required" => "required",
                     "class" => "PlanillaBundle:Producto",
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('p')
-                                ->where('p.anoEje > 2010');
-                    },
+                    "choices" => $options['producto'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['productoSeleccion']
                 ])
                 ->add('actProy', EntityType::class, [
                     "label" => "Actividad",
                     "required" => "required",
                     "class" => "PlanillaBundle:ActProy",
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('a')
-                                ->where('a.anoEje > 2010');
-                    },
+                    "choices" => $options['actividad'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['actividadSeleccion']
                 ])
                 ->add('funcion', EntityType::class, [
                     "label" => "Función",
                     "required" => "required",
                     "class" => "PlanillaBundle:Funcion",
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('f')
-                                ->where('f.anoEje > 2010');
-                    },
+                    "choices" => $options['funcion'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['funcionSeleccion']
                 ])
                 ->add('divfunc', EntityType::class, [
                     "label" => "División Funcional",
                     "required" => "required",
                     "class" => "PlanillaBundle:Divfunc",
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('d')
-                                ->where('d.anoEje > 2010');
-                    },
+                    "choices" => $options['divfunc'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['divfuncSeleccion']
                 ])
                 ->add('grpf', EntityType::class, [
                     "label" => "Grupo Funcional",
                     "required" => "required",
                     "class" => "PlanillaBundle:Grpf",
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('g')
-                                ->where('g.anoEje > 2010');
-                    },
+                    "choices" => $options['grpf'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['grpfSeleccion']
                 ])
                 ->add('ejecutora', EntityType::class, [
                     "label" => "Ejecutora",
                     "required" => "required",
                     "class" => "PlanillaBundle:Ejecutora",
+                    "choices" => $options['ejecutora'],
                     "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['ejecutoraSeleccion']
                 ])
                 ->add('meta', TextType::class, [
                     "label" => "Meta",
@@ -121,7 +110,23 @@ class MetaEditType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Meta']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Meta',
+            'programa' => null,
+            'programaSeleccion' => null,
+            'producto' => null,
+            'productoSeleccion' => null,
+            'actividad' => null,
+            'actividadSeleccion' => null,
+            'funcion' => null,
+            'funcionSeleccion' => null,
+            'divfunc' => null,
+            'divfuncSeleccion' => null,
+            'grpf' => null,
+            'grpfSeleccion' => null,
+            'ejecutora' => null,
+            'ejecutoraSeleccion' => null
+            ]);
     }
 
     /**

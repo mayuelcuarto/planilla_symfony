@@ -18,16 +18,13 @@ class FuncionController extends Controller {
 
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $funcion_repo = $em->getRepository("PlanillaBundle:Funcion");
-        $funcions = $funcion_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
-
+        $funcions = $em->getRepository("PlanillaBundle:Funcion")->findAll();
         return $this->render("@Planilla/funcion/index.html.twig", ["funcions" => $funcions]);
     }
 
     public function addAction(Request $request) {
         $funcion = new Funcion();
-        $form = $this->createForm(FuncionType::class, $funcion);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(FuncionType::class, $funcion, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -52,11 +49,11 @@ class FuncionController extends Controller {
                     if ($flush == null) {
                         $status = "La función se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar función!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La función no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -69,9 +66,7 @@ class FuncionController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $funcion_repo = $em->getRepository("PlanillaBundle:Funcion");
         $funcion = $funcion_repo->find($id);
-
-        $form = $this->createForm(FuncionType::class, $funcion);
-
+        $form = $this->createForm(FuncionType::class, $funcion, ["estado" => $funcion->getEstado()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

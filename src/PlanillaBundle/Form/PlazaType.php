@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormInterface;
 use PlanillaBundle\Entity\TipoPlanilla;
 use PlanillaBundle\Entity\CategoriaOcupacional;
-use PDO;
 
 class PlazaType extends AbstractType {
 
@@ -124,11 +123,7 @@ class PlazaType extends AbstractType {
     
     protected function seteandoCategoria(FormInterface $form, CategoriaOcupacional $categoria) {
                 $em = $this->entityManager;
-                $grupo = $em->getRepository('PlanillaBundle:GrupoOcupacional')->find(["grupoOcupacional" => $categoria->getGrupoOcupacional()]);
-                $query = $em->createQuery("SELECT c FROM PlanillaBundle:CategoriaOcupacional c 
-                                   WHERE c.grupoOcupacional = :grupo ")
-                ->setParameter('grupo', $grupo);
-                $categorias = $query->getResult();
+                $categorias = $em->getRepository('PlanillaBundle:CategoriaOcupacional')->findBy(["grupoOcupacional" => $categoria->getGrupoOcupacional()]);
                 
                 $form->add('categoria', EntityType::class, [
                     "label" => "Categoría Ocupacional",
@@ -143,10 +138,7 @@ class PlazaType extends AbstractType {
     
     protected function setNumPlazaInicio(FormInterface $form, TipoPlanilla $tipoPlanilla= null) {
                 $em = $this->entityManager;
-                $sth1 = $em->getConnection()->prepare("SELECT SugerirPlaza(:tipoPlanilla)");
-                $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
-                $sth1->execute();
-                while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {$numPlaza = $fila[0];}
+                $numPlaza = $em->getRepository('PlanillaBundle:Plaza')->sugerirNumPlaza($tipoPlanilla->getId());
                 
                 $form->add('numPlaza', TextType::class, [
                     "label" => "Plaza",

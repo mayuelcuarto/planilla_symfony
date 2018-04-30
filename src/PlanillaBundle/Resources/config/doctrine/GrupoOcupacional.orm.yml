@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\GrupoOcupacional:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\GrupoOcupacionalRepository
     table: grupo_ocupacional
     id:
         grupoOcupacional:

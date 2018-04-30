@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Producto:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\ProductoRepository
     table: producto
     id:
         id:

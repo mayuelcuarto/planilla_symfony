@@ -22,6 +22,19 @@ class GrupoOcupacional
      */
     private $estado;
 
+    /**
+     * Set grupoOcupacional
+     *
+     * @param integer $grupoOcupacional
+     *
+     * @return GrupoOcupacional
+     */
+    public function setGrupoOcupacional($grupoOcupacional)
+    {
+        $this->grupoOcupacional = $grupoOcupacional;
+
+        return $this;
+    }
 
     /**
      * Get grupoOcupacional

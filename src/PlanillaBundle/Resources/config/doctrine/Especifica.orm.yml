@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Especifica:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\EspecificaRepository
     table: especifica
     id:
         id:

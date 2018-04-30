@@ -22,6 +22,19 @@ class MotivoAnulacion
      */
     private $estado;
 
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return MotivoAnulacion
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id

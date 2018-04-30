@@ -43,7 +43,8 @@ class ConceptoType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['estado']
                 ])
                 ->add('esActivo', CheckboxType::class, [
                     "label" => "Activo",
@@ -80,7 +81,10 @@ class ConceptoType extends AbstractType {
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Concepto']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Concepto',
+            'estado' => null
+            ]);
     }
 
 }

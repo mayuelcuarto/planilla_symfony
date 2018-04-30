@@ -34,7 +34,8 @@ class DivfuncType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['estado']
                 ])
                 ->add('Guardar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -46,7 +47,10 @@ class DivfuncType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Divfunc']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Divfunc',
+            'estado' => null
+            ]);
     }
 
     /**

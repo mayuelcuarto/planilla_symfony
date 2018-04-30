@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Plaza:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\PlazaRepository
     table: plaza
     indexes:
         fk_plaza_categoria_ocupacional1_idx:

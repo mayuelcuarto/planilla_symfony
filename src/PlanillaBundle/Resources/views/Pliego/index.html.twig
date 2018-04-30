@@ -1,6 +1,6 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-5">
+    <div>
         <h3>Lista de Pliegos</h3>
         <hr/>
         <a href="{{ path("pliego_add") }}" class="btn btn-success">Agregar Pliego</a>
@@ -8,7 +8,7 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
+        <table id="myTable" class="table-sm table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -16,6 +16,7 @@
                     <th>Sector</th>
                     <th>Pliego</th>
                     <th>Nombre</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,9 +27,21 @@
                         <td>{{ pliego.sector.nombre }}</td>
                         <td>{{ pliego.pliego }}</td>
                         <td>{{ pliego.nombre }}</td>
+                        <td>{{ pliego.estado }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "order": [[0, 'desc'],[5, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [5]}]
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\RegimenPensionario:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\RegimenPensionarioRepository
     table: regimen_pensionario
     id:
         id:

@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\CondicionLaboral:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\CondicionLaboralRepository
     table: condicion_laboral
     id:
         id:

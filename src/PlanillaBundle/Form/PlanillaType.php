@@ -10,8 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use PlanillaBundle\Entity\TipoPlanilla;
+use PlanillaBundle\Entity\PlazaHistorial;
 
 class PlanillaType extends AbstractType {
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -39,8 +51,7 @@ class PlanillaType extends AbstractType {
                     "required" => "required",
                     "class" => "PlanillaBundle:TipoPlanilla",
                     "choice_label" => "nombre",
-                    "data" => $options['tipoPlanilla'],
-                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('fuente', EntityType::class, [
                     "label" => "Fuente de Financiamiento",
@@ -53,33 +64,10 @@ class PlanillaType extends AbstractType {
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('especifica', EntityType::class, [
-                    "label" => "Específica de Gasto",
-                    "required" => "required",
-                    "class" => "PlanillaBundle:Especifica",
-                    "query_builder" => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('e')
-                                ->where('e.estado = 1');
-                    },
-                    "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
-                ->add('secFunc', EntityType::class, [
-                    "label" => "Meta",
-                    "required" => "required",
-                    "class" => "PlanillaBundle:Meta",
-                    "query_builder" => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('m')
-                                ->where('m.estado = 1');
-                    },
-                    "choice_label" => "cadena",
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
                 ->add('plazaHistorial', EntityType::class, [
                     "label" => "Plaza de Personal",
                     "required" => "required",
                     "class" => "PlanillaBundle:PlazaHistorial",
-                    "choices" => $options['plazas'],
                     "choice_label" => "cadena",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
@@ -92,6 +80,58 @@ class PlanillaType extends AbstractType {
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
                 ])
         ;
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'));
+    }
+
+    function onPreSetData(FormEvent $event) {
+        $form = $event->getForm();
+        $options = $form->getConfig()->getOptions();
+        if ($options['accion'] == 1) {
+            $em = $this->entityManager;
+            $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->findOneBy(["id" => 1]);
+            $this->seteandoPlazaHistorial($form, $tipoPlanilla, $options['anoEje'], $options['mesEje']);
+        }
+    }
+
+    function onPreSubmitData(FormEvent $event) {
+        $em = $this->entityManager;
+        $form = $event->getForm();
+        $data = $event->getData();
+        $options = $form->getConfig()->getOptions();
+        if ($options['accion'] == 1) {
+            $plazaHistorial = $em->getRepository('PlanillaBundle:PlazaHistorial')->find($data['plazaHistorial']);
+            $this->seteandoPlazaHistorialSubmit($form, $plazaHistorial);
+        }
+    }
+
+    protected function seteandoPlazaHistorial(FormInterface $form, TipoPlanilla $tipoPlanilla, $anoEje, $mesEje) {
+        $em = $this->entityManager;
+        $plazaHistoriales = $em->getRepository('PlanillaBundle:PlazaHistorial')->findByTipoPlanillaAnoEjeMesEje($tipoPlanilla, $anoEje, $mesEje);
+
+        $form->add('plazaHistorial', EntityType::class, [
+            "label" => "Plaza de Personal",
+            "required" => "required",
+            "class" => "PlanillaBundle:PlazaHistorial",
+            "choice_label" => "cadena",
+            "choices" => $plazaHistoriales,
+            "attr" => ["class" => "form-control form-control-sm"],
+        ]);
+    }
+
+    protected function seteandoPlazaHistorialSubmit(FormInterface $form, PlazaHistorial $plazaHistorial) {
+        $em = $this->entityManager;
+        $plazaHistoriales = $em->getRepository('PlanillaBundle:PlazaHistorial')->findAll();
+
+        $form->add('plazaHistorial', EntityType::class, [
+            "label" => "Plaza de Personal",
+            "required" => "required",
+            "class" => "PlanillaBundle:PlazaHistorial",
+            "choice_label" => "cadena",
+            "choices" => $plazaHistoriales,
+            "attr" => ["class" => "form-control form-control-sm"],
+            "data" => $plazaHistorial
+        ]);
     }
 
     /**
@@ -100,10 +140,9 @@ class PlanillaType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Planilla',
-            'plazas' => null,
             'anoEje' => null,
             'mesEje' => null,
-            'tipoPlanilla' => null
+            'accion' => null
         ]);
     }
 

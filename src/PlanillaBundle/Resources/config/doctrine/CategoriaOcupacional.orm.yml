@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\CategoriaOcupacional:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\CategoriaOcupacionalRepository
     table: categoria_ocupacional
     indexes:
         fk_categoria_ocupacional_grupo_ocupacional1_idx:

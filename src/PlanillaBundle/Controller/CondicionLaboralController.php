@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\CondicionLaboral;
 use PlanillaBundle\Form\CondicionLaboralType;
 use PlanillaBundle\Form\CondicionLaboralEditType;
-use PDO;
 
 class CondicionLaboralController extends Controller {
 
@@ -29,15 +28,8 @@ class CondicionLaboralController extends Controller {
     public function addAction(Request $request) {
         $condicionLaboral = new CondicionLaboral();
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()->prepare("SELECT SugerirCondicionLaboral()");
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $id = $fila[0];
-        }
-        $form = $this->createForm(CondicionLaboralType::class, $condicionLaboral);
-
-        $form->get("id")->setData($id);
-        $form->get("estado")->setData(true);
+        $id = $em->getRepository("PlanillaBundle:CondicionLaboral")->sugerirCondicionLaboral();
+        $form = $this->createForm(CondicionLaboralType::class, $condicionLaboral,["id" => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -47,28 +39,19 @@ class CondicionLaboralController extends Controller {
                     $status = "La condición laboral ya existe!!!";
                 } else {
                     $condicionLaboral = new CondicionLaboral();
+                    $condicionLaboral->setId($form->get("id")->getData());
                     $condicionLaboral->setNombre($form->get("nombre")->getData());
                     $condicionLaboral->setEstado($form->get("estado")->getData());
-
-                    $id = $form->get("id")->getData();
-                    $nombre = $condicionLaboral->getNombre();
-                    $estado = $condicionLaboral->getEstado();
-
-                    $sth = $em->getConnection()->prepare("CALL AgregarCondicionLaboral(:id, :nombre, :estado)");
-
-                    $sth->bindValue(':id', $id);
-                    $sth->bindValue(':nombre', $nombre);
-                    $sth->bindValue(':estado', $estado);
-                    $sth->execute();
+                    $condicionLaboral_repo->AgregarCondicionLaboral($condicionLaboral);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "La condición laboral se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar condición laboral!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "La condición laboral no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -81,7 +64,6 @@ class CondicionLaboralController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $condicionLaboral_repo = $em->getRepository("PlanillaBundle:CondicionLaboral");
         $condicionLaboral = $condicionLaboral_repo->find($id);
-
         $form = $this->createForm(CondicionLaboralEditType::class, $condicionLaboral);
 
         $form->handleRequest($request);

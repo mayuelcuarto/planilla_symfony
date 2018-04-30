@@ -57,7 +57,6 @@ plaza_add:
     path: /plaza/add/
     defaults: { _controller: PlanillaBundle:Plaza:add }
     
-    
 plaza_edit:
     path: /plaza/edit/{id}
     defaults: { _controller: PlanillaBundle:Plaza:edit }
@@ -352,6 +351,11 @@ plazaHistorial_baja:
     path: /plazaHistorial/baja/{id}
     defaults: { _controller: PlanillaBundle:PlazaHistorial:baja }
     
+plazaHistorial_ajax_afp:
+    path:     /plazaHistorial/afp
+    defaults: { _controller: "PlanillaBundle:PlazaHistorial:modifyAfp" }
+    methods:  GET
+    
 grupoOcupacional_index:
     path: /grupoOcupacional/index
     defaults: { _controller: PlanillaBundle:GrupoOcupacional:index }
@@ -381,21 +385,35 @@ planilla_index:
     defaults: { _controller: PlanillaBundle:Planilla:index }
     
 planilla_add:
-    path: /planilla/add/{tipoPlanilla}
+    path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
     
 planilla_edit:
     path: /planilla/edit/{id}
     defaults: { _controller: PlanillaBundle:Planilla:edit }
     
+planilla_ajax_plazaHistorial:
+    path:     /planilla/plazaHistorial
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
+    methods:  GET
+    
 planillaHasConcepto_index:
     path: /planillaHasConcepto/index/{planillaId}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:index }
     
 planillaHasConcepto_add:
-    path: /planillaHasConcepto/add/{planillaId}{tipoConcepto}
+    path: /planillaHasConcepto/add/{planillaId}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:add }
     
 planillaHasConcepto_edit:
     path: /planillaHasConcepto/edit/{id}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:edit }
+
+planillaHasConcepto_eliminar:
+    path: /planillaHasConcepto/eliminar/{id}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:eliminar }
+    
+planillaHasConcepto_ajax_concepto:
+    path:     /planillaHasConcepto/concepto
+    defaults: { _controller: "PlanillaBundle:PlanillaHasConcepto:modifyConcepto" }
+    methods:  GET
