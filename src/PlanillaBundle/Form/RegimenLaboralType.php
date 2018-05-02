@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -20,7 +21,8 @@ class RegimenLaboralType extends AbstractType {
                     "label" => "ID",
                     "mapped" => false,
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 2]
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 2],
+                    "data" => $options['id']
                 ])
                 ->add('nombre', TextType::class, [
                     "label" => "Nombre",
@@ -32,10 +34,16 @@ class RegimenLaboralType extends AbstractType {
                     "required" => "required",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
+                ->add('sueldoMinimo', NumberType::class, [
+                    "label" => "Sueldo Mínimo",
+                    "required" => "required",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => true
                 ])
                 ->add('Guardar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -47,7 +55,10 @@ class RegimenLaboralType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\RegimenLaboral']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\RegimenLaboral',
+            'id' => null
+            ]);
     }
 
     /**

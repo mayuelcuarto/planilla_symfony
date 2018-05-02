@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -23,6 +24,11 @@ class RegimenLaboralEditType extends AbstractType {
                 ])
                 ->add('descripcion', TextType::class, [
                     "label" => "Descripción",
+                    "required" => "required",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('sueldoMinimo', NumberType::class, [
+                    "label" => "Sueldo Mínimo",
                     "required" => "required",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
