@@ -3,8 +3,12 @@
     <div>
         <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
         <hr/>
-            <div>
+        <div class="row mx-auto">
                 <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button" class="btn btn-success">Agregar Concepto</a>
+                {% if planilla.plazaHistorial.plaza.tipoPlanilla.id == 1 or planilla.plazaHistorial.plaza.tipoPlanilla.id == 4%}
+                <hr/>
+                <a href="" role="button" class="btn btn-success">Inasistencias y Tardanzas</a>
+                {% endif %}
             </div>
             <hr/>
         {% for message in app.session.flashbag().get('status') %}
