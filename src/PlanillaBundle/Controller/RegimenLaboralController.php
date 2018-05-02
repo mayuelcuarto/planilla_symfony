@@ -29,15 +29,8 @@ class RegimenLaboralController extends Controller {
     public function addAction(Request $request) {
         $regimenLaboral = new RegimenLaboral();
         $em = $this->getDoctrine()->getManager();
-        $sth1 = $em->getConnection()->prepare("SELECT SugerirRegimenLaboral()");
-        $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $id = $fila[0];
-        }
-        $form = $this->createForm(RegimenLaboralType::class, $regimenLaboral);
-
-        $form->get("id")->setData($id);
-        $form->get("estado")->setData(true);
+        $id = $em->getRepository("PlanillaBundle:RegimenLaboral")->SugerirRegimenLaboral();
+        $form = $this->createForm(RegimenLaboralType::class, $regimenLaboral, ["id" => $id]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -47,30 +40,22 @@ class RegimenLaboralController extends Controller {
                     $status = "El régimen laboral ya existe!!!";
                 } else {
                     $regimenLaboral = new RegimenLaboral();
+                    $regimenLaboral->setId($form->get("id")->getData());
                     $regimenLaboral->setNombre($form->get("nombre")->getData());
                     $regimenLaboral->setDescripcion($form->get("descripcion")->getData());
+                    $regimenLaboral->setSueldoMinimo($form->get("sueldoMinimo")->getData());
                     $regimenLaboral->setEstado($form->get("estado")->getData());
 
-                    $id = $form->get("id")->getData();
-                    $nombre = $regimenLaboral->getNombre();
-                    $descripcion = $regimenLaboral->getDescripcion();
-                    $estado = $regimenLaboral->getEstado();
-
-                    $sth = $em->getConnection()->prepare("CALL AgregarRegimenLaboral(:id, :nombre, :descripcion, :estado)");
-                    $sth->bindValue(':id', $id);
-                    $sth->bindValue(':nombre', $nombre);
-                    $sth->bindValue(':descripcion', $descripcion);
-                    $sth->bindValue(':estado', $estado);
-                    $sth->execute();
+                    $regimenLaboral_repo->AgregarRegimenLaboral($regimenLaboral);
                     $flush = $em->flush();
                     if ($flush == null) {
                         $status = "El régimen laboral se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar régimen laboral!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El régimen laboral no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -91,6 +76,8 @@ class RegimenLaboralController extends Controller {
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $regimenLaboral->setNombre($form->get("nombre")->getData());
+                $regimenLaboral->setDescripcion($form->get("descripcion")->getData());
+                $regimenLaboral->setSueldoMinimo($form->get("sueldoMinimo")->getData());
                 $regimenLaboral->setEstado($form->get("estado")->getData());
 
                 $em = $this->getDoctrine()->getManager();
