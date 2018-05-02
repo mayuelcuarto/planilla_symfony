@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\RegimenLaboral:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\RegimenLaboralRepository
     table: regimen_laboral
     id:
         id:
@@ -26,4 +27,10 @@ PlanillaBundle\Entity\RegimenLaboral:
             length: 255
             options:
                 fixed: false
+        sueldoMinimo:
+            type: float
+            nullable: true
+            precision: 15
+            scale: 2
+            column: sueldo_minimo
     lifecycleCallbacks: {  }

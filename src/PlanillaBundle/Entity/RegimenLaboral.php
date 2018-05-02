@@ -26,7 +26,25 @@ class RegimenLaboral
      * @var string
      */
     private $descripcion;
+    
+    /**
+     * @var float
+     */
+    private $sueldoMinimo;
 
+    /**
+     * Set if
+     *
+     * @param integer $id
+     *
+     * @return RegimenLaboral
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -108,5 +126,29 @@ class RegimenLaboral
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+    
+    /**
+     * Set sueldoMinimo
+     *
+     * @param float $sueldoMinimo
+     *
+     * @return RegimenLaboral
+     */
+    public function setSueldoMinimo($sueldoMinimo)
+    {
+        $this->sueldoMinimo = $sueldoMinimo;
+
+        return $this;
+    }
+
+    /**
+     * Get sueldoMinimo
+     *
+     * @return float
+     */
+    public function getSueldoMinimo()
+    {
+        return $this->sueldoMinimo;
     }
 }
