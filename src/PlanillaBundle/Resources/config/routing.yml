@@ -392,6 +392,10 @@ planilla_edit:
     path: /planilla/edit/{id}
     defaults: { _controller: PlanillaBundle:Planilla:edit }
     
+planilla_delete:
+    path: /planilla/delete/{id}
+    defaults: { _controller: PlanillaBundle:Planilla:delete }
+    
 planilla_ajax_plazaHistorial:
     path:     /planilla/plazaHistorial
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
@@ -409,9 +413,9 @@ planillaHasConcepto_edit:
     path: /planillaHasConcepto/edit/{id}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:edit }
 
-planillaHasConcepto_eliminar:
-    path: /planillaHasConcepto/eliminar/{id}
-    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:eliminar }
+planillaHasConcepto_delete:
+    path: /planillaHasConcepto/delete/{id}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:delete }
     
 planillaHasConcepto_ajax_concepto:
     path:     /planillaHasConcepto/concepto
