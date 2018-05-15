@@ -1,6 +1,6 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
-    <div class="col-lg-6">
+    <div>
         <h3>Historial de Plaza</h3>
         <hr/>
         {% if activado == true %}
@@ -12,7 +12,7 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table class="table-sm table-bordered table-responsive" height="430px">
+        <table id="myTable" class="table-sm table-bordered table-responsive">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -26,18 +26,30 @@
                 {% for plazaHistorial in plazaHistorials %}
                     <tr {% if plazaHistorial.estado == false %} class="table-secondary" {% endif%} >
                         <td><a href="{{path("plazaHistorial_edit",{"id":plazaHistorial.id})}}" class="btn btn-warning ">{{ plazaHistorial.secPersonal }}</a></td>
-                        <td>{% if plazaHistorial.estado == true %}
-                            <a href="{{path("plazaHistorial_baja",{"id":plazaHistorial.id})}}" class="btn btn-danger">X</a>
-                        {% else %}
-                            <span class="btn btn-outline-dark">X</span>
+                        <td>
+                            {% if plazaHistorial.estado == true %}
+                                <a href="{{path("plazaHistorial_baja",{"id":plazaHistorial.id})}}" class="btn btn-danger">X</a>
+                            {% else %}
+                                <span class="btn btn-outline-dark">X</span>
                             {% endif%}
-                            </td>
-                            <td>{{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}</td>
-                            <td>{{ plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
-                            <td>{{ plazaHistorial.plaza.numPlaza }}</td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% endblock %}
+                        </td>
+                        <td>{{ plazaHistorial.codPersonal.apellidoPaterno }} {{ plazaHistorial.codPersonal.apellidoMaterno }}, {{ plazaHistorial.codPersonal.nombre }}</td>
+                        <td>{{ plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
+                        <td>{{ plazaHistorial.plaza.numPlaza }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        //Función para implementar datatables
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 6,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "searching": false
+            });
+        });
+    </script>
+{% endblock %}
