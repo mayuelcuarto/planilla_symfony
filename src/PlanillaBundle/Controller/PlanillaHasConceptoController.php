@@ -108,7 +108,7 @@ class PlanillaHasConceptoController extends Controller {
         ]);
     }
 
-    public function eliminarAction($id) {
+    public function deleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         $planillaHasConcepto_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
         $planillaHasConcepto = $planillaHasConcepto_repo->find($id);
