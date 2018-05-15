@@ -3,14 +3,19 @@
     <div>
         <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
         <hr/>
-        <div class="row mx-auto">
-                <a href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button" class="btn btn-success">Agregar Concepto</a>
-                {% if planilla.plazaHistorial.plaza.tipoPlanilla.id == 1 or planilla.plazaHistorial.plaza.tipoPlanilla.id == 4%}
-                <hr/>
-                <a href="" role="button" class="btn btn-success">Inasistencias y Tardanzas</a>
-                {% endif %}
+        <div class="row mx-auto"> 
+            <div>
+                <a class="btn btn-success" href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button">Agregar Concepto</a>
             </div>
-            <hr/>
+            {% if planilla.plazaHistorial.plaza.tipoPlanilla.id == 1 or planilla.plazaHistorial.plaza.tipoPlanilla.id == 4%}
+                <hr/>
+                <div class="d-block d-sm-none"><br><br></div>
+                <div>
+                    <a class="btn btn-success" href="" role="button">Inasistencias y Tardanzas</a>
+                </div>
+            {% endif %}
+        </div>
+        <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
@@ -31,25 +36,30 @@
                         <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
                         <td>{{ planillaHasConcepto.concepto.concepto }}</td>
                         <td>{{ planillaHasConcepto.monto }}</td>
-                        <td><a href="{{ path("planillaHasConcepto_eliminar",{"id":planillaHasConcepto.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
+                        <td><a href="{{ path("planillaHasConcepto_delete",{"id":planillaHasConcepto.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <hr/>
     <div class="row mx-auto">
-            <div class="alert alert-info">
-                <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg }}</span>
-            </div>
-            <hr/>
-            <div class="alert alert-info">
-                <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg }}
-            </div>
-            <hr/>
-            <div class="alert alert-info">
-                <span >TOTAL EGRESOS: {{ planilla.totalEgreso }}
-            </div>
+        <div class="alert alert-info">
+            <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg }}</span>
         </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg }}
+        </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >TOTAL EGRESOS: {{ planilla.totalEgreso }}
+        </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >CUOTA PATRONAL: {{ planilla.patronal }}
+        </div>
+    </div>
     <script>
         //Función para implementar datatables
         $(document).ready(function () {
