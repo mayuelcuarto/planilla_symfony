@@ -142,6 +142,23 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
+    
+    public function deleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+        $planilla = $planilla_repo->find($id);
+
+        $em->remove($planilla);
+        $flush = $em->flush();
+        if ($flush == null) {
+            $status = "La planilla se ha eliminado correctamente";
+        } else {
+            $status = "Error al eliminar planilla!!";
+        }
+
+        $this->session->getFlashBag()->add("status", $status);
+        return $this->redirectToRoute("planilla_index");
+    }
 
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
