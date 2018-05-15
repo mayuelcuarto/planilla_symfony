@@ -17,7 +17,8 @@
                     <th>Tipo</th>
                     <th>Plaza</th>
                     <th>Conceptos</th>
-                    <th>Personal</th>  
+                    <th>Personal</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +30,8 @@
                         <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
                         <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
                         <td><a href="{{path("planillaHasConcepto_index",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
-                        <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>   
+                        <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
+                        <td><a href="{{ path("planilla_delete",{"id":planilla.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
