@@ -412,6 +412,10 @@ planillaHasConcepto_add:
 planillaHasConcepto_edit:
     path: /planillaHasConcepto/edit/{id}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:edit }
+    
+planillaHasConcepto_tardanzas:
+    path: /planillaHasConcepto/tardanzas/{planillaId}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:tardanzas }
 
 planillaHasConcepto_delete:
     path: /planillaHasConcepto/delete/{id}
