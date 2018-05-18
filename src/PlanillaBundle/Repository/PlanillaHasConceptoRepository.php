@@ -83,5 +83,19 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth->bindValue(':planillaId', $planilla->getId());
         $sth->execute();
     }
+    
+    public function ActualizarInasistencias(Planilla $planilla) {
+        $em = $this->getEntityManager();
+        $sth = $em->getConnection()->prepare("CALL ActualizarInasistencias(:planillaId)");
+        $sth->bindValue(':planillaId', $planilla->getId());
+        $sth->execute();
+    }
+    
+    public function ActualizarEsSalud(Planilla $planilla) {
+        $em = $this->getEntityManager();
+        $sth = $em->getConnection()->prepare("CALL ActualizarEsSalud(:planillaId)");
+        $sth->bindValue(':planillaId', $planilla->getId());
+        $sth->execute();
+    }
 }
 
