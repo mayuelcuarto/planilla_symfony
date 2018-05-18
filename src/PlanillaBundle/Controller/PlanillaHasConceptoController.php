@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\PlanillaHasConcepto;
 use PlanillaBundle\Form\PlanillaHasConceptoType;
+use PlanillaBundle\Form\TardanzasType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaHasConceptoController extends Controller {
@@ -49,6 +50,7 @@ class PlanillaHasConceptoController extends Controller {
                 $em->persist($planillaHasConcepto);
                 $flush = $em->flush();
                 $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarPlanillaAfp($planilla);
+                $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarEsSalud($planilla);
                 if ($flush == null) {
                     $status = "El concepto de planilla se agregó correctamente";
                 } else {
@@ -90,6 +92,7 @@ class PlanillaHasConceptoController extends Controller {
                 $em->persist($planillaHasConcepto);
                 $flush = $em->flush();
                 $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarPlanillaAfp($planilla);
+                $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarEsSalud($planilla);
                 if ($flush == null) {
                     $status = "El concepto de planilla se ha editado correctamente";
                 } else {
@@ -105,6 +108,44 @@ class PlanillaHasConceptoController extends Controller {
         return $this->render('@Planilla/planillaHasConcepto/edit.html.twig', [
                     "form" => $form->createView(),
                     "planillaId" => $planillaHasConcepto->getPlanilla()->getId()
+        ]);
+    }
+    
+    
+    public function tardanzasAction(Request $request, $planillaId){
+        $em = $this->getDoctrine()->getManager();
+        //$planillaHasConcepto = new PlanillaHasConcepto();
+        $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+        $planilla = $planilla_repo->find($planillaId);
+        
+        $form = $this->createForm(TardanzasType::class, $planilla);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $planilla->setTardanzas($form->get("tardanzas")->getData());
+                $planilla->setParticulares($form->get("particulares")->getData());
+                $planilla->setLsgh($form->get("lsgh")->getData());
+                $planilla->setFaltas($form->get("faltas")->getData());
+
+                $em->persist($planilla);
+                $flush = $em->flush();
+                $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarInasistencias($planilla);
+                $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->ActualizarEsSalud($planilla);
+                if ($flush == null) {
+                    $status = "Tardanzas descargadas correctamente";
+                } else {
+                    $status = "Error al descargar tardanzas!!";
+                }
+            } else {
+                $status = "Las tardanzas no se han descargado, porque el formulario no es válido!!";
+            }
+
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->redirectToRoute("planillaHasConcepto_index", ["planillaId" => $planillaId]);
+        }
+        return $this->render('@Planilla/planillaHasConcepto/tardanzas.html.twig', [
+                    "form" => $form->createView()
         ]);
     }
 
