@@ -15,11 +15,7 @@ SET
 p.rem_aseg = remAseg, 
 p.rem_noaseg = remNoAseg, 
 p.total_egreso = totalEgreso,
-p.patronal = patronal,
-p.tardanzas = 0,
-p.particulares = 0, 
-p.lsgh= 0,
-p.faltas = 0
+p.patronal = patronal
 WHERE 
 p.id = planilla_id
 ;

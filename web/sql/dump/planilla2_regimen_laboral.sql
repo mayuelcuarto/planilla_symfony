@@ -29,6 +29,7 @@ CREATE TABLE `regimen_laboral` (
   `nombre` varchar(255) NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `descripcion` varchar(255) DEFAULT NULL,
+  `sueldo_minimo` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -39,7 +40,7 @@ CREATE TABLE `regimen_laboral` (
 
 LOCK TABLES `regimen_laboral` WRITE;
 /*!40000 ALTER TABLE `regimen_laboral` DISABLE KEYS */;
-INSERT INTO `regimen_laboral` VALUES (1,'DL 276',1,'NOMBRADOS'),(2,'DL 728',1,''),(4,'DL 1057',1,'CAS'),(9,'SIN RÉGIMEN',1,NULL);
+INSERT INTO `regimen_laboral` VALUES (1,'DL 276',1,'NOMBRADOS',930),(2,'DL 728',1,'',NULL),(4,'DL 1057',1,'CAS',1245),(9,'SIN RÉGIMEN',1,NULL,NULL);
 /*!40000 ALTER TABLE `regimen_laboral` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-30  2:49:53
+-- Dump completed on 2018-05-17 22:18:48

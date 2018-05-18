@@ -36,59 +36,79 @@ CLOSE afp_cursor;
 
 SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
 
-IF pension_c IS NOT NULL AND pension_c <> 0 THEN
-SET pension = ROUND(pension_c * remAseg, 2);
-SET pension_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 75);
-IF pension_v IS NULL THEN
-	INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
-    VALUES(0, pension, NOW(), planilla_id, 75, 1);
-ELSE
-	UPDATE planilla_has_concepto
-	SET monto = pension 
-    WHERE id = pension_v;
-END IF;
-END IF;
-
-IF snp_c IS NOT NULL AND snp_c <> 0 THEN
-SET snp = ROUND(snp_c * remAseg, 2);
-SET snp_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 76);
-IF snp_v IS NULL THEN
-	INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
-    VALUES(0, snp, NOW(), planilla_id, 76, 1);
-ELSE
-	UPDATE planilla_has_concepto
-	SET monto = snp 
-    WHERE id = snp_v;
-END IF;
+IF pension_c IS NOT NULL AND pension_c > 0 THEN
+	SET pension = ROUND(pension_c * remAseg, 2);
+	SET pension_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 75);
+	IF pension_v IS NULL THEN
+		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
+		VALUES(0, pension, NOW(), planilla_id, 75, 1);
+	ELSE
+		UPDATE planilla_has_concepto
+		SET monto = pension 
+		WHERE id = pension_v;
+	END IF;
+ELSE 
+	SET pension_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 75);
+	IF pension_v IS NOT NULL THEN
+		DELETE FROM planilla_has_concepto WHERE id = pension_v;
+    END IF;
 END IF;
 
-IF jubilacion_c IS NOT NULL AND jubilacion_c <> 0 THEN
-SET jubilacion = ROUND(jubilacion_c * remAseg, 2);
-SET jubilacion_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 78);
-IF jubilacion_v IS NULL THEN
-	INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
-    VALUES(0, jubilacion, NOW(), planilla_id, 78, 1);
-ELSE
-	UPDATE planilla_has_concepto
-	SET monto = jubilacion 
-    WHERE id = jubilacion_v;
-END IF;
-END IF;
-
-IF seguros_c IS NOT NULL AND seguros_c <> 0 THEN
-SET seguros = ROUND(seguros_c * remAseg, 2);
-SET seguros_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 79);
-IF seguros_v IS NULL THEN
-	INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
-    VALUES(0, seguros, NOW(), planilla_id, 79, 1);
-ELSE
-	UPDATE planilla_has_concepto
-	SET monto = seguros 
-    WHERE id = seguros_v;
-END IF;
+IF snp_c IS NOT NULL AND snp_c > 0 THEN
+	SET snp = ROUND(snp_c * remAseg, 2);
+	SET snp_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 76);
+	IF snp_v IS NULL THEN
+		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
+		VALUES(0, snp, NOW(), planilla_id, 76, 1);
+	ELSE
+		UPDATE planilla_has_concepto
+		SET monto = snp 
+		WHERE id = snp_v;
+	END IF;
+ELSE 
+	SET snp_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 76);
+	IF snp_v IS NOT NULL THEN
+		DELETE FROM planilla_has_concepto WHERE id = snp_v;
+    END IF;
 END IF;
 
-IF (ra_mix_c IS NOT NULL AND ra_mix_c <> 0) OR (ra_c IS NOT NULL AND ra_c <> 0) THEN
+IF jubilacion_c IS NOT NULL AND jubilacion_c > 0 THEN
+	SET jubilacion = ROUND(jubilacion_c * remAseg, 2);
+	SET jubilacion_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 78);
+	IF jubilacion_v IS NULL THEN
+		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
+		VALUES(0, jubilacion, NOW(), planilla_id, 78, 1);
+	ELSE
+		UPDATE planilla_has_concepto
+		SET monto = jubilacion 
+		WHERE id = jubilacion_v;
+	END IF;
+ELSE 
+	SET jubilacion_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 78);
+	IF jubilacion_v IS NOT NULL THEN
+		DELETE FROM planilla_has_concepto WHERE id = jubilacion_v;
+    END IF;
+END IF;
+
+IF seguros_c IS NOT NULL AND seguros_c > 0 THEN
+	SET seguros = ROUND(seguros_c * remAseg, 2);
+	SET seguros_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 79);
+	IF seguros_v IS NULL THEN
+		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
+		VALUES(0, seguros, NOW(), planilla_id, 79, 1);
+	ELSE
+		UPDATE planilla_has_concepto
+		SET monto = seguros 
+		WHERE id = seguros_v;
+	END IF;
+ELSE 
+	SET seguros_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 79);
+	IF seguros_v IS NOT NULL THEN
+		DELETE FROM planilla_has_concepto WHERE id = seguros_v;
+    END IF;
+END IF;
+
+IF (ra_mix_c IS NOT NULL AND ra_mix_c > 0) OR (ra_c IS NOT NULL AND ra_c > 0) THEN
 	IF ra_Mixta = 1 THEN
 		SET ra = ROUND(ra_mix_c * remAseg, 2);
 	ELSE
@@ -103,5 +123,10 @@ IF (ra_mix_c IS NOT NULL AND ra_mix_c <> 0) OR (ra_c IS NOT NULL AND ra_c <> 0) 
 		SET monto = ra 
 		WHERE id = ra_v;
 	END IF;
+ELSE
+    SET ra_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 80);
+	IF ra_v IS NOT NULL THEN
+		DELETE FROM planilla_has_concepto WHERE id = ra_v;
+    END IF;
 END IF;
 END
