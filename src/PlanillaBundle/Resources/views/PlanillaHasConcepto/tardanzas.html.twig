@@ -1,0 +1,9 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-4">
+        <h4>Descargar Inasistencias y Tardanzas</h4>
+        <hr/>
+        {{form_start(form)}}
+        {{form_end(form,{'action':'', 'method':'POST'})}}
+    </div>
+{% endblock %}
