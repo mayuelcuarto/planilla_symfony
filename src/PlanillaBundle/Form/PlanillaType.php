@@ -100,8 +100,10 @@ class PlanillaType extends AbstractType {
         $data = $event->getData();
         $options = $form->getConfig()->getOptions();
         if ($options['accion'] == 1) {
-            $plazaHistorial = $em->getRepository('PlanillaBundle:PlazaHistorial')->find($data['plazaHistorial']);
-            $this->seteandoPlazaHistorialSubmit($form, $plazaHistorial);
+            if (isset($data['plazaHistorial'])) {
+                $plazaHistorial = $em->getRepository('PlanillaBundle:PlazaHistorial')->find($data['plazaHistorial']);
+                $this->seteandoPlazaHistorialSubmit($form, $plazaHistorial);
+            }
         }
     }
 
