@@ -7,12 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Form\PlanillaType;
+use PlanillaBundle\Form\PlanillaGeneracionType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaController extends Controller {
 
     private $session;
-    
+
     public function __construct() {
         $this->session = new Session();
     }
@@ -41,7 +42,7 @@ class PlanillaController extends Controller {
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
             'accion' => 1
-                ]);
+        ]);
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -110,7 +111,7 @@ class PlanillaController extends Controller {
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
             'accion' => 2
-                ]);
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -142,7 +143,7 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
-    
+
     public function deleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
@@ -160,6 +161,48 @@ class PlanillaController extends Controller {
         return $this->redirectToRoute("planilla_index");
     }
 
+    public function generacionAction(Request $request) {
+        $planilla = new Planilla();
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = \date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+
+        for ($i = 2016; $i <= $anoEje; $i++) {
+            $anoArray[$i] = $i;
+        }
+
+        $form = $this->createForm(PlanillaGeneracionType::class, $planilla, [
+            'anoEjeActual' => $anoEje,
+            'mesEjeActual' => $mesEje,
+            'anoArray' => $anoArray
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $anoEjeOrigen = $form->get("anoEjeOrigen")->getData();
+                $mesEjeOrigen = $form->get("mesEjeOrigen")->getData();
+                $usuario = $this->getUser();
+                $em->getRepository("PlanillaBundle:Planilla")->GeneracionPlanilla($anoEjeOrigen, $mesEjeOrigen, $usuario);
+                $flush = $em->flush();
+                if ($flush == null) {
+                    $status = "La planilla se ha generado correctamente para el presente periodo";
+                } else {
+                    $status = "Error al generar planilla!!";
+                }
+            } else {
+                $status = "La planilla no se generó, porque los parámetros no son válidos!!";
+            }
+
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->redirectToRoute("planilla_generacion");
+        }
+        return $this->render('@Planilla/planilla/generacion.html.twig', [
+                    "form" => $form->createView()
+        ]);
+    }
+
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
         $em = $this->getDoctrine()->getManager();
@@ -168,9 +211,10 @@ class PlanillaController extends Controller {
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
         //$mesEje = $mes_repo->findOneBy(["mesEje" => 10]);
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
-        
+
         $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->find(['id' => $tipoPlanilla_id]);
         $plazaHistoriales = $em->getRepository('PlanillaBundle:PlazaHistorial')->findArrayByTipoPlanillaAnoEjeMesEje($tipoPlanilla, $anoEje, $mesEje);
         return new JsonResponse($plazaHistoriales);
     }
+
 }
