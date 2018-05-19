@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Planilla:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\PlanillaRepository
     table: planilla
     indexes:
         fk_planilla_plaza_historial1_idx1:
