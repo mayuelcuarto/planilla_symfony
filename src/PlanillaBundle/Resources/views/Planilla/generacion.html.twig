@@ -1,0 +1,22 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div>
+        <h4>Generación de Planilla</h4>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        {{form_start(form)}}
+        <div class="row">
+            <div class="col-sm-4">
+                {{form_row(form.anoEjeOrigen)}}
+                {{form_row(form.mesEjeOrigen)}}
+            </div>
+            <div class="col-sm-4">
+                {{form_row(form.anoEjeActual) }}
+                {{form_row(form.mesEjeActual) }}
+            </div>
+        </div>
+        {{form_end(form,{'action':'', 'method':'POST'})}}
+    </div>
+{% endblock %}
