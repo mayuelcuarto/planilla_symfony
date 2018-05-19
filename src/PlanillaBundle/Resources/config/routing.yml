@@ -396,6 +396,10 @@ planilla_delete:
     path: /planilla/delete/{id}
     defaults: { _controller: PlanillaBundle:Planilla:delete }
     
+planilla_generacion:
+    path: /planilla/generacion
+    defaults: { _controller: PlanillaBundle:Planilla:generacion }
+    
 planilla_ajax_plazaHistorial:
     path:     /planilla/plazaHistorial
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
