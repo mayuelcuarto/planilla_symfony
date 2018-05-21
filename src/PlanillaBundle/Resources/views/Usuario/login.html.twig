@@ -2,8 +2,8 @@
 {% block content %}    
     <div class="col-auto">
         <form action="{{ path("login") }}" class="form-signin" method="post">
-            <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 font-weight-normal">Por favor valídese</h1>
+            <img class="mb-4 img-fluid" src="{{ asset('image/login.png') }}" alt="">
+            <h1 class="h3 mb-3 font-weight-normal">Por favor, valídese</h1>
             <label for="inputEmail" class="sr-only">Usuario</label>
             <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="Usuario" required autofocus>
             <label for="inputPassword" class="sr-only">Contraseña</label>
