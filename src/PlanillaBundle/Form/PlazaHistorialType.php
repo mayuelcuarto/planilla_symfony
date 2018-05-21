@@ -142,7 +142,7 @@ class PlazaHistorialType extends AbstractType {
         //$options = $form->getConfig()->getOptions();
         $em = $this->entityManager;
         $afp = $em->getRepository('PlanillaBundle:Afp')->find($data['afp']);
-        $this->seteandoConcepto($form, $afp);
+        $this->seteandoAfp($form, $afp);
     }
 
     protected function seteandoAfps(FormInterface $form, RegimenPensionario $regimenPensionario) {
