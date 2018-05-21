@@ -31,7 +31,7 @@
                         <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
                         <td><a href="{{path("planillaHasConcepto_index",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
                         <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
-                        <td><a href="{{ path("planilla_delete",{"id":planilla.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
+                        <td><a href="{{ path("planilla_delete",{"id":planilla.id}) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?');">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
