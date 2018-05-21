@@ -69,8 +69,10 @@ class PlazaHistorialController extends Controller {
                 $plazaHistorial->setAfpMix($form->get("afpMix")->getData());
                 $plazaHistorial->setFechaAfp($form->get("fechaAfp")->getData());
                 $plazaHistorial->setEstado(true);
+                $plaza->setEstado(true);
 
                 $em->persist($plazaHistorial);
+                $em->persist($plaza);
                 $flush = $em->flush();
                 if ($flush == null) {
                     $status = "El historial de plaza se ha creado correctamente";
@@ -153,9 +155,12 @@ class PlazaHistorialController extends Controller {
                 $plazaHistorial->setDocAnulacion($form->get("docAnulacion")->getData());
                 $plazaHistorial->setFechaAnulacion($form->get("fechaAnulacion")->getData());
                 $plazaHistorial->setEstado(false);
+                $plaza = $plazaHistorial->getPlaza();
+                $plaza->setEstado(false);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($plazaHistorial);
+                $em->persist($plaza);
                 $flush = $em->flush();
                 if ($flush == null) {
                     $status = "EL historial de plaza se ha dado de baja";
