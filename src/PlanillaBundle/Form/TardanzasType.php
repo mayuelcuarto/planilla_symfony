@@ -23,12 +23,12 @@ class TardanzasType extends AbstractType {
                     "label" => "Minutos de permisos particulares",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('lsgh', NumberType::class, [
-                    "label" => "Días de Licencia sin goce de haber",
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
                 ->add('faltas', NumberType::class, [
                     "label" => "Días de Falta",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('lsgh', NumberType::class, [
+                    "label" => "Días de Licencia sin goce de haber",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('Guardar', SubmitType::class, [
