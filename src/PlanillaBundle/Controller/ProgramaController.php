@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Programa;
 use PlanillaBundle\Form\ProgramaType;
+use PlanillaBundle\Form\ProgramaEditType;
 
 class ProgramaController extends Controller {
 
@@ -31,8 +32,9 @@ class ProgramaController extends Controller {
     }
 
     public function addAction(Request $request) {
+        $anoEje = \date("Y");
         $programa = new Programa();
-        $form = $this->createForm(ProgramaType::class, $programa);
+        $form = $this->createForm(ProgramaType::class, $programa, ["estado" => true, "anoEje" => $anoEje]);
         $form->get("estado")->setData(true);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -75,25 +77,31 @@ class ProgramaController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $programa_repo = $em->getRepository("PlanillaBundle:Programa");
         $programa = $programa_repo->find($id);
-
-        $form = $this->createForm(ProgramaType::class, $programa);
+        $programa_aux = $programa;
+        $form = $this->createForm(ProgramaEditType::class, $programa);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $programa->setAnoEje($form->get("anoEje")->getData());
-                $programa->setPrograma($form->get("programa")->getData());
-                $programa->setNombre($form->get("nombre")->getData());
-                $programa->setEstado($form->get("estado")->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($programa);
-                $flush = $em->flush();
-                if ($flush == null) {
-                    $status = "El programa se ha editado correctamente";
+                $programa2 = $programa_repo->findOneBy([
+                    "anoEje" => $form->get("anoEje")->getData(),
+                    "programa" => $form->get("programa")->getData()
+                ]);
+                if ($programa2 != null and $programa2 != $programa_aux) {
+                    $status = "El programa ya existe!!!";
                 } else {
-                    $status = "Error al editar programa!!";
+                    $programa->setAnoEje($form->get("anoEje")->getData());
+                    $programa->setPrograma($form->get("programa")->getData());
+                    $programa->setNombre($form->get("nombre")->getData());
+                    $programa->setEstado($form->get("estado")->getData());
+                    $em->persist($programa);
+                    $flush = $em->flush();
+                    if ($flush == null) {
+                        $status = "El programa se ha editado correctamente";
+                    } else {
+                        $status = "Error al editar programa!!";
+                    }
                 }
             } else {
                 $status = "El programa no se ha editado, porque el formulario no es válido!!";

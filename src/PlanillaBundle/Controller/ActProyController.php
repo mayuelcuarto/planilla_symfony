@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\ActProy;
 use PlanillaBundle\Form\ActProyType;
+use PlanillaBundle\Form\ActProyEditType;
 
 class ActProyController extends Controller {
 
@@ -23,8 +24,9 @@ class ActProyController extends Controller {
     }
 
     public function addAction(Request $request) {
+        $anoEje = \date("Y");
         $actividad = new ActProy();
-        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => true]);
+        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => true, "anoEje" => $anoEje]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -66,24 +68,33 @@ class ActProyController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $actividad_repo = $em->getRepository("PlanillaBundle:ActProy");
         $actividad = $actividad_repo->find($id);
-        $form = $this->createForm(ActProyType::class, $actividad, ["estado" => $actividad->getEstado()]);
+        $actividad_aux = $actividad;
+        $form = $this->createForm(ActProyEditType::class, $actividad);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $actividad->setAnoEje($form->get("anoEje")->getData());
-                $actividad->setActProy($form->get("actProy")->getData());
-                $actividad->setNombre($form->get("nombre")->getData());
-                $actividad->setEstado($form->get("estado")->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($actividad);
-                $flush = $em->flush();
-                if ($flush == null) {
-                    $status = "La actividad se ha editado correctamente";
+                $actividad2 = $actividad_repo->findOneBy([
+                    "anoEje" => $form->get("anoEje")->getData(),
+                    "actProy" => $form->get("actProy")->getData()
+                ]);
+                if ($actividad2 != null and $actividad2 != $actividad_aux) {
+                    $status = "La actividad ya existe!!!";
                 } else {
-                    $status = "Error al editar actividad!!";
+                    $actividad->setAnoEje($form->get("anoEje")->getData());
+                    $actividad->setActProy($form->get("actProy")->getData());
+                    $actividad->setNombre($form->get("nombre")->getData());
+                    $actividad->setEstado($form->get("estado")->getData());
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($actividad);
+                    $flush = $em->flush();
+                    if ($flush == null) {
+                        $status = "La actividad se ha editado correctamente";
+                    } else {
+                        $status = "Error al editar actividad!!";
+                    }
                 }
             } else {
                 $status = "La actividad no se ha editado, porque el formulario no es válido!!";

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Form\PlanillaType;
 use PlanillaBundle\Form\PlanillaGeneracionType;
+use PlanillaBundle\Form\PlanillaFechasType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaController extends Controller {
@@ -199,6 +200,43 @@ class PlanillaController extends Controller {
             return $this->redirectToRoute("planilla_generacion");
         }
         return $this->render('@Planilla/planilla/generacion.html.twig', [
+                    "form" => $form->createView()
+        ]);
+    }
+
+    public function fechasAction(Request $request) {
+        $planilla = new Planilla();
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = \date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+
+        $form = $this->createForm(PlanillaFechasType::class, $planilla, [
+            'anoEjeActual' => $anoEje,
+            'mesEjeActual' => $mesEje
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $fechaGeneracion = $form->get("fechaGeneracion")->getData();
+                $fechaPago = $form->get("fechaPago")->getData();
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $em->getRepository("PlanillaBundle:Planilla")->PlanillaFechas($tipoPlanilla->getId(), $fechaGeneracion, $fechaPago);
+                $flush = $em->flush();
+                if ($flush == null) {
+                    $status = "Las fechas de generación y pago se han generado correctamente para el periodo actual";
+                } else {
+                    $status = "Error al generar fecha de planilla!!";
+                }
+            } else {
+                $status = "Las fechas de planilla no se generaron, porque los parámetros no son válidos!!";
+            }
+
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->redirectToRoute("planilla_fechas");
+        }
+        return $this->render('@Planilla/planilla/fechas.html.twig', [
                     "form" => $form->createView()
         ]);
     }

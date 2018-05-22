@@ -19,7 +19,8 @@ class GrpfType extends AbstractType {
                 ->add('anoEje', TextType::class, [
                     "label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4]
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4],
+                    "data" => $options['anoEje']
                 ])
                 ->add('grpf', TextType::class, [
                     "label" => "Grupo Funcional",
@@ -34,7 +35,8 @@ class GrpfType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['estado']
                 ])
                 ->add('Guardar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -48,7 +50,8 @@ class GrpfType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Grpf',
-            'estado' => null
+            'estado' => null,
+            'anoEje' => null
             ]);
     }
 

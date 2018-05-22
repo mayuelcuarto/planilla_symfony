@@ -19,7 +19,8 @@ class ActProyType extends AbstractType {
                 ->add('anoEje', TextType::class, [
                     "label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => 'form-control form-control-sm', "maxlength" => 4]
+                    "attr" => ["class" => 'form-control form-control-sm', "maxlength" => 4],
+                    "data" => $options['anoEje']
                 ])
                 ->add('actProy', TextType::class, [
                     "label" => "Actividad",
@@ -49,7 +50,8 @@ class ActProyType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\ActProy',
-            'estado' => null
+            'estado' => null,
+            'anoEje' => null
             ]);
     }
 

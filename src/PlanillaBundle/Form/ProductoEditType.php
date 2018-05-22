@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class DivfuncType extends AbstractType {
+class ProductoEditType extends AbstractType {
 
     /**
      * {@inheritdoc}
@@ -19,11 +19,10 @@ class DivfuncType extends AbstractType {
                 ->add('anoEje', TextType::class, [
                     "label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4],
-                    "data" => $options['anoEje']
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4]
                 ])
-                ->add('divfunc', TextType::class, [
-                    "label" => "División Funcional",
+                ->add('producto', TextType::class, [
+                    "label" => "Producto",
                     "required" => "required",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
@@ -35,8 +34,7 @@ class DivfuncType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"],
-                    "data" => $options['estado']
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('Guardar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -48,18 +46,14 @@ class DivfuncType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults([
-            'data_class' => 'PlanillaBundle\Entity\Divfunc',
-            'estado' => null,
-            'anoEje' => null
-            ]);
+        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Producto']);
     }
 
     /**
      * {@inheritdoc}
      */
     public function getBlockPrefix() {
-        return 'planillabundle_divfunc';
+        return 'planillabundle_producto';
     }
 
 }

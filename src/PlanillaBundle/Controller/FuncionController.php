@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Funcion;
 use PlanillaBundle\Form\FuncionType;
+use PlanillaBundle\Form\FuncionEditType;
 
 class FuncionController extends Controller {
 
@@ -23,8 +24,9 @@ class FuncionController extends Controller {
     }
 
     public function addAction(Request $request) {
+        $anoEje = \date("Y");
         $funcion = new Funcion();
-        $form = $this->createForm(FuncionType::class, $funcion, ["estado" => true]);
+        $form = $this->createForm(FuncionType::class, $funcion, ["estado" => true, "anoEje" => $anoEje]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -66,23 +68,30 @@ class FuncionController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $funcion_repo = $em->getRepository("PlanillaBundle:Funcion");
         $funcion = $funcion_repo->find($id);
-        $form = $this->createForm(FuncionType::class, $funcion, ["estado" => $funcion->getEstado()]);
+        $funcion_aux = $funcion;
+        $form = $this->createForm(FuncionEditType::class, $funcion);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $funcion->setAnoEje($form->get("anoEje")->getData());
-                $funcion->setFuncion($form->get("funcion")->getData());
-                $funcion->setNombre($form->get("nombre")->getData());
-                $funcion->setEstado($form->get("estado")->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($funcion);
-                $flush = $em->flush();
-                if ($flush == null) {
-                    $status = "La función se ha editado correctamente";
+                $funcion2 = $funcion_repo->findOneBy([
+                    "anoEje" => $form->get("anoEje")->getData(),
+                    "funcion" => $form->get("funcion")->getData()
+                ]);
+                if ($funcion2 != null and $funcion2 != $funcion_aux) {
+                    $status = "La función ya existe!!!";
                 } else {
-                    $status = "Error al editar función!!";
+                    $funcion->setAnoEje($form->get("anoEje")->getData());
+                    $funcion->setFuncion($form->get("funcion")->getData());
+                    $funcion->setNombre($form->get("nombre")->getData());
+                    $funcion->setEstado($form->get("estado")->getData());
+                    $em->persist($funcion);
+                    $flush = $em->flush();
+                    if ($flush == null) {
+                        $status = "La función se ha editado correctamente";
+                    } else {
+                        $status = "Error al editar función!!";
+                    }
                 }
             } else {
                 $status = "La función no se ha editado, porque el formulario no es válido!!";

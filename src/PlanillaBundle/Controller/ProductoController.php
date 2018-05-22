@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Producto;
 use PlanillaBundle\Form\ProductoType;
+use PlanillaBundle\Form\ProductoEditType;
 
 class ProductoController extends Controller {
 
@@ -25,9 +26,9 @@ class ProductoController extends Controller {
     }
 
     public function addAction(Request $request) {
+        $anoEje = \date("Y");
         $producto = new Producto();
-        $form = $this->createForm(ProductoType::class, $producto);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(ProductoType::class, $producto, ["estado" => true, "anoEje" => $anoEje]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -69,25 +70,33 @@ class ProductoController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $producto_repo = $em->getRepository("PlanillaBundle:Producto");
         $producto = $producto_repo->find($id);
-
-        $form = $this->createForm(ProductoType::class, $producto);
+        $producto_aux = $producto;
+        $form = $this->createForm(ProductoEditType::class, $producto);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $producto->setAnoEje($form->get("anoEje")->getData());
-                $producto->setProducto($form->get("producto")->getData());
-                $producto->setNombre($form->get("nombre")->getData());
-                $producto->setEstado($form->get("estado")->getData());
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($producto);
-                $flush = $em->flush();
-                if ($flush == null) {
-                    $status = "El producto se ha editado correctamente";
+                $producto2 = $producto_repo->findOneBy([
+                    "anoEje" => $form->get("anoEje")->getData(),
+                    "producto" => $form->get("producto")->getData()
+                ]);
+                if ($producto2 != null and $producto2 != $producto_aux) {
+                    $status = "El producto ya existe!!!";
                 } else {
-                    $status = "Error al editar producto!!";
+                    $producto->setAnoEje($form->get("anoEje")->getData());
+                    $producto->setProducto($form->get("producto")->getData());
+                    $producto->setNombre($form->get("nombre")->getData());
+                    $producto->setEstado($form->get("estado")->getData());
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($producto);
+                    $flush = $em->flush();
+                    if ($flush == null) {
+                        $status = "El producto se ha editado correctamente";
+                    } else {
+                        $status = "Error al editar producto!!";
+                    }
                 }
             } else {
                 $status = "El producto no se ha editado, porque el formulario no es válido!!";

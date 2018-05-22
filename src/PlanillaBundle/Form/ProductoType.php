@@ -19,7 +19,8 @@ class ProductoType extends AbstractType {
                 ->add('anoEje', TextType::class, [
                     "label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4]
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4],
+                    "data" => $options['anoEje']
                 ])
                 ->add('producto', TextType::class, [
                     "label" => "Producto",
@@ -34,7 +35,8 @@ class ProductoType extends AbstractType {
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['estado']
                 ])
                 ->add('Guardar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -46,7 +48,11 @@ class ProductoType extends AbstractType {
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(['data_class' => 'PlanillaBundle\Entity\Producto']);
+        $resolver->setDefaults([
+            'data_class' => 'PlanillaBundle\Entity\Producto',
+            'estado' => null,
+            'anoEje' => null
+            ]);
     }
 
     /**

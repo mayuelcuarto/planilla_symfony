@@ -19,7 +19,8 @@ class FuncionType extends AbstractType {
                 ->add('anoEje', TextType::class, [
                     "label" => "Año",
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4]
+                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 4],
+                    "data" => $options['anoEje']
                 ])
                 ->add('funcion', TextType::class, [
                     "label" => "Funcion",
@@ -49,7 +50,8 @@ class FuncionType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Funcion',
-                'estado' => null
+                'estado' => null,
+                'anoEje' => null
                 ]);
     }
 
