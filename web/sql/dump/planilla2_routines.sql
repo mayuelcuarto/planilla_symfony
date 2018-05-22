@@ -64,7 +64,7 @@ ELSEIF regimenLaboral = 4 THEN
 ELSE 
 	SET patronal = 0;
 END IF;
-RETURN ROUND(patronal, 2);
+RETURN redondearA2(patronal);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -85,6 +85,31 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `GenerarSecPlazaHistorial`(plazaId IN
 BEGIN
 	DECLARE aux INT;
     SET aux = (SELECT MAX(sec_personal) FROM plaza_historial WHERE plaza_id = plazaId) + 1;
+    IF aux IS NOT NULL AND aux > 0 THEN
+		RETURN aux;
+    ELSE
+		RETURN 1;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `redondearA2` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `redondearA2`(valor DOUBLE) RETURNS double
+BEGIN
+	DECLARE aux DOUBLE;
+	SET aux = ROUND(valor + 0.0000000001, 2);
     RETURN aux;
 END ;;
 DELIMITER ;
@@ -111,7 +136,7 @@ WHERE phc.planilla_id = planilla_id AND c.tipo_concepto = 1 AND c.es_afp = 1);
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
-RETURN ROUND(aux, 2);
+RETURN redondearA2(aux);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -137,7 +162,7 @@ WHERE phc.planilla_id = planilla_id AND c.tipo_concepto = 1 AND c.es_asegurada =
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
-RETURN ROUND(aux, 2);
+RETURN redondearA2(aux);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -163,7 +188,7 @@ WHERE phc.planilla_id = planilla_id AND c.tipo_concepto = 1 AND c.es_asegurada =
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
-RETURN ROUND(aux, 2);
+RETURN redondearA2(aux);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -401,7 +426,7 @@ WHERE phc.planilla_id = planilla_id AND c.tipo_concepto = 2);
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
-RETURN ROUND(aux, 2);
+RETURN redondearA2(aux);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -432,7 +457,7 @@ INNER JOIN plaza pl ON pl.id = ph.plaza_id
 WHERE p.id = planilla_id);
 
 SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
-SET essalud = ROUND(remAseg * 0.04, 2);
+SET essalud = redondearA2(remAseg * 0.04);
 
 IF tipoPlanilla = 2 OR tipoPlanilla = 3 THEN
 IF essalud IS NOT NULL AND essalud > 0 THEN
@@ -494,21 +519,23 @@ DECLARE faltas_aux DOUBLE;
 DECLARE concepto_v INT;
 DECLARE concepto_monto DOUBLE;
 
+DECLARE a DOUBLE;
+DECLARE b DOUBLE;
+DECLARE c DOUBLE;
+
 DECLARE planilla_cursor CURSOR FOR 
-(SELECT p.tardanzas, p.particulares, p.lsgh, p.faltas FROM planilla p 
+(SELECT p.rem_aseg, p.rem_noaseg, p.tardanzas, p.particulares, p.lsgh, p.faltas FROM planilla p 
 WHERE p.id = planilla_id);
 
 OPEN planilla_cursor;
-FETCH planilla_cursor INTO tardanzas_m, particulares_m, lsgh_d, faltas_d;
+FETCH planilla_cursor INTO remAseg, remNoAseg, tardanzas_m, particulares_m, lsgh_d, faltas_d;
 CLOSE planilla_cursor;
 
-SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
-SET remNoAseg = (SELECT RemuneracionNoAsegurable(planilla_id));
 SET remBruta = remAseg + remNoAseg;
 
-SET montoDia = ROUND(remBruta / 30, 2);
-SET montoHora = ROUND(montoDia / 8, 2);
-SET montoMin = ROUND(montoHora / 60, 2);
+SET montoDia = (SELECT redondearA2((remBruta / 30)));
+SET montoHora = (SELECT redondearA2((montoDia / 8)));
+SET montoMin = (SELECT redondearA2((montoHora / 60)));
 
 IF tardanzas_m > 0 THEN
 	SET tardanzas_aux = tardanzas_m * montoMin;
@@ -646,6 +673,9 @@ DECLARE ra_mix_c DOUBLE;
 DECLARE ra DOUBLE;
 DECLARE ra_v DOUBLE;
 
+DECLARE tipoPlanilla INT;
+DECLARE varerror INT;
+
 DECLARE afp_cursor CURSOR FOR 
 (SELECT a.pension, a.snp, a.jubilacion, a.seguros, a.ra, a.ra_mixta, ph.afp_mix FROM planilla p 
 INNER JOIN plaza_historial ph ON ph.id = p.plaza_historial_id 
@@ -656,10 +686,15 @@ OPEN afp_cursor;
 FETCH afp_cursor INTO pension_c, snp_c, jubilacion_c, seguros_c, ra_c, ra_mix_c, ra_Mixta;
 CLOSE afp_cursor;
 
-SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
+SET tipoPlanilla = (SELECT pl.tipo_planilla FROM planilla p
+INNER JOIN plaza_historial ph ON ph.id = p.plaza_historial_id 
+INNER JOIN plaza pl ON pl.id = ph.plaza_id 
+WHERE p.id = planilla_id);
 
+IF tipoPlanilla = 1 OR tipoPlanilla = 4 THEN
+SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
 IF pension_c IS NOT NULL AND pension_c > 0 THEN
-	SET pension = ROUND(pension_c * remAseg, 2);
+	SET pension = redondearA2(pension_c * remAseg);
 	SET pension_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 75);
 	IF pension_v IS NULL THEN
 		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
@@ -677,7 +712,7 @@ ELSE
 END IF;
 
 IF snp_c IS NOT NULL AND snp_c > 0 THEN
-	SET snp = ROUND(snp_c * remAseg, 2);
+	SET snp = redondearA2(snp_c * remAseg);
 	SET snp_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 76);
 	IF snp_v IS NULL THEN
 		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
@@ -695,7 +730,7 @@ ELSE
 END IF;
 
 IF jubilacion_c IS NOT NULL AND jubilacion_c > 0 THEN
-	SET jubilacion = ROUND(jubilacion_c * remAseg, 2);
+	SET jubilacion = redondearA2(jubilacion_c * remAseg);
 	SET jubilacion_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 78);
 	IF jubilacion_v IS NULL THEN
 		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
@@ -713,7 +748,7 @@ ELSE
 END IF;
 
 IF seguros_c IS NOT NULL AND seguros_c > 0 THEN
-	SET seguros = ROUND(seguros_c * remAseg, 2);
+	SET seguros = redondearA2(seguros_c * remAseg);
 	SET seguros_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 79);
 	IF seguros_v IS NULL THEN
 		INSERT INTO planilla_has_concepto(id, monto, fecha_ing, planilla_id, concepto_id, usuario_id)
@@ -732,9 +767,9 @@ END IF;
 
 IF (ra_mix_c IS NOT NULL AND ra_mix_c > 0) OR (ra_c IS NOT NULL AND ra_c > 0) THEN
 	IF ra_Mixta = 1 THEN
-		SET ra = ROUND(ra_mix_c * remAseg, 2);
+		SET ra = redondearA2(ra_mix_c * remAseg);
 	ELSE
-		SET ra = ROUND(ra_c * remAseg, 2);
+		SET ra = redondearA2(ra_c * remAseg);
 	END IF;
 	SET ra_v = (SELECT phc.id FROM planilla_has_concepto phc WHERE phc.planilla_id = planilla_id AND phc.concepto_id = 80);
 	IF ra_v IS NULL THEN
@@ -750,6 +785,53 @@ ELSE
 	IF ra_v IS NOT NULL THEN
 		DELETE FROM planilla_has_concepto WHERE id = ra_v;
     END IF;
+END IF;
+
+SET varerror = (SELECT @@error_count);
+IF varerror = 0 THEN
+COMMIT;
+ELSE
+ROLLBACK;
+END IF;
+END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ActualizarPlanillaFechas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ALLOW_INVALID_DATES,ERROR_FOR_DIVISION_BY_ZERO,TRADITIONAL,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarPlanillaFechas`(IN tipo_planilla INT, IN fecha_generacion DATE, IN fecha_pago DATE)
+BEGIN
+DECLARE varerror INT;
+DECLARE anoActual INT;
+DECLARE mesActual INT;
+
+SET anoActual = YEAR(NOW());
+SET mesActual = MONTH(NOW());
+
+UPDATE planilla p 
+INNER JOIN plaza_historial ph ON ph.id = p.plaza_historial_id 
+INNER JOIN plaza pl ON pl.id = ph.plaza_id
+SET
+p.fecha_generacion = fecha_generacion,
+p.fecha_pago = fecha_pago
+WHERE p.ano_eje = anoActual AND p.mes_eje = mesActual AND pl.tipo_planilla = tipo_planilla;
+
+SET varerror = (SELECT @@error_count);
+IF varerror = 0 THEN
+COMMIT;
+ELSE
+ROLLBACK;
 END IF;
 END ;;
 DELIMITER ;
@@ -957,4 +1039,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-21  9:00:26
+-- Dump completed on 2018-05-22  3:10:30
