@@ -59,4 +59,15 @@ class PlanillaRepository extends EntityRepository {
         }
     }
 
+    public function PlanillaFechas($tipoPlanillaId, $fechaGeneracion, $fechaPago) {
+        $em = $this->getEntityManager();
+        $sth = $em->getConnection()->prepare("CALL ActualizarPlanillaFechas(:tipoPlanillaId, :fechaGeneracion, :fechaPago)");
+        $sth->bindValue(':tipoPlanillaId', $tipoPlanillaId);
+        $fechaGeneracionFormat = $fechaGeneracion->format('Y-m-d');
+        $sth->bindValue(':fechaGeneracion', $fechaGeneracionFormat);
+        $fechaPagoFormat = $fechaPago->format('Y-m-d');
+        $sth->bindValue(':fechaPago', $fechaPagoFormat);
+        $sth->execute();
+    }
+
 }
