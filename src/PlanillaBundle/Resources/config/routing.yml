@@ -400,6 +400,10 @@ planilla_generacion:
     path: /planilla/generacion
     defaults: { _controller: PlanillaBundle:Planilla:generacion }
     
+planilla_fechas:
+    path: /planilla/fechas
+    defaults: { _controller: PlanillaBundle:Planilla:fechas }
+    
 planilla_ajax_plazaHistorial:
     path:     /planilla/plazaHistorial
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
