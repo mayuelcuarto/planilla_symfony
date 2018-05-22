@@ -70,12 +70,12 @@ class PersonalType extends AbstractType {
                 ->add('cuspp', TextType::class, [
                     "label" => "CUSPP",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 8]
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('numAutogenerado', TextType::class, [
                     "label" => "Numero Autogenerado",
                     "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm", "maxlength" => 8]
+                    "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('estado', CheckboxType::class, [
                     "label" => "Estado",
