@@ -1,0 +1,10 @@
+#imgBack {
+    opacity: 1;
+    -webkit-transition: opacity .5s;
+    -moz-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+#imgBack:hover {
+    opacity: .5;
+}
