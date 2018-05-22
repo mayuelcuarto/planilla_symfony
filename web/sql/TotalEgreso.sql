@@ -7,5 +7,5 @@ WHERE phc.planilla_id = planilla_id AND c.tipo_concepto = 2);
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
-RETURN ROUND(aux, 2);
+RETURN redondearA2(aux);
 END

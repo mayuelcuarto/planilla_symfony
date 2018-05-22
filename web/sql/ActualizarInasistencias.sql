@@ -24,21 +24,23 @@ DECLARE faltas_aux DOUBLE;
 DECLARE concepto_v INT;
 DECLARE concepto_monto DOUBLE;
 
+DECLARE a DOUBLE;
+DECLARE b DOUBLE;
+DECLARE c DOUBLE;
+
 DECLARE planilla_cursor CURSOR FOR 
-(SELECT p.tardanzas, p.particulares, p.lsgh, p.faltas FROM planilla p 
+(SELECT p.rem_aseg, p.rem_noaseg, p.tardanzas, p.particulares, p.lsgh, p.faltas FROM planilla p 
 WHERE p.id = planilla_id);
 
 OPEN planilla_cursor;
-FETCH planilla_cursor INTO tardanzas_m, particulares_m, lsgh_d, faltas_d;
+FETCH planilla_cursor INTO remAseg, remNoAseg, tardanzas_m, particulares_m, lsgh_d, faltas_d;
 CLOSE planilla_cursor;
 
-SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
-SET remNoAseg = (SELECT RemuneracionNoAsegurable(planilla_id));
 SET remBruta = remAseg + remNoAseg;
 
-SET montoDia = ROUND(remBruta / 30, 2);
-SET montoHora = ROUND(montoDia / 8, 2);
-SET montoMin = ROUND(montoHora / 60, 2);
+SET montoDia = (SELECT redondearA2((remBruta / 30)));
+SET montoHora = (SELECT redondearA2((montoDia / 8)));
+SET montoMin = (SELECT redondearA2((montoHora / 60)));
 
 IF tardanzas_m > 0 THEN
 	SET tardanzas_aux = tardanzas_m * montoMin;

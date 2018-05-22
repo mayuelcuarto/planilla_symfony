@@ -28,5 +28,5 @@ ELSEIF regimenLaboral = 4 THEN
 ELSE 
 	SET patronal = 0;
 END IF;
-RETURN ROUND(patronal, 2);
+RETURN redondearA2(patronal);
 END

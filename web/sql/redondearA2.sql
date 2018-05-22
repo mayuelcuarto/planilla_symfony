@@ -1,0 +1,6 @@
+CREATE FUNCTION `redondearA2` (valor DOUBLE) RETURNS DOUBLE
+BEGIN
+	DECLARE aux DOUBLE;
+	SET aux = ROUND(valor + 0.0000000001, 2);
+    RETURN aux;
+END

@@ -12,7 +12,7 @@ INNER JOIN plaza pl ON pl.id = ph.plaza_id
 WHERE p.id = planilla_id);
 
 SET remAseg = (SELECT RemuneracionAsegurable(planilla_id));
-SET essalud = ROUND(remAseg * 0.04, 2);
+SET essalud = redondearA2(remAseg * 0.04);
 
 IF tipoPlanilla = 2 OR tipoPlanilla = 3 THEN
 IF essalud IS NOT NULL AND essalud > 0 THEN
