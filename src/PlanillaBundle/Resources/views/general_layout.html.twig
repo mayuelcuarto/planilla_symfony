@@ -14,6 +14,8 @@
         <!-- Importando Datatables -->
         <link rel="stylesheet" type="text/css" href="{{ asset('DataTables/datatables.min.css') }}"/>
         <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"></script>
+        
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
     </header>
     <body>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')%}
@@ -77,10 +79,8 @@
                                 <li><a class="dropdown-item" href="{{path("planilla_index")}}">Planilla</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{path("planilla_generacion")}}">Generar Planilla Mensual</a></li>
-                                <li><a class="dropdown-item" href="#">Generar Fechas de Planilla</a></li>
+                                <li><a class="dropdown-item" href="{{path("planilla_fechas")}}">Generar Fechas de Planilla</a></li>
                                 <li><a class="dropdown-item" href="#">Generar MCPP TXT</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Limpiar Planilla</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
