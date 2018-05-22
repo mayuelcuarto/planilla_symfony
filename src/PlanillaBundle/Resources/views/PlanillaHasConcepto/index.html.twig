@@ -1,9 +1,13 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div>
-        <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
-        <hr/>
-        <div class="row mx-auto"> 
+        <div class="row mx-auto">
+                <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
+                <a class="btn" href="{{path("planilla_index")}}" role="button" >
+                    <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:42px;height:42px;border:0;">
+                </a>
+        </div>
+        <div class="row mx-auto">
             <div>
                 <a class="btn btn-success" href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button">Agregar Concepto</a>
             </div>
@@ -59,6 +63,8 @@
         <div class="alert alert-info">
             <span >CUOTA PATRONAL: {{ planilla.patronal }}
         </div>
+        <hr/>
+
     </div>
     <script>
         //Función para implementar datatables
