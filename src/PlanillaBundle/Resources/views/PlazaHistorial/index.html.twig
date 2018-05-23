@@ -1,7 +1,12 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div>
+        <div class="row mx-auto">
         <h3>Historial de Plaza</h3>
+        <a class="btn" href="{{path("plaza_index")}}" role="button" >
+            <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:30px;height:30px;border:0;">
+        </a>
+        </div>
         <hr/>
         {% if activado == true %}
             <a href="{{path("plazaHistorial_add", {"plazaId":plazaId})}}" class="btn btn-success">Agregar Historial</a>

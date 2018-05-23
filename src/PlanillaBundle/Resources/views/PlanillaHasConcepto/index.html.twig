@@ -4,9 +4,10 @@
         <div class="row mx-auto">
                 <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
                 <a class="btn" href="{{path("planilla_index")}}" role="button" >
-                    <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:42px;height:42px;border:0;">
+                    <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:30px;height:30px;border:0;">
                 </a>
         </div>
+        <hr/>
         <div class="row mx-auto">
             <div>
                 <a class="btn btn-success" href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button">Agregar Concepto</a>
