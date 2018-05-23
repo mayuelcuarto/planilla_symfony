@@ -417,6 +417,10 @@ planillaHasConcepto_index:
     path: /planillaHasConcepto/index/{planillaId}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:index }
     
+planillaHasConcepto_consulta:
+    path: /planillaHasConcepto/consulta/{planillaId}
+    defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:consulta }
+    
 planillaHasConcepto_add:
     path: /planillaHasConcepto/add/{planillaId}
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:add }
