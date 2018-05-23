@@ -1,0 +1,76 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div>
+        <h3>Consulta de Planillas</h3>
+        <hr/>
+        <div class="row d-flex">
+            <div class="col-5">
+                {{form_start(form)}}
+                {{form_end(form,{'action':'', 'method':'POST'})}}
+            </div>
+            {% if sumaRemAseg != null %}
+                <div class="col-5 ml-auto">
+                    <table class="table-sm table-bordered">
+                        <tr><td colspan="2" class="text-center"><b>RESUMEN DE PLANILLA</b></td></tr>
+                        <tr><td>Rem. Asegurable</td><td class="text-right">{{ sumaRemAseg }}</td></tr>
+                        <tr><td>Rem. No Asegurable</td><td class="text-right">{{ sumaRemNoAseg }}</td></tr>
+                        <tr><td>Total de Ingresos</td><td class="text-right">{{ sumaRemAseg + sumaRemNoAseg }}</td></tr>
+                        <tr><td colspan="2"></td></tr>
+                        <tr><td>Total de Egresos</td><td class="text-right">{{ sumaTotalEgreso }}</td></tr>
+                        <tr><td><b>Total Neto</b></td><td class="text-right"><b>{{ sumaRemAseg + sumaRemNoAseg - sumaTotalEgreso }}</b></td></tr>
+                        <tr></tr>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Tipo</th>
+                    <th>Plaza</th>
+                    <th>Conceptos</th>
+                    <th>Personal</th>
+                    <th>Rem Aseg</th>
+                    <th>Rem NoAseg</th>
+                    <th>Egresos</th>
+                    <th>Neto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for planilla in planillas %}
+                    <tr>
+                        <td>{{ planilla.id }}</td>
+                        <td>{{ planilla.anoEje }}</td>
+                        <td>{{ planilla.mesEje.nombre }}</td>
+                        <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
+                        <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
+                        <td><a href="" class="btn btn-info">MOSTRAR</a></td>
+                        <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
+                        <td td class="text-right">{{ planilla.remAseg }}</td>
+                        <td td class="text-right">{{ planilla.remNoAseg }}</td>
+                        <td td class="text-right">{{ planilla.totalEgreso }}</td>
+                        <td td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        //Función para implementar datatables
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "order": [[3, 'asc'], [4, 'asc']]
+            });
+        });
+    </script>
+{% endblock %}
