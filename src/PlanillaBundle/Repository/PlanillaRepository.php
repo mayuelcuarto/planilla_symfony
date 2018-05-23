@@ -7,6 +7,8 @@ use PlanillaBundle\Entity\Usuario;
 use PlanillaBundle\Entity\Mes;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Entity\PlanillaHasConcepto;
+use PlanillaBundle\Entity\TipoPlanilla;
+use PDO;
 
 class PlanillaRepository extends EntityRepository {
 
@@ -70,4 +72,57 @@ class PlanillaRepository extends EntityRepository {
         $sth->execute();
     }
 
+    public function findByAnoMesTipoPlanilla($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT p FROM PlanillaBundle:Planilla p
+                                       INNER JOIN p.plazaHistorial ph
+                                       INNER JOIN ph.plaza pl
+                                       WHERE 
+                                       p.anoEje = :anoEje AND 
+                                       p.mesEje = :mesEje AND 
+                                       pl.tipoPlanilla = :tipoPlanilla")
+                        ->setParameter('anoEje', $anoEje)
+                        ->setParameter('mesEje', $mesEje)
+                        ->setParameter('tipoPlanilla', $tipoPlanilla)
+                        ->getResult();
+    }
+
+    public function SumaRemAseg($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaRemAseg(:anoEje, :mesEje, :tipoPlanilla)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaRemAseg = $fila[0];
+        }
+        return $sumaRemAseg;
+    }
+    
+    public function SumaRemNoAseg($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaRemNoAseg(:anoEje, :mesEje, :tipoPlanilla)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaRemNoAseg = $fila[0];
+        }
+        return $sumaRemNoAseg;
+    }
+    
+    public function SumaTotalEgreso($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaTotalEgreso(:anoEje, :mesEje, :tipoPlanilla)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaTotalEgreso = $fila[0];
+        }
+        return $sumaTotalEgreso;
+    }
 }

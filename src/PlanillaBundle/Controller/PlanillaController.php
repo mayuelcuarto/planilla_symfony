@@ -54,7 +54,7 @@ class PlanillaController extends Controller {
                 $anoEjeForm = $form->get("anoEje")->getData();
                 $mesEjeForm = $form->get("mesEje")->getData();
                 $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
-                $planillas = $planilla_repo->findArrayByAnoMesTipoPlanilla($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                $planillas = $planilla_repo->findByAnoMesTipoPlanilla($anoEjeForm, $mesEjeForm, $tipoPlanilla);
                 $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
                 $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
                 $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla);
