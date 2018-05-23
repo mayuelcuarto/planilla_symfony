@@ -1,16 +1,17 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div>
-        <h3>Consulta de Planillas</h3>
+        <h4>CONSULTA DE PLANILLAS</h4>
         <hr/>
-        <div class="row d-flex">
-            <div class="col-5">
+        <div class="row mx-auto">
+            <div class="col-xl-4">
                 {{form_start(form)}}
                 {{form_end(form,{'action':'', 'method':'POST'})}}
             </div>
             {% if sumaRemAseg != null %}
-                <div class="col-5 ml-auto">
-                    <table class="table-sm table-bordered">
+                <div class="col-xl-8">
+                    <div class="float-right col-sm-auto" width="100%">
+                    <table class="table-sm table-bordered col-sm-auto">
                         <tr><td colspan="2" class="text-center"><b>RESUMEN DE PLANILLA</b></td></tr>
                         <tr><td>Rem. Asegurable</td><td class="text-right">{{ sumaRemAseg }}</td></tr>
                         <tr><td>Rem. No Asegurable</td><td class="text-right">{{ sumaRemNoAseg }}</td></tr>
@@ -20,6 +21,7 @@
                         <tr><td><b>Total Neto</b></td><td class="text-right"><b>{{ sumaRemAseg + sumaRemNoAseg - sumaTotalEgreso }}</b></td></tr>
                         <tr></tr>
                     </table>
+                    </div>
                 </div>
             {% endif %}
         </div>
@@ -51,12 +53,12 @@
                         <td>{{ planilla.mesEje.nombre }}</td>
                         <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
                         <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
-                        <td><a href="" class="btn btn-info">MOSTRAR</a></td>
+                        <td><a href="{{path("planillaHasConcepto_consulta",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
                         <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
-                        <td td class="text-right">{{ planilla.remAseg }}</td>
-                        <td td class="text-right">{{ planilla.remNoAseg }}</td>
-                        <td td class="text-right">{{ planilla.totalEgreso }}</td>
-                        <td td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
+                        <td class="text-right">{{ planilla.remAseg }}</td>
+                        <td class="text-right">{{ planilla.remNoAseg }}</td>
+                        <td class="text-right">{{ planilla.totalEgreso }}</td>
+                        <td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
                     </tr>
                 {% endfor %}
             </tbody>
