@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Form\PlanillaType;
+use PlanillaBundle\Form\PlanillaSearchType;
 use PlanillaBundle\Form\PlanillaGeneracionType;
 use PlanillaBundle\Form\PlanillaFechasType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,22 +22,74 @@ class PlanillaController extends Controller {
 
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        //$anoEje = 2017;
         $anoEje = date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        //$mesEje = $mes_repo->findOneBy(["mesEje" => 10]);
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $planillas = $em->getRepository("PlanillaBundle:Planilla")->findBy(["anoEje" => $anoEje, "mesEje" => $mesEje]);
-        return $this->render("@Planilla/planilla/index.html.twig", ["planillas" => $planillas]);
+        return $this->render("@Planilla/planilla/index.html.twig", [
+            "planillas" => $planillas,
+            "anoEje" => $anoEje,
+            "mesEje" => $mesEje->getNombre()
+                ]);
+    }
+
+    public function consultaAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $planilla = new Planilla();
+        for ($i = 2008; $i <= $anoEje; $i++) {
+            $anoArray[$i] = $i;
+        }
+        $form = $this->createForm(PlanillaSearchType::class, $planilla, [
+            'anoArray' => $anoArray,
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillas = $planilla_repo->findArrayByAnoMesTipoPlanilla($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                if (count($planillas) != 0) {
+                    $status = "Listando " . count($planillas) . " registros";
+                } else {
+                    $status = "No se encontraron registros de coincidencia";
+                }
+            } else {
+                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+            }
+
+            $this->session->getFlashBag()->add("status", $status);
+            return $this->render("@Planilla/planilla/consulta.html.twig", [
+                        "form" => $form->createView(),
+                        "planillas" => $planillas,
+                        "sumaRemAseg" => $sumaRemAseg,
+                        "sumaRemNoAseg" => $sumaRemNoAseg,
+                        "sumaTotalEgreso" => $sumaTotalEgreso
+            ]);
+        }
+        return $this->render("@Planilla/planilla/consulta.html.twig", [
+                    "form" => $form->createView(),
+                    "planillas" => null,
+                    "sumaRemAseg" => null,
+                    "sumaRemNoAseg" => null,
+                    "sumaTotalEgreso" => null
+        ]);
     }
 
     public function addAction(Request $request) {
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
-        //$anoEje = 2017;
         $anoEje = \date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
 
         $form = $this->createForm(PlanillaType::class, $planilla, [
@@ -98,12 +151,9 @@ class PlanillaController extends Controller {
     }
 
     public function editAction(Request $request, $id) {
-        //$planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
-        //$anoEje = 2017;
         $anoEje = \date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        //$mesEje = $mes_repo->findOneBy(array("mesEje" => 10));
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
         $planilla = $planilla_repo->find($id);
@@ -244,10 +294,8 @@ class PlanillaController extends Controller {
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
         $em = $this->getDoctrine()->getManager();
-        //$anoEje = 2017;
         $anoEje = date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
-        //$mesEje = $mes_repo->findOneBy(["mesEje" => 10]);
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
 
         $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->find(['id' => $tipoPlanilla_id]);
