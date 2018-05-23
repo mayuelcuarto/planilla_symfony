@@ -29,6 +29,18 @@ class PlanillaHasConceptoController extends Controller {
                     "planilla" => $planilla
         ]);
     }
+    
+    public function consultaAction($planillaId) {
+        $em = $this->getDoctrine()->getManager();
+        $planillaHasConceptos = $em->getRepository("PlanillaBundle:PlanillaHasConcepto")->findBy(["planilla" => $planillaId]);
+        $planilla = $em->getRepository("PlanillaBundle:Planilla")->find($planillaId);
+
+        return $this->render("@Planilla/planillaHasConcepto/consulta.html.twig", [
+                    "planillaHasConceptos" => $planillaHasConceptos,
+                    "planillaId" => $planillaId,
+                    "planilla" => $planilla
+        ]);
+    }
 
     public function addAction(Request $request, $planillaId) {
         $em = $this->getDoctrine()->getManager();
