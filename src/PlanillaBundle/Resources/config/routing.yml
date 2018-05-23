@@ -384,6 +384,10 @@ planilla_index:
     path: /planilla/index
     defaults: { _controller: PlanillaBundle:Planilla:index }
     
+planilla_consulta:
+    path: /planilla/consulta
+    defaults: { _controller: PlanillaBundle:Planilla:consulta }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
