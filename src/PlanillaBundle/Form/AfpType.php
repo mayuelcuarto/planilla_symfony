@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -37,34 +37,40 @@ class AfpType extends AbstractType {
                     "required" => "required",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('snp', NumberType::class, [
+                ->add('snp', PercentType::class, [
                     "label" => "SNP",
                     "required" => false,
+                    "scale" => 2,
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('jubilacion', NumberType::class, [
-                    "label" => "Jubilación",
-                    "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
-                ->add('seguros', NumberType::class, [
-                    "label" => "Seguros",
-                    "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
-                ->add('ra', NumberType::class, [
-                    "label" => "Comisión RA",
-                    "required" => false,
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
-                ->add('pension', NumberType::class, [
+                ->add('pension', PercentType::class, [
                     "label" => "Pensión",
                     "required" => false,
+                    "scale" => 2,
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('raMixta', NumberType::class, [
+                ->add('jubilacion', PercentType::class, [
+                    "label" => "Jubilación",
+                    "required" => false,
+                    "scale" => 2,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('seguros', PercentType::class, [
+                    "label" => "Seguros",
+                    "required" => false,
+                    "scale" => 2,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('ra', PercentType::class, [
+                    "label" => "Comisión RA",
+                    "required" => false,
+                    "scale" => 2,
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('raMixta', PercentType::class, [
                     "label" => "Comisión RA Mixta",
                     "required" => false,
+                    "scale" => 2,
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('estado', CheckboxType::class, [
