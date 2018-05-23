@@ -2,17 +2,17 @@
 {% block content %}
     <div>
         <div class="row mx-auto">
-                <h3>Conceptos de Planilla {{ planilla.plazaHistorial.codPersonal.cadena }}</h3>
-                <a class="btn" href="{{path("planilla_index")}}" role="button" >
-                    <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:30px;height:30px;border:0;">
-                </a>
+            <h4>CONCEPTOS DE PLANILLA {{ planilla.mesEje.nombre }} {{ planilla.anoEje }} - {{ planilla.plazaHistorial.codPersonal.cadena }}</h4>
+            <a class="btn" href="{{path("planilla_index")}}" role="button" >
+                <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:30px;height:30px;border:0;">
+            </a>
         </div>
         <hr/>
         <div class="row mx-auto">
             <div>
                 <a class="btn btn-success" href="{{ path("planillaHasConcepto_add",{"planillaId":planillaId}) }}" role="button">Agregar Concepto</a>
             </div>
-            {% if planilla.plazaHistorial.plaza.tipoPlanilla.id == 1 or planilla.plazaHistorial.plaza.tipoPlanilla.id == 4%}
+            {% if planilla.plazaHistorial.plaza.tipoPlanilla.id != 2 and planilla.plazaHistorial.plaza.tipoPlanilla.id != 3%}
                 <hr/>
                 <div class="d-block d-sm-none"><br><br></div>
                 <div>
@@ -24,7 +24,7 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table id="myTable" class="table-sm table-bordered table-responsive">
+        <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -40,7 +40,7 @@
                         <td><a href="{{ path("planillaHasConcepto_edit",{"id":planillaHasConcepto.id}) }}" class="btn btn-warning">{{ planillaHasConcepto.concepto.id }}</a></td>
                         <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
                         <td>{{ planillaHasConcepto.concepto.concepto }}</td>
-                        <td>{{ planillaHasConcepto.monto }}</td>
+                        <td class="text-right">{{ planillaHasConcepto.monto }}</td>
                         <td><a href="{{ path("planillaHasConcepto_delete",{"id":planillaHasConcepto.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}

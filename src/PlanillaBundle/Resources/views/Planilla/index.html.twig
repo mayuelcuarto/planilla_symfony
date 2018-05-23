@@ -1,7 +1,7 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div>
-        <h3>Procesamiento de Planillas {{ mesEje }} {{ anoEje }}</h3>
+        <h4>PROCESAMIENTO DE PLANILLAS {{ mesEje }} {{ anoEje }}</h4>
         <hr/>
         <a href="{{ path("planilla_add") }}" class="btn btn-success">Agregar Planilla</a>
         <hr/>
@@ -31,10 +31,10 @@
                         <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
                         <td><a href="{{path("planillaHasConcepto_index",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
                         <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
-                        <td td class="text-right">{{ planilla.remAseg }}</td>
-                        <td td class="text-right">{{ planilla.remNoAseg }}</td>
-                        <td td class="text-right">{{ planilla.totalEgreso }}</td>
-                        <td td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
+                        <td class="text-right">{{ planilla.remAseg }}</td>
+                        <td class="text-right">{{ planilla.remNoAseg }}</td>
+                        <td class="text-right">{{ planilla.totalEgreso }}</td>
+                        <td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
                         <td><a href="{{ path("planilla_delete",{"id":planilla.id}) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?');">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
