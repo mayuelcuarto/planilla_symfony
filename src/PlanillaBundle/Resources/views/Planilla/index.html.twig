@@ -1,23 +1,25 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div>
-        <h3>Procesamiento de Planillas</h3>
+        <h3>Procesamiento de Planillas {{ mesEje }} {{ anoEje }}</h3>
         <hr/>
         <a href="{{ path("planilla_add") }}" class="btn btn-success">Agregar Planilla</a>
         <hr/>
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table id="myTable" class="table-sm table-bordered table-responsive">
+        <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Año</th>
-                    <th>Mes</th>
                     <th>Tipo</th>
                     <th>Plaza</th>
                     <th>Conceptos</th>
                     <th>Personal</th>
+                    <th>Rem Aseg</th>
+                    <th>Rem NoAseg</th>
+                    <th>Egresos</th>
+                    <th>Neto</th>
                     <th>Eliminar</th>
                 </tr>
             </thead>
@@ -25,12 +27,14 @@
                 {% for planilla in planillas %}
                     <tr>
                         <td><a href="{{path("planilla_edit",{"id":planilla.id})}}" class="btn btn-warning ">{{ planilla.id }}</a></td>
-                        <td>{{ planilla.anoEje }}</td>
-                        <td>{{ planilla.mesEje.nombre }}</td>
                         <td>{{ planilla.plazaHistorial.plaza.tipoPlanilla.nombre }}</td>
                         <td>{{ planilla.plazaHistorial.plaza.numPlaza }}</td>
                         <td><a href="{{path("planillaHasConcepto_index",{"planillaId":planilla.id})}}" class="btn btn-info">MOSTRAR</a></td>
                         <td>{{ planilla.plazaHistorial.codPersonal.cadena }}</td>
+                        <td td class="text-right">{{ planilla.remAseg }}</td>
+                        <td td class="text-right">{{ planilla.remNoAseg }}</td>
+                        <td td class="text-right">{{ planilla.totalEgreso }}</td>
+                        <td td class="text-right">{{ planilla.remAseg + planilla.remNoAseg - planilla.totalEgreso}}</td>
                         <td><a href="{{ path("planilla_delete",{"id":planilla.id}) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro?');">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
@@ -44,7 +48,7 @@
                 "pageLength": 5,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[3, 'asc'], [4, 'asc']]
+                "order": [[1, 'asc'], [2, 'asc']]
             });
         });
     </script>
