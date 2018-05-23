@@ -1,0 +1,98 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div>
+        <div class="row mx-auto">
+            <h4>CONCEPTOS DE PLANILLA {{ planilla.mesEje.nombre }} {{ planilla.anoEje }} - {{ planilla.plazaHistorial.codPersonal.cadena }}</h4>
+        </div>
+        <hr/>
+        <div class="row mx-auto">
+            <div class="col">
+                <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for planillaHasConcepto in planillaHasConceptos %}
+                            <tr>
+                                <td>{{ planillaHasConcepto.concepto.id }}</td>
+                                <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
+                                <td>{{ planillaHasConcepto.concepto.concepto }}</td>
+                                <td class="text-right">{{ planillaHasConcepto.monto }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <hr/>
+            {% if planilla.plazaHistorial.plaza.tipoPlanilla.id != 2 and planilla.plazaHistorial.plaza.tipoPlanilla.id != 3%}
+                {% set remBruta = planilla.remAseg + planilla.remNoaseg%}
+                {% set montoDia = (remBruta / 30)|round(2) %}
+                {% set montoHora = (montoDia / 8)|round(2) %}
+                {% set montoMinuto = (montoHora / 60)|round(2) %}
+                {% set tardanzasM = planilla.tardanzas * montoMinuto %}
+                {% set particularesM = planilla.particulares * montoMinuto %}
+                {% set faltasM = planilla.faltas * montoDia %}
+                {% set lsghM = planilla.lsgh * montoDia %}
+                <div class="col">
+                    <table class="table-sm table-bordered table-hover" width="100%">
+                        <thead>
+                            <tr><th colspan="3" class="text-center">DESCUENTOS DE HORARIO</th></tr>
+                            <tr>
+                                <th>Descuento</th>
+                                <th>Tiempo</th>
+                                <th class="text-right">Monto</th>
+                            </tr>
+                        </thead>
+                        <tr><td>Tardanzas</td><td>{{ planilla.tardanzas }} minuto(s)</td>
+                            <td class="text-right">{{ tardanzasM }}</td></tr>
+                        <tr><td>Particulares</td><td>{{ planilla.particulares }} minuto(s)</td>
+                            <td class="text-right">{{ particularesM }}</td></tr>
+                        <tr><td>Faltas</td><td>{{ planilla.faltas }} día(s)</td>
+                            <td class="text-right">{{ faltasM }}</td></tr>
+                        <tr><td colspan="2"><b>TOTAL</b></td>
+                            <td class="text-right"><b>{{ tardanzasM + particularesM + faltasM }}</b></td></tr>
+                        <tr><td colspan="3"></td></tr>
+                        <tr><td>LSGH</td><td>{{ planilla.lsgh }} día(s)</td>
+                            <td class="text-right">{{ lsghM }}</td></tr>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <hr/>
+    <div class="row mx-auto">
+        <div class="alert alert-info">
+            <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg }}</span>
+        </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg }}
+        </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >TOTAL EGRESOS: {{ planilla.totalEgreso }}
+        </div>
+        <hr/>
+        <div class="alert alert-info">
+            <span >CUOTA PATRONAL: {{ planilla.patronal }}
+        </div>
+        <hr/>
+
+    </div>
+    <script>
+        //Función para implementar datatables
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 4,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "order": [[1, 'desc'], [0, 'asc']]
+            });
+        });
+    </script>
+{% endblock %}
