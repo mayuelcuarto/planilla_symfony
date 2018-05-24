@@ -10,6 +10,7 @@ use PlanillaBundle\Form\PlanillaType;
 use PlanillaBundle\Form\PlanillaSearchType;
 use PlanillaBundle\Form\PlanillaGeneracionType;
 use PlanillaBundle\Form\PlanillaFechasType;
+use PlanillaBundle\Form\PlanillaReportType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaController extends Controller {
@@ -334,6 +335,9 @@ class PlanillaController extends Controller {
             } else {
                 $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
             }
+            if(isset($status)){
+                $this->session->getFlashBag()->add("status", $status);
+            }
             return $this->render("PlanillaBundle:planilla:reporteTotales.html.php", [
                         "planillas" => $planillas,
                         "sumaRemAseg" => $sumaRemAseg,
@@ -345,7 +349,63 @@ class PlanillaController extends Controller {
                         "fuente" => $fuenteFinanc
             ]);
         }
+        
         return $this->render("@Planilla/planilla/totales.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
+    
+    public function reporteAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+
+        $planilla = new Planilla();
+        for ($i = 2008; $i <= $anoEje; $i++) {
+            $anoArray[$i] = $i;
+        }
+
+        $form = $this->createForm(PlanillaReportType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $anoArray,
+            'fuentes' => $fuentes
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+                $tipo = $form->get("tipo")->getData();
+                
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                if($tipo == 1){
+                    $planillas = $planilla_repo->findByAnoMesTipoFuente($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                }else{
+                    $planillaForm = $form->get("planilla")->getData();
+                    $planillas = $planilla_repo->find($planillaForm);
+                }
+            } else {
+                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+            }
+            if(isset($status)){
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reporte.html.php", [
+                        "planillas" => $planillas,
+                        "tipoPlanilla" => $tipoPlanilla,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "fuente" => $fuenteFinanc
+            ]);
+        }
+        return $this->render("@Planilla/planilla/reporte.html.twig", [
                     "form" => $form->createView()
         ]);
     }
