@@ -63,6 +63,7 @@ class PlazaHistorialController extends Controller {
                 $plazaHistorial->setModoIngreso($form->get("modoIngreso")->getData());
                 $plazaHistorial->setResolucion($form->get("resolucion")->getData());
                 $plazaHistorial->setFechaIngreso($form->get("fechaIngreso")->getData());
+                $plazaHistorial->setUnidad($form->get("unidad")->getData());
                 $plazaHistorial->setCargo($form->get("cargo")->getData());
                 $plazaHistorial->setRegimenPensionario($form->get("regimenPensionario")->getData());
                 $plazaHistorial->setAfp($form->get("afp")->getData());
@@ -107,12 +108,14 @@ class PlazaHistorialController extends Controller {
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+                //$plazaHistorial = new PlazaHistorial();
                 $plazaHistorial->setCodPersonal($form->get("codPersonal")->getData());
                 $plazaHistorial->setRegimenLaboral($form->get("regimenLaboral")->getData());
                 $plazaHistorial->setCondicionLaboral($form->get("condicionLaboral")->getData());
                 $plazaHistorial->setModoIngreso($form->get("modoIngreso")->getData());
                 $plazaHistorial->setResolucion($form->get("resolucion")->getData());
                 $plazaHistorial->setFechaIngreso($form->get("fechaIngreso")->getData());
+                $plazaHistorial->setUnidad($form->get("unidad")->getData());
                 $plazaHistorial->setCargo($form->get("cargo")->getData());
                 $plazaHistorial->setRegimenPensionario($form->get("regimenPensionario")->getData());
                 $plazaHistorial->setAfp($form->get("afp")->getData());
