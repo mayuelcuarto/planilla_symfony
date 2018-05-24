@@ -56,3 +56,7 @@ services:
     PlanillaBundle\Form\PlanillaSearchType:
         arguments: ['@doctrine.orm.entity_manager']
         tags: [form.type]
+        
+    PlanillaBundle\Form\PlanillaReportType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
