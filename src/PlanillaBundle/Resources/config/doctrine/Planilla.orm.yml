@@ -162,4 +162,9 @@ PlanillaBundle\Entity\Planilla:
                 usuario_id:
                     referencedColumnName: id
             orphanRemoval: false
+    oneToMany:
+        planillaHasConcepto:
+            targetEntity: PlanillaHasConcepto
+            mappedBy: planilla
+            cascade: ["persist"]
     lifecycleCallbacks: {  }

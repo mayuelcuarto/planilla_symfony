@@ -37,7 +37,7 @@ PlanillaBundle\Entity\PlanillaHasConcepto:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: null
+            inversedBy: planillaHasConcepto
             joinColumns:
                 planilla_id:
                     referencedColumnName: id
