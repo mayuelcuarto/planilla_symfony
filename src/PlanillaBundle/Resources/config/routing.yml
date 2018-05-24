@@ -387,7 +387,11 @@ planilla_index:
 planilla_consulta:
     path: /planilla/consulta
     defaults: { _controller: PlanillaBundle:Planilla:consulta }
-    
+
+planilla_reporte:
+    path: /planilla/reporte
+    defaults: { _controller: PlanillaBundle:Planilla:reporte }
+
 planilla_reporte_totales:
     path: /planilla/reporte/totales
     defaults: { _controller: PlanillaBundle:Planilla:totales }
