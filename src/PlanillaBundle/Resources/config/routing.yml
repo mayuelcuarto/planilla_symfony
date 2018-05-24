@@ -62,12 +62,12 @@ plaza_edit:
     defaults: { _controller: PlanillaBundle:Plaza:edit }
     
 plaza_ajax_numPlaza:
-    path:     /plaza/numPlaza
+    path:     /plaza/ajax/numPlaza
     defaults: { _controller: "PlanillaBundle:Plaza:modifyNumPlaza" }
     methods:  GET
     
 plaza_ajax_categoria:
-    path:     /plaza/categoria
+    path:     /plaza/ajax/categoria
     defaults: { _controller: "PlanillaBundle:Plaza:modifyCategoria" }
     methods:  GET
     
@@ -352,7 +352,7 @@ plazaHistorial_baja:
     defaults: { _controller: PlanillaBundle:PlazaHistorial:baja }
     
 plazaHistorial_ajax_afp:
-    path:     /plazaHistorial/afp
+    path:     /plazaHistorial/ajax/afp
     defaults: { _controller: "PlanillaBundle:PlazaHistorial:modifyAfp" }
     methods:  GET
     
@@ -388,6 +388,10 @@ planilla_consulta:
     path: /planilla/consulta
     defaults: { _controller: PlanillaBundle:Planilla:consulta }
     
+planilla_reporte_totales:
+    path: /planilla/reporte/totales
+    defaults: { _controller: PlanillaBundle:Planilla:totales }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
@@ -409,8 +413,13 @@ planilla_fechas:
     defaults: { _controller: PlanillaBundle:Planilla:fechas }
     
 planilla_ajax_plazaHistorial:
-    path:     /planilla/plazaHistorial
+    path:     /planilla/ajax/plazaHistorial
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
+    methods:  GET
+    
+planilla_ajax_fuente:
+    path:     /planilla/ajax/fuente
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyFuente" }
     methods:  GET
     
 planillaHasConcepto_index:
@@ -438,6 +447,6 @@ planillaHasConcepto_delete:
     defaults: { _controller: PlanillaBundle:PlanillaHasConcepto:delete }
     
 planillaHasConcepto_ajax_concepto:
-    path:     /planillaHasConcepto/concepto
+    path:     /planillaHasConcepto/ajax/concepto
     defaults: { _controller: "PlanillaBundle:PlanillaHasConcepto:modifyConcepto" }
     methods:  GET
