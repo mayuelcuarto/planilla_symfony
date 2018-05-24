@@ -2,6 +2,8 @@
 
 namespace PlanillaBundle\Entity;
 
+use \Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Planilla
  */
@@ -106,7 +108,12 @@ class Planilla
      * @var \PlanillaBundle\Entity\Usuario
      */
     private $usuario;
+    
+    protected $planillaHasConcepto;
 
+    public function __construct() {
+        $this->planillaHasConcepto = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -572,6 +579,10 @@ class Planilla
     public function getUsuario()
     {
         return $this->usuario;
+    }
+    
+    public function getPlanillaHasConcepto(){
+        return $this->planillaHasConcepto;
     }
 }
 
