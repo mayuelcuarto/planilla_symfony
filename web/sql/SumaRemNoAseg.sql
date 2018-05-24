@@ -1,10 +1,10 @@
-CREATE DEFINER=`root`@`localhost` FUNCTION `SumaRemNoAseg`(anoEje INT, mesEje INT,tipoPlanilla INT) RETURNS DOUBLE
+CREATE DEFINER=`root`@`localhost` FUNCTION `SumaRemNoAseg`(anoEje INT, mesEje INT,tipoPlanilla INT, fuenteFinanc INT) RETURNS DOUBLE
 BEGIN
 DECLARE aux DOUBLE;
 SET aux = (SELECT SUM(p.rem_noaseg) FROM planilla p 
 INNER JOIN plaza_historial ph ON ph.id = p.plaza_historial_id
 INNER JOIN plaza pl ON pl.id = ph.plaza_id
-WHERE p.ano_eje = anoEje AND p.mes_eje = mesEje AND pl.tipo_planilla = tipoPlanilla);
+WHERE p.ano_eje = anoEje AND p.mes_eje = mesEje AND pl.tipo_planilla = tipoPlanilla AND p.fuente_id = fuenteFinanc);
 IF aux IS NULL THEN
 	SET aux = 0;
 END IF;
