@@ -8,9 +8,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use PlanillaBundle\Entity\FuenteFinanc;
 
 class PlanillaSearchType extends AbstractType {
 
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
+    }
+    
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -42,10 +53,50 @@ class PlanillaSearchType extends AbstractType {
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
+                ->add('tipoPlanilla', EntityType::class, [
+                    "label" => "Tipo Planilla",
+                    "mapped" => false,
+                    "required" => "required",
+                    "class" => "PlanillaBundle:TipoPlanilla",
+                    "choice_label" => "nombre",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
+                ->add('fuente', EntityType::class, [
+                    "label" => "Fuente de Financiamiento",
+                    "mapped" => false,
+                    "required" => "required",
+                    "class" => "PlanillaBundle:FuenteFinanc",
+                    "choices" => $options['fuentes'],
+                    "choice_label" => "nombre",
+                    "attr" => ["class" => "form-control form-control-sm"]
+                ])
                 ->add('Buscar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
                 ])
         ;
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+    }
+    
+    function onPreSubmit(FormEvent $event) {
+        $form = $event->getForm();
+        $data = $event->getData();
+        $em = $this->entityManager;
+        //var_dump($data['fuente']);
+        $options = $form->getConfig()->getOptions();
+        $fuente = $em->getRepository('PlanillaBundle:FuenteFinanc')->findOneBy(["id" => $data['fuente']]);
+        $this->seteandoFuente($form, $fuente, $options);
+    }
+    
+    protected function seteandoFuente(FormInterface $form, FuenteFinanc $fuente, $options) {
+        $form->add('fuente', EntityType::class, [
+            "label" => "Fuente de Financiamiento",
+            "required" => "required",
+            "class" => "PlanillaBundle:FuenteFinanc",
+            "choices" => $options['fuentes'],
+            "choice_label" => "nombre",
+            "attr" => ["class" => "form-control form-control-sm"],
+            "data" => $fuente
+        ]);
     }
 
     /**
@@ -56,7 +107,8 @@ class PlanillaSearchType extends AbstractType {
             'data_class' => 'PlanillaBundle\Entity\Planilla',
             'anoArray' => null,
             'anoEje' => null,
-            'mesEje' => null
+            'mesEje' => null,
+            'fuentes' => null
             ]);
     }
 
