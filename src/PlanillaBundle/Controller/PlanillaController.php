@@ -27,10 +27,10 @@ class PlanillaController extends Controller {
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $planillas = $em->getRepository("PlanillaBundle:Planilla")->findBy(["anoEje" => $anoEje, "mesEje" => $mesEje]);
         return $this->render("@Planilla/planilla/index.html.twig", [
-            "planillas" => $planillas,
-            "anoEje" => $anoEje,
-            "mesEje" => $mesEje->getNombre()
-                ]);
+                    "planillas" => $planillas,
+                    "anoEje" => $anoEje,
+                    "mesEje" => $mesEje->getNombre()
+        ]);
     }
 
     public function consultaAction(Request $request) {
@@ -38,6 +38,9 @@ class PlanillaController extends Controller {
         $anoEje = date("Y");
         $mes_repo = $em->getRepository("PlanillaBundle:Mes");
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+
         $planilla = new Planilla();
         for ($i = 2008; $i <= $anoEje; $i++) {
             $anoArray[$i] = $i;
@@ -45,7 +48,8 @@ class PlanillaController extends Controller {
         $form = $this->createForm(PlanillaSearchType::class, $planilla, [
             'anoArray' => $anoArray,
             'anoEje' => $anoEje,
-            'mesEje' => $mesEje
+            'mesEje' => $mesEje,
+            'fuentes' => $fuentes
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -53,11 +57,14 @@ class PlanillaController extends Controller {
                 $tipoPlanilla = $form->get("tipoPlanilla")->getData();
                 $anoEjeForm = $form->get("anoEje")->getData();
                 $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+
                 $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
-                $planillas = $planilla_repo->findByAnoMesTipoPlanilla($anoEjeForm, $mesEjeForm, $tipoPlanilla);
-                $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
-                $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla);
-                $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla);
+                $planillas = $planilla_repo->findByAnoMesTipoFuente($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+
+                $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
                 if (count($planillas) != 0) {
                     $status = "Listando " . count($planillas) . " registros";
                 } else {
@@ -291,6 +298,58 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    public function totalesAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+
+        $planilla = new Planilla();
+        for ($i = 2008; $i <= $anoEje; $i++) {
+            $anoArray[$i] = $i;
+        }
+
+        $form = $this->createForm(PlanillaSearchType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $anoArray,
+            'fuentes' => $fuentes
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillas = $planilla_repo->findByAnoMesTipoFuente($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+            } else {
+                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+            }
+            return $this->render("PlanillaBundle:planilla:reporteTotales.html.php", [
+                        "planillas" => $planillas,
+                        "sumaRemAseg" => $sumaRemAseg,
+                        "sumaRemNoAseg" => $sumaRemNoAseg,
+                        "sumaTotalEgreso" => $sumaTotalEgreso,
+                        "tipoPlanilla" => $tipoPlanilla,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "fuente" => $fuenteFinanc
+            ]);
+        }
+        return $this->render("@Planilla/planilla/totales.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
+
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
         $em = $this->getDoctrine()->getManager();
@@ -301,6 +360,13 @@ class PlanillaController extends Controller {
         $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->find(['id' => $tipoPlanilla_id]);
         $plazaHistoriales = $em->getRepository('PlanillaBundle:PlazaHistorial')->findArrayByTipoPlanillaAnoEjeMesEje($tipoPlanilla, $anoEje, $mesEje);
         return new JsonResponse($plazaHistoriales);
+    }
+
+    public function modifyFuenteAction(Request $request) {
+        $anoEje = $request->query->get("anoEje");
+        $em = $this->getDoctrine()->getManager();
+        $fuentes = $em->getRepository('PlanillaBundle:FuenteFinanc')->findArrayByAnoEje($anoEje);
+        return new JsonResponse($fuentes);
     }
 
 }
