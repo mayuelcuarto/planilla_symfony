@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\FuenteFinanc:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\FuenteFinancRepository
     table: fuente_financ
     id:
         id:
