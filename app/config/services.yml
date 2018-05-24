@@ -52,3 +52,7 @@ services:
     PlanillaBundle\Form\PlazaHistorialType:
         arguments: ['@doctrine.orm.entity_manager']
         tags: [form.type]
+        
+    PlanillaBundle\Form\PlanillaSearchType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]
