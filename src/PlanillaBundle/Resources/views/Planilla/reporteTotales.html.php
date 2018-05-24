@@ -36,12 +36,12 @@ $hora = date("H:i:s");
 
         <tr>
             <td><?php echo $p->getPlazaHistorial()->getPlaza()->getTipoPlanilla()->getId() . "-" . $p->getPlazaHistorial()->getPlaza()->getNumPlaza(); ?></td>
-            <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getApellidoPaterno() . " " . $p->getPlazaHistorial()->getCodPersonal()->getApellidoMaterno() . ", " . $p->getPlazaHistorial()->getCodPersonal()->getNombre(); ?>
-            <td style="text-align: right;"><?php echo $p->getRemAseg(); ?>
-            <td style="text-align: right;"><?php echo $p->getRemNoaseg(); ?>
-            <td style="text-align: right;"><?php echo ($p->getRemAseg() + $p->getRemNoaseg()); ?>
-            <td style="text-align: right;"><?php echo $p->getTotalEgreso(); ?>
-            <td style="text-align: right;"><?php echo (($p->getRemAseg() + $p->getRemNoaseg()) - $p->getTotalEgreso()); ?>
+            <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getApellidoPaterno() . " " . $p->getPlazaHistorial()->getCodPersonal()->getApellidoMaterno() . ", " . $p->getPlazaHistorial()->getCodPersonal()->getNombre(); ?></td>
+            <td style="text-align: right;"><?php echo $p->getRemAseg(); ?></td>
+            <td style="text-align: right;"><?php echo $p->getRemNoaseg(); ?></td>
+            <td style="text-align: right;"><?php echo ($p->getRemAseg() + $p->getRemNoaseg()); ?></td>
+            <td style="text-align: right;"><?php echo $p->getTotalEgreso(); ?></td>
+            <td style="text-align: right;"><?php echo (($p->getRemAseg() + $p->getRemNoaseg()) - $p->getTotalEgreso()); ?></td>
         </tr>
     <?php } ?>
     <tr>
