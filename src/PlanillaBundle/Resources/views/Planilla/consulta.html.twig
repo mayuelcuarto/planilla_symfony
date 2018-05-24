@@ -6,21 +6,25 @@
         <div class="row mx-auto">
             <div class="col-xl-4">
                 {{form_start(form)}}
+                {{form_row(form.anoEje, {'id': 'anoEje' }) }}
+                {{form_row(form.mesEje)}}
+                {{form_row(form.tipoPlanilla)}}
+                {{form_row(form.fuente, {'id': 'fuente' }) }}
                 {{form_end(form,{'action':'', 'method':'POST'})}}
             </div>
             {% if sumaRemAseg != null %}
                 <div class="col-xl-8">
                     <div class="float-right col-sm-auto" width="100%">
-                    <table class="table-sm table-bordered col-sm-auto">
-                        <tr><td colspan="2" class="text-center"><b>RESUMEN DE PLANILLA</b></td></tr>
-                        <tr><td>Rem. Asegurable</td><td class="text-right">{{ sumaRemAseg }}</td></tr>
-                        <tr><td>Rem. No Asegurable</td><td class="text-right">{{ sumaRemNoAseg }}</td></tr>
-                        <tr><td>Total de Ingresos</td><td class="text-right">{{ sumaRemAseg + sumaRemNoAseg }}</td></tr>
-                        <tr><td colspan="2"></td></tr>
-                        <tr><td>Total de Egresos</td><td class="text-right">{{ sumaTotalEgreso }}</td></tr>
-                        <tr><td><b>Total Neto</b></td><td class="text-right"><b>{{ sumaRemAseg + sumaRemNoAseg - sumaTotalEgreso }}</b></td></tr>
-                        <tr></tr>
-                    </table>
+                        <table class="table-sm table-bordered col-sm-auto">
+                            <tr><td colspan="2" class="text-center"><b>RESUMEN DE PLANILLA</b></td></tr>
+                            <tr><td>Rem. Asegurable</td><td class="text-right">{{ sumaRemAseg }}</td></tr>
+                            <tr><td>Rem. No Asegurable</td><td class="text-right">{{ sumaRemNoAseg }}</td></tr>
+                            <tr><td>Total de Ingresos</td><td class="text-right">{{ sumaRemAseg + sumaRemNoAseg }}</td></tr>
+                            <tr><td colspan="2"></td></tr>
+                            <tr><td>Total de Egresos</td><td class="text-right">{{ sumaTotalEgreso }}</td></tr>
+                            <tr><td><b>Total Neto</b></td><td class="text-right"><b>{{ sumaRemAseg + sumaRemNoAseg - sumaTotalEgreso }}</b></td></tr>
+                            <tr></tr>
+                        </table>
                     </div>
                 </div>
             {% endif %}
@@ -72,6 +76,34 @@
                 "bLengthChange": false,
                 "autoWidth": false,
                 "order": [[3, 'asc'], [4, 'asc']]
+            });
+        });
+
+        $('#anoEje').change(function () {
+            var anoEje = $(this);
+            $.ajax({
+                url: "{{ path('planilla_ajax_fuente') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    anoEje: anoEje.val()
+                },
+                success: function (fuentes) {
+                    var fuente = $("#fuente");
+                    fuente.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for (var i = 0; i < fuentes.length; i++) {
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(fuentes[i]); //Escribes en él el nombre de la provincia
+                        $(option).val(fuentes[i].id);
+                        $(option).text(fuentes[i].nombre);
+                        $(option).appendTo("#fuente"); //Lo metes en el select con id provincias
+                    }
+
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ... ");
+                }
             });
         });
     </script>
