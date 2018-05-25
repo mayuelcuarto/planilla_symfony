@@ -37,20 +37,20 @@ $hora = date("H:i:s");
         <tr>
             <td><?php echo $p->getPlazaHistorial()->getPlaza()->getTipoPlanilla()->getId() . "-" . $p->getPlazaHistorial()->getPlaza()->getNumPlaza(); ?></td>
             <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getApellidoPaterno() . " " . $p->getPlazaHistorial()->getCodPersonal()->getApellidoMaterno() . ", " . $p->getPlazaHistorial()->getCodPersonal()->getNombre(); ?></td>
-            <td style="text-align: right;"><?php echo $p->getRemAseg(); ?></td>
-            <td style="text-align: right;"><?php echo $p->getRemNoaseg(); ?></td>
-            <td style="text-align: right;"><?php echo ($p->getRemAseg() + $p->getRemNoaseg()); ?></td>
-            <td style="text-align: right;"><?php echo $p->getTotalEgreso(); ?></td>
-            <td style="text-align: right;"><?php echo (($p->getRemAseg() + $p->getRemNoaseg()) - $p->getTotalEgreso()); ?></td>
+            <td style="text-align: right;"><?php echo number_format($p->getRemAseg(),2); ?></td>
+            <td style="text-align: right;"><?php echo number_format($p->getRemNoaseg(),2); ?></td>
+            <td style="text-align: right;"><?php echo number_format(($p->getRemAseg() + $p->getRemNoaseg()),2); ?></td>
+            <td style="text-align: right;"><?php echo number_format($p->getTotalEgreso(),2); ?></td>
+            <td style="text-align: right;"><?php echo number_format((($p->getRemAseg() + $p->getRemNoaseg()) - $p->getTotalEgreso()),2); ?></td>
         </tr>
     <?php } ?>
     <tr>
         <td colspan="2" style="text-align: center;"><b>TOTAL</b></td>
-        <td style="text-align: right;"><b><?php echo $sumaRemAseg; ?></b></td>
-        <td style="text-align: right;"><b><?php echo $sumaRemNoAseg; ?></b></td>
-        <td style="text-align: right;"><b><?php echo ($sumaRemAseg + $sumaRemNoAseg); ?></b></td>
-        <td style="text-align: right;"><b><?php echo $sumaTotalEgreso; ?></b></td>
-        <td style="text-align: right;"><b><?php echo (($sumaRemAseg + $sumaRemNoAseg) - $sumaTotalEgreso); ?></b></td>
+        <td style="text-align: right;"><b><?php echo number_format($sumaRemAseg,2); ?></b></td>
+        <td style="text-align: right;"><b><?php echo number_format($sumaRemNoAseg,2); ?></b></td>
+        <td style="text-align: right;"><b><?php echo number_format(($sumaRemAseg + $sumaRemNoAseg),2); ?></b></td>
+        <td style="text-align: right;"><b><?php echo number_format($sumaTotalEgreso,2); ?></b></td>
+        <td style="text-align: right;"><b><?php echo number_format((($sumaRemAseg + $sumaRemNoAseg) - $sumaTotalEgreso),2); ?></b></td>
     </tr>
 </table>
 <?php
