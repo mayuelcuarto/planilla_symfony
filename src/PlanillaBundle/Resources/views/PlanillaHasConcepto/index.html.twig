@@ -40,7 +40,7 @@
                         <td><a href="{{ path("planillaHasConcepto_edit",{"id":planillaHasConcepto.id}) }}" class="btn btn-warning">{{ planillaHasConcepto.concepto.id }}</a></td>
                         <td>{{ planillaHasConcepto.concepto.tipoConcepto.nombre }}</td>
                         <td>{{ planillaHasConcepto.concepto.concepto }}</td>
-                        <td class="text-right">{{ planillaHasConcepto.monto }}</td>
+                        <td class="text-right">{{ planillaHasConcepto.monto|number_format(2, '.', ',') }}</td>
                         <td><a href="{{ path("planillaHasConcepto_delete",{"id":planillaHasConcepto.id}) }}" class="btn btn-danger">ELIMINAR</a></td>
                     </tr>
                 {% endfor %}
@@ -50,19 +50,19 @@
     <hr/>
     <div class="row mx-auto">
         <div class="alert alert-info">
-            <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg }}</span>
+            <span >REMUNERACIÓN ASEGURABLE: {{ planilla.remAseg|number_format(2, '.', ',') }}</span>
         </div>
         <hr/>
         <div class="alert alert-info">
-            <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg }}
+            <span >REMUNERACIÓN NO ASEGURABLE: {{ planilla.remNoAseg|number_format(2, '.', ',') }}
         </div>
         <hr/>
         <div class="alert alert-info">
-            <span >TOTAL EGRESOS: {{ planilla.totalEgreso }}
+            <span >TOTAL EGRESOS: {{ planilla.totalEgreso|number_format(2, '.', ',') }}
         </div>
         <hr/>
         <div class="alert alert-info">
-            <span >CUOTA PATRONAL: {{ planilla.patronal }}
+            <span >CUOTA PATRONAL: {{ planilla.patronal|number_format(2, '.', ',') }}
         </div>
         <hr/>
 
