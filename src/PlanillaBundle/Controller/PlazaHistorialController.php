@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\PlazaHistorial;
 use PlanillaBundle\Form\PlazaHistorialType;
-use PlanillaBundle\Form\PlazaHistorialEditType;
 use PlanillaBundle\Form\PlazaHistorialBajaType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -41,14 +40,21 @@ class PlazaHistorialController extends Controller {
         $plazaHistorial = new PlazaHistorial();
         $em = $this->getDoctrine()->getManager();
         $regPen_repo = $em->getRepository("PlanillaBundle:RegimenPensionario");
-        $regPen = $regPen_repo->findBy(["estado"=> 1]);
+        //Obteniendo datos de regimen pensionario
+        $regPen = $regPen_repo->findBy(["estado" => 1]);
         $regPenSeleccion = $regPen_repo->findOneBy(["id" => 1]);
-        
+        //Obteniendo datos de unidades
+        $unidad_repo = $em->getRepository("PlanillaBundle:Unidad");
+        $unidad = $unidad_repo->findBy(["estado" => 1]);
+        $unidadSeleccion = $unidad_repo->findOneBy(["id" => 1]);
+
         $form = $this->createForm(PlazaHistorialType::class, $plazaHistorial, [
             "accion" => 1,
             "regPen" => $regPen,
-            "regPenSeleccion" => $regPenSeleccion
-            ]);
+            "regPenSeleccion" => $regPenSeleccion,
+            "unidad" => $unidad,
+            "unidadSeleccion" => $unidadSeleccion
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -97,12 +103,20 @@ class PlazaHistorialController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $plazaHistorial_repo = $em->getRepository("PlanillaBundle:PlazaHistorial");
         $plazaHistorial = $plazaHistorial_repo->find($id);
+        //Obteniendo datos de regimen pensionario
         $regPen_repo = $em->getRepository("PlanillaBundle:RegimenPensionario");
-        $regPen = $regPen_repo->findByIdEstado($plazaHistorial->getRegimenPensionario()->getId(),1);
+        $regPen = $regPen_repo->findByIdEstado($plazaHistorial->getRegimenPensionario()->getId(), 1);
+        //Obteniendo datos de grupos funcionales
+        $unidad_repo = $em->getRepository("PlanillaBundle:Unidad");
+        $unidad = $unidad_repo->findByIdEstado($plazaHistorial->getUnidad()->getId(), 1);
+
         $form = $this->createForm(PlazaHistorialType::class, $plazaHistorial, [
-            "accion" => 2, 
+            "accion" => 2,
             "regPen" => $regPen,
-            "regPenSeleccion" => $plazaHistorial->getRegimenPensionario()]);
+            "regPenSeleccion" => $plazaHistorial->getRegimenPensionario(),
+            "unidad" => $unidad,
+            "unidadSeleccion" => $plazaHistorial->getUnidad()
+        ]);
 
         $form->handleRequest($request);
 
@@ -190,4 +204,5 @@ class PlazaHistorialController extends Controller {
         $afps = $em->getRepository('PlanillaBundle:Afp')->findArrayByRegPen($regimenPensionario);
         return new JsonResponse($afps);
     }
+
 }
