@@ -9,10 +9,11 @@
         <option name="fixed"/>
       </options>
     </field>
-    <field name="abrev" type="string" column="abrev" length="50" nullable="true">
+    <field name="abrev" type="string" column="abrev" length="50" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
     </field>
+    <field name="estado" type="boolean" column="estado" nullable="false"/>
   </entity>
 </doctrine-mapping>

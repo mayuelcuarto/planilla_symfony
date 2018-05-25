@@ -1,5 +1,6 @@
 PlanillaBundle\Entity\Unidad:
     type: entity
+    repositoryClass: PlanillaBundle\Repository\UnidadRepository
     table: unidad
     id:
         id:
@@ -19,8 +20,11 @@ PlanillaBundle\Entity\Unidad:
                 fixed: false
         abrev:
             type: string
-            nullable: true
+            nullable: false
             length: 50
             options:
                 fixed: false
+        estado:
+            type: boolean
+            nullable: false
     lifecycleCallbacks: {  }
