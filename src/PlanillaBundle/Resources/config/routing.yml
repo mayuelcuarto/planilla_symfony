@@ -311,6 +311,18 @@ sexo_edit:
     path: /sexo/edit/{id}
     defaults: { _controller: PlanillaBundle:Sexo:edit }
     
+unidad_index:
+    path: /unidad/index
+    defaults: { _controller: PlanillaBundle:Unidad:index }
+    
+unidad_add:
+    path: /unidad/add
+    defaults: { _controller: PlanillaBundle:Unidad:add }
+    
+unidad_edit:
+    path: /unidad/edit/{id}
+    defaults: { _controller: PlanillaBundle:Unidad:edit }
+    
 tipoPlanilla_index:
     path: /tipoPlanilla/index
     defaults: { _controller: PlanillaBundle:TipoPlanilla:index }
@@ -424,6 +436,11 @@ planilla_ajax_plazaHistorial:
 planilla_ajax_fuente:
     path:     /planilla/ajax/fuente
     defaults: { _controller: "PlanillaBundle:Planilla:modifyFuente" }
+    methods:  GET
+    
+planilla_ajax_planilla:
+    path:     /planilla/ajax/planilla
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyPlanilla" }
     methods:  GET
     
 planillaHasConcepto_index:
