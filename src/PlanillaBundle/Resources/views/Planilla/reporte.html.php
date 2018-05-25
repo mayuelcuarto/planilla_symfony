@@ -89,7 +89,7 @@ foreach ($planillas as $p) {
         </tr>
         <tr>
             <td width="45%">
-                <table>
+                <table width="100%">
                     <thead>
                         <tr><th colspan="2" style="text-align: center;"><b>DATOS LABORALES</b></th></tr>
                     </thead>
@@ -147,7 +147,7 @@ foreach ($planillas as $p) {
                             <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getCuspp(); ?></td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="2" style="text-align: center;">
                                 <table border="1" width="100%">
                                     <thead>
                                         <tr><th colspan="2" style="text-align: center;">TOTALES</th></tr>
