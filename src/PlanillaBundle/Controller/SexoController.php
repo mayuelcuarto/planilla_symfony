@@ -16,18 +16,17 @@ class SexoController extends Controller {
         $this->session = new Session();
     }
 
-    public function indexAction(Request $request) {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $sexo_repo = $em->getRepository("PlanillaBundle:Sexo");
-        $sexos = $sexo_repo->findBy([], ['estado' => 'DESC', 'id' => 'ASC']);
+        $sexos = $sexo_repo->findAll();
 
         return $this->render("@Planilla/sexo/index.html.twig", ["sexos" => $sexos]);
     }
 
     public function addAction(Request $request) {
         $sexo = new Sexo();
-        $form = $this->createForm(SexoType::class, $sexo);
-        $form->get("estado")->setData(true);
+        $form = $this->createForm(SexoType::class, $sexo, ["estado" => true]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
@@ -47,11 +46,11 @@ class SexoController extends Controller {
                     if ($flush == null) {
                         $status = "El sexo se ha creado correctamente";
                     } else {
-                        $status = "No te has registrado correctamente";
+                        $status = "Error al agregar sexo!!";
                     }
                 }
             } else {
-                $status = "No te has registrado correctamente";
+                $status = "El sexo no se agregó, porque el formulario no es válido!!";
             }
 
             $this->session->getFlashBag()->add("status", $status);
@@ -65,7 +64,7 @@ class SexoController extends Controller {
         $sexo_repo = $em->getRepository("PlanillaBundle:Sexo");
         $sexo = $sexo_repo->find($id);
 
-        $form = $this->createForm(SexoType::class, $sexo);
+        $form = $this->createForm(SexoType::class, $sexo, ["estado" => $sexo->getEstado()]);
 
         $form->handleRequest($request);
 
