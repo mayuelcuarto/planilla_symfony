@@ -23,16 +23,18 @@ class PlanillaFechasType extends AbstractType {
                     "label" => "Fecha de Generación",
                     "mapped" => false,
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['fechaGeneracion']
                 ])
                 ->add('fechaPago', BirthdayType::class, [
                     "label" => "Fecha de Pago",
                     "mapped" => false,
                     "required" => "required",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['fechaPago']
                 ])
                 ->add('tipoPlanilla', EntityType::class, [
-                    "label" => "Año Actual",
+                    "label" => "Tipo de Planilla",
                     "mapped" => false,
                     "required" => "required",
                     "class" => "PlanillaBundle:TipoPlanilla",
@@ -72,7 +74,9 @@ class PlanillaFechasType extends AbstractType {
         $resolver->setDefaults([
             'data_class' => 'PlanillaBundle\Entity\Planilla',
             'anoEjeActual' => null,
-            'mesEjeActual' => null
+            'mesEjeActual' => null,
+            'fechaGeneracion' => null,
+            'fechaPago' => null
         ]);
     }
 
