@@ -9,11 +9,12 @@
         <hr/>
         {{form_start(form)}}
         {{form_row(form.anoEje, {'id': 'anoEje' }) }}
-        {{form_row(form.mesEje)}}
-        {{form_row(form.tipoPlanilla)}}
+        {{form_row(form.mesEje, {'id': 'mesEje' })}}
+        {{form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' })}}
         {{form_row(form.fuente, {'id': 'fuente' }) }}
         {{form_row(form.tipo, {'id': 'tipo'})}}
-        {{form_end(form,{'action':'', 'method':'POST'})}}
+        {{form_row(form.planilla, {'id': 'planilla'}) }}
+        {{form_end(form,{'action':'', 'method':'POST'}) }}
     </div>
     <script>
         $('#anoEje').change(function () {
@@ -39,9 +40,51 @@
 
                 },
                 error: function (err) {
-                    alert("An error ocurred while loading data ... ");
+                    alert("Ocurrió un error mientras se cargaban los datos ... ");
                 }
             });
         });
+        
+        function ActualizarPlanilla() {
+            var tipo = $("#tipo");
+            var anoEje = $("#anoEje");
+            var mesEje = $("#mesEje");
+            var tipoPlanilla = $("#tipoPlanilla");
+            var fuente = $("#fuente");
+            $.ajax({
+                url: "{{ path('planilla_ajax_planilla') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    tipo: tipo.val(),
+                    anoEje: anoEje.val(),
+                    mesEje: mesEje.val(),
+                    tipoPlanilla: tipoPlanilla.val(),
+                    fuente: fuente.val()
+                },
+                success: function (planillas) {
+                    var planilla = $("#planilla");
+                    planilla.find('option').remove().end(); 
+                    var option = document.createElement("option");
+                    for (var i = 0; i < planillas.length; i++) {
+                        var option = document.createElement("option"); 
+                        $(option).html(planillas[i]); 
+                        $(option).val(planillas[i].id);
+                        $(option).text(planillas[i].nombre);
+                        $(option).appendTo("#planilla"); 
+                    }
+
+                },
+                error: function (err) {
+                    alert("Ocurrió un error mientras se cargaban los datos ... ");
+                }
+            });
+        }
+        
+        $('#mesEje').change(ActualizarPlanilla);
+        $('#tipoPlanilla').change(ActualizarPlanilla);
+        $('#fuente').change(ActualizarPlanilla);
+        $('#tipo').change(ActualizarPlanilla);
+        
     </script>
 {% endblock %}
