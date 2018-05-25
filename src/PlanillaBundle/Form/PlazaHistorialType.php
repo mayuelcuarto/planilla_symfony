@@ -79,8 +79,10 @@ class PlazaHistorialType extends AbstractType {
                     "label" => "Dirección",
                     "required" => "required",
                     "class" => "PlanillaBundle:Unidad",
+                    "choices" => $options['unidad'],
                     "choice_label" => "nombre",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['unidadSeleccion']
                 ])
                 ->add('cargo', TextType::class, [
                     "label" => "Cargo",
@@ -178,7 +180,9 @@ class PlazaHistorialType extends AbstractType {
             'data_class' => 'PlanillaBundle\Entity\PlazaHistorial',
             'accion' => null,
             'regPen' => null,
-            'regPenSeleccion' => null
+            'regPenSeleccion' => null,
+            'unidad' => null,
+            'unidadSeleccion' => null
         ]);
     }
 
