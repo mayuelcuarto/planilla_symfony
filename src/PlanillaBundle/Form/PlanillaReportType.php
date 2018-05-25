@@ -21,7 +21,7 @@ class PlanillaReportType extends AbstractType {
     public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -75,10 +75,16 @@ class PlanillaReportType extends AbstractType {
                     "mapped" => false,
                     "required" => "required",
                     "choices" => ["MASIVO" => 1, "INDIVIDUAL" => 2],
-                    "expanded" => true,
-                    "multiple" => false,
                     "attr" => ["class" => "form-control form-control-sm"],
                     "data" => 1
+                ])
+                ->add('planilla', ChoiceType::class, [
+                    "label" => "Planilla",
+                    "mapped" => false,
+                    "required" => "required",
+                    "choices" => ["TODOS" => 0],
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => 0
                 ])
                 ->add('Buscar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -86,17 +92,32 @@ class PlanillaReportType extends AbstractType {
         ;
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
-    
+
     function onPreSubmit(FormEvent $event) {
         $form = $event->getForm();
         $data = $event->getData();
         $em = $this->entityManager;
         //var_dump($data['fuente']);
         $options = $form->getConfig()->getOptions();
+        $mesEje = $em->getRepository('PlanillaBundle:Mes')->findOneBy(["mesEje" => $data['mesEje']]);
+        $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->findOneBy(["id" => $data['tipoPlanilla']]);
         $fuente = $em->getRepository('PlanillaBundle:FuenteFinanc')->findOneBy(["id" => $data['fuente']]);
+        if ($data['tipo'] == 2) {
+            //$planilla = $em->getRepository('PlanillaBundle:Planilla')->findOneBy(["id" => $data['planilla']]);
+            $planillas = $em->getRepository('PlanillaBundle:Planilla')->findArrayByAnoMesTipoFuente(
+                    $data['anoEje'], $mesEje, $tipoPlanilla, $fuente
+            );
+            if (count($planillas) == 0) {
+                $this->seteandoPlanilla2($form);
+            } else {
+                $this->seteandoPlanilla($form, $data['planilla'], $planillas);
+            }
+        } else {
+            $this->seteandoPlanilla2($form);
+        }
         $this->seteandoFuente($form, $fuente, $options);
     }
-    
+
     protected function seteandoFuente(FormInterface $form, FuenteFinanc $fuente, $options) {
         $form->add('fuente', EntityType::class, [
             "label" => "Fuente de Financiamiento",
@@ -109,6 +130,29 @@ class PlanillaReportType extends AbstractType {
         ]);
     }
 
+    protected function seteandoPlanilla(FormInterface $form, $planilla, $planillas) {
+        //$form->remove('planilla');
+        $form->add('planilla', ChoiceType::class, [
+            "label" => "Planilla",
+            "mapped" => false,
+            "required" => "required",
+            "choices" => $planillas,
+            "attr" => ["class" => "form-control form-control-sm"],
+            "data" => $planilla
+        ]);
+    }
+
+    protected function seteandoPlanilla2(FormInterface $form) {
+        //$form->remove('planilla');
+        $form->add('planilla', ChoiceType::class, [
+            "label" => "Planilla",
+            "mapped" => false,
+            "required" => "required",
+            "choices" => ["TODOS" => 0],
+            "attr" => ["class" => "form-control form-control-sm"],
+            "data" => 0]);
+    }
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -119,7 +163,7 @@ class PlanillaReportType extends AbstractType {
             'anoEje' => null,
             'mesEje' => null,
             'fuentes' => null
-            ]);
+        ]);
     }
 
 }
