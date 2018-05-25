@@ -23,7 +23,8 @@ class PlanillaGeneracionType extends AbstractType {
                     "mapped" => false,
                     "required" => "required",
                     "choices" => $options['anoArray'],
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['anoEjeOrigen']
                 ])
                 ->add('mesEjeOrigen', EntityType::class, [
                     "label" => "Mes de Origen",
@@ -31,14 +32,15 @@ class PlanillaGeneracionType extends AbstractType {
                     "required" => "required",
                     "class" => "PlanillaBundle:Mes",
                     "choice_label" => "nombre",
-                    "attr" => ["class" => "form-control form-control-sm"]
+                    "attr" => ["class" => "form-control form-control-sm"],
+                    "data" => $options['mesEjeOrigen']
                 ])
                 ->add('anoEjeActual', NumberType::class, [
                     "label" => "Año Actual",
                     "mapped" => false,
                     "required" => "required",
-                    "data" => $options['anoEjeActual'],
-                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true],
+                    "data" => $options['anoEjeActual']
                 ])
                 ->add('mesEjeActual', EntityType::class, [
                     "label" => "Mes Actual",
@@ -46,8 +48,8 @@ class PlanillaGeneracionType extends AbstractType {
                     "required" => "required",
                     "class" => "PlanillaBundle:Mes",
                     "choice_label" => "nombre",
-                    "data" => $options['mesEjeActual'],
-                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true]
+                    "attr" => ["class" => "form-control form-control-sm", "disabled" => true],
+                    "data" => $options['mesEjeActual']
                 ])
                 ->add('Generar', SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
@@ -63,7 +65,9 @@ class PlanillaGeneracionType extends AbstractType {
             'data_class' => 'PlanillaBundle\Entity\Planilla',
             'anoEjeActual' => null,
             'mesEjeActual' => null,
-            'anoArray' => null
+            'anoArray' => null,
+            'anoEjeOrigen' => null,
+            'mesEjeOrigen' => null
         ]);
     }
 
