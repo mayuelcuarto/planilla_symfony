@@ -1,0 +1,43 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div>
+        <h3>Lista de Direcciones</h3>
+        <hr/>
+        <a href="{{ path("unidad_add") }}" class="btn btn-success">Agregar Dirección</a>
+        <hr/>
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Abreviatura</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for unidad in unidades %}
+                    <tr {% if unidad.estado == false %} class="table-secondary" {% endif%} >
+                        <td><a href="{{path("unidad_edit",{"id":unidad.id})}}" class="btn btn-warning ">{{ unidad.id }}</a></td>
+                        <td>{{ unidad.nombre }}</td>
+                        <td>{{ unidad.abrev }}</td>
+                        <td>{{ unidad.estado }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "pageLength": 5,
+                "bLengthChange": false,
+                "autoWidth": false,
+                "order": [[3, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [3]}]
+            });
+        });
+    </script>
+{% endblock %}
