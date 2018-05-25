@@ -21,7 +21,11 @@ class Unidad
      * @var string
      */
     private $abrev;
-
+    
+    /**
+     * @var boolean
+     */
+    private $estado;
 
     /**
      * Get id
@@ -79,5 +83,29 @@ class Unidad
     public function getAbrev()
     {
         return $this->abrev;
+    }
+    
+    /**
+     * Set estado
+     *
+     * @param boolean $estado
+     *
+     * @return Sexo
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return boolean
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }
