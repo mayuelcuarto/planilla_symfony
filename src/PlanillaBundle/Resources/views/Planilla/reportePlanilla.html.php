@@ -88,7 +88,7 @@ foreach ($planillas as $p) {
             </td>
         </tr>
         <tr>
-            <td width="45%">
+            <td width="40%" style="vertical-align: top;">
                 <table width="100%">
                     <thead>
                         <tr><th colspan="2" style="text-align: center;"><b>DATOS LABORALES</b></th></tr>
@@ -153,7 +153,7 @@ foreach ($planillas as $p) {
                                         <tr><th colspan="2" style="text-align: center;">TOTALES</th></tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td><b>Remuneracion Asegurable</b></td><td style="text-align: right;"><?php echo number_format($p->getRemAseg(), 2); ?></td></tr>
+                                        <tr><td width="70%"><b>Remuneracion Asegurable</b></td><td width="30%" style="text-align: right;"><?php echo number_format($p->getRemAseg(), 2); ?></td></tr>
                                         <tr><td><b>Remuneracion No Asegurable</b></td><td style="text-align: right;"><?php echo number_format($p->getRemNoaseg(), 2); ?></td></tr>
                                         <tr><td><b>Total Ingresos</b></td><td style="text-align: right;"><?php echo number_format(($p->getRemAseg() + $p->getRemNoaseg()), 2); ?></td></tr>
                                         <tr><td><b>Total Egresos</b></td><td style="text-align: right;"><?php echo number_format($p->getTotalEgreso(), 2); ?></td></tr>
@@ -167,12 +167,12 @@ foreach ($planillas as $p) {
                             <td colspan="2"><b>NOTA</b></td>
                         </tr>
                         <tr>
-                            <td colspan="2"><?php echo $p->getNota(); ?></td>
+                            <td colspan="2" style="text-align: justify;"><?php echo $p->getNota(); ?></td>
                         </tr>
                     </tbody>
                 </table>
             </td>
-            <td width="55%" style="vertical-align:top;">
+            <td width="60%" style="vertical-align:top;">
                 <table width="100%">
                     <tr>
                         <td width="50%" style="vertical-align:top;">
@@ -239,6 +239,6 @@ $dompdf = new DOMPDF(); //if you use namespaces you may use new \DOMPDF()
 $dompdf->loadHtml(ob_get_clean());
 $dompdf->set_paper("A4", "portrait");
 $dompdf->render();
-$dompdf->stream("totales.pdf", array("Attachment" => 0));
+$dompdf->stream("reporte.pdf", array("Attachment" => 0));
 ?>
 
