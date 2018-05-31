@@ -53,14 +53,6 @@ class PlanillaReportType extends AbstractType {
                     "choice_label" => "nombre",
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
-                ->add('tipoPlanilla', EntityType::class, [
-                    "label" => "Tipo Planilla",
-                    "mapped" => false,
-                    "required" => "required",
-                    "class" => "PlanillaBundle:TipoPlanilla",
-                    "choice_label" => "nombre",
-                    "attr" => ["class" => "form-control form-control-sm"]
-                ])
                 ->add('fuente', EntityType::class, [
                     "label" => "Fuente de Financiamiento",
                     "mapped" => false,
@@ -86,7 +78,7 @@ class PlanillaReportType extends AbstractType {
                     "attr" => ["class" => "form-control form-control-sm"],
                     "data" => 0
                 ])
-                ->add('Buscar', SubmitType::class, [
+                ->add($options['btnSubmit'], SubmitType::class, [
                     "attr" => ["class" => "form-submit btn btn-success form-control-sm"]
                 ])
         ;
@@ -97,13 +89,11 @@ class PlanillaReportType extends AbstractType {
         $form = $event->getForm();
         $data = $event->getData();
         $em = $this->entityManager;
-        //var_dump($data['fuente']);
         $options = $form->getConfig()->getOptions();
         $mesEje = $em->getRepository('PlanillaBundle:Mes')->findOneBy(["mesEje" => $data['mesEje']]);
         $tipoPlanilla = $em->getRepository('PlanillaBundle:TipoPlanilla')->findOneBy(["id" => $data['tipoPlanilla']]);
         $fuente = $em->getRepository('PlanillaBundle:FuenteFinanc')->findOneBy(["id" => $data['fuente']]);
         if ($data['tipo'] == 2) {
-            //$planilla = $em->getRepository('PlanillaBundle:Planilla')->findOneBy(["id" => $data['planilla']]);
             $planillas = $em->getRepository('PlanillaBundle:Planilla')->findArrayByAnoMesTipoFuente(
                     $data['anoEje'], $mesEje, $tipoPlanilla, $fuente
             );
@@ -131,7 +121,6 @@ class PlanillaReportType extends AbstractType {
     }
 
     protected function seteandoPlanilla(FormInterface $form, $planilla, $planillas) {
-        //$form->remove('planilla');
         $form->add('planilla', ChoiceType::class, [
             "label" => "Planilla",
             "mapped" => false,
@@ -143,7 +132,6 @@ class PlanillaReportType extends AbstractType {
     }
 
     protected function seteandoPlanilla2(FormInterface $form) {
-        //$form->remove('planilla');
         $form->add('planilla', ChoiceType::class, [
             "label" => "Planilla",
             "mapped" => false,
@@ -162,7 +150,8 @@ class PlanillaReportType extends AbstractType {
             'anoArray' => null,
             'anoEje' => null,
             'mesEje' => null,
-            'fuentes' => null
+            'fuentes' => null,
+            'btnSubmit' => null
         ]);
     }
 
