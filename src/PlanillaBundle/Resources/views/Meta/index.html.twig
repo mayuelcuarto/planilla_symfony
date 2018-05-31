@@ -15,6 +15,7 @@
                     <th>Año</th>
                     <th>Meta</th>
                     <th>Finalidad</th>
+                    <th>Actividad</th>
                     <th>Nombre</th>
                     <th>Estado</th>
                 </tr>
@@ -26,6 +27,7 @@
                         <td>{{ meta.ejecutora.pliego.sector.anoEje }}</td>
                         <td>{{ meta.meta }}</td>
                         <td>{{ meta.finalidad }}</td>
+                        <td>{{ meta.actProy.nombre }}</td>
                         <td>{{ meta.nombre }}</td>
                         <td>{{ meta.estado }}</td>
                     </tr>
@@ -39,8 +41,8 @@
                 "pageLength": 5,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[0, 'desc'],[5, 'desc']],
-                "aoColumnDefs": [{"bVisible": false, "aTargets": [5]}]
+                "order": [[0, 'desc'],[6, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [6]}]
             });
         });
     </script>
