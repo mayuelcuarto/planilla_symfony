@@ -58,6 +58,7 @@ $hora = date("H:i:s");
 
 $dompdf = new DOMPDF(); //if you use namespaces you may use new \DOMPDF()
 $dompdf->loadHtml(ob_get_clean());
+$dompdf->set_paper("A4", "portrait");
 $dompdf->render();
 $dompdf->stream("totales.pdf", array("Attachment" => 0));
 ?>
