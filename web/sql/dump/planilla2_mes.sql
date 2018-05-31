@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `mes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mes` (
-  `mes_eje` int(11) NOT NULL,
+  `mes_eje` int(2) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`mes_eje`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-22  3:10:26
+-- Dump completed on 2018-05-31 15:24:00

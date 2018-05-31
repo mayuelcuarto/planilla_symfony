@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `act_proy`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `act_proy` (
-  `ano_eje` int(11) NOT NULL,
+  `ano_eje` int(4) NOT NULL,
   `act_proy` char(10) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `estado` tinyint(1) DEFAULT NULL,
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-22  3:10:27
+-- Dump completed on 2018-05-31 15:24:01
