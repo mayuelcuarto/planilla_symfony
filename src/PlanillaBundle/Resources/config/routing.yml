@@ -408,6 +408,14 @@ planilla_reporte_totales:
     path: /planilla/reporte/totales
     defaults: { _controller: PlanillaBundle:Planilla:totales }
     
+planilla_reporte_resumen:
+    path: /planilla/reporte/resumen
+    defaults: { _controller: PlanillaBundle:Planilla:resumen }
+    
+planilla_reporte_metas:
+    path: /planilla/reporte/metas
+    defaults: { _controller: PlanillaBundle:Planilla:metas }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
@@ -436,6 +444,11 @@ planilla_ajax_plazaHistorial:
 planilla_ajax_fuente:
     path:     /planilla/ajax/fuente
     defaults: { _controller: "PlanillaBundle:Planilla:modifyFuente" }
+    methods:  GET
+    
+planilla_ajax_meta:
+    path:     /planilla/ajax/meta
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyMeta" }
     methods:  GET
     
 planilla_ajax_planilla:
