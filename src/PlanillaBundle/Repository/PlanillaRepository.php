@@ -152,4 +152,18 @@ class PlanillaRepository extends EntityRepository {
         }
         return $sumaTotalEgreso;
     }
+    
+    public function SumaPatronal($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaPatronal(:anoEje, :mesEje, :tipoPlanilla, :fuente)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':fuente', $fuente->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaPatronal = $fila[0];
+        }
+        return $sumaPatronal;
+    }
 }
