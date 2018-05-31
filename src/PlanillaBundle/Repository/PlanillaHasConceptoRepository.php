@@ -4,6 +4,11 @@ namespace PlanillaBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Entity\TipoConcepto;
+use PlanillaBundle\Entity\Mes;
+use PlanillaBundle\Entity\TipoPlanilla;
+use PlanillaBundle\Entity\FuenteFinanc;
+use PlanillaBundle\Entity\Concepto;
+use PDO;
 
 class PlanillaHasConceptoRepository extends EntityRepository {
 
@@ -96,6 +101,21 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth = $em->getConnection()->prepare("CALL ActualizarEsSalud(:planillaId)");
         $sth->bindValue(':planillaId', $planilla->getId());
         $sth->execute();
+    }
+    
+    public function SumaConcepto($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente, Concepto $concepto) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConcepto(:anoEje, :mesEje, :tipoPlanilla, :fuente, :concepto)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':fuente', $fuente->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
     }
 }
 
