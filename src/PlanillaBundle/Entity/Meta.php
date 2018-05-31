@@ -79,7 +79,7 @@ class Meta
      */
     public function getCadena()
     {
-        return $this->getEjecutora()->getPliego()->getSector()->getAnoEje()." - ".$this->meta." ".$this->nombre;
+        return $this->getEjecutora()->getPliego()->getSector()->getAnoEje()." - ".$this->meta." ".$this->getActProy()->getActProy()." ".$this->nombre;
     } 
 
     /**
