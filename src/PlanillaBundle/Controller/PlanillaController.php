@@ -355,7 +355,7 @@ class PlanillaController extends Controller {
                 $sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
                 $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
             } else {
-                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
             }
             if (isset($status)) {
                 $this->session->getFlashBag()->add("status", $status);
@@ -424,7 +424,7 @@ class PlanillaController extends Controller {
                 $sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
                 $sumaPatronal = $planilla_repo->SumaPatronal($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
             } else {
-                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
             }
             if (isset($status)) {
                 $this->session->getFlashBag()->add("status", $status);
@@ -458,10 +458,10 @@ class PlanillaController extends Controller {
         $especificas1 = $especifica_repo->findArrayByAnoMesTP($anoEje, $mesEje, $tipoPlanilla);
         //var_dump($especificas1);
         $especificas = Array();
-        foreach($especificas1 as $especifica){
-            $especificas[$especifica['especifica']." ".$especifica["nombre"]] = $especifica['id'];
+        foreach ($especificas1 as $especifica) {
+            $especificas[$especifica['especifica'] . " " . $especifica["nombre"]] = $especifica['id'];
         }
-        
+
         //var_dump($especificas);
 
         $planilla = new Planilla();
@@ -483,41 +483,93 @@ class PlanillaController extends Controller {
                 $tipoPlanilla = $form->get("tipoPlanilla")->getData();
                 $anoEjeForm = $form->get("anoEje")->getData();
                 $mesEjeForm = $form->get("mesEje")->getData();
-                $especifica = $form->get("especifica")->getData();
-                /*
-                  $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
-                  $planillaHasConcepto_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
-                  $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
+                $especificaForm = $form->get("especifica")->getData();
+                $especifica = $em->getRepository("PlanillaBundle:Especifica")->findOneBy(["id" => $especificaForm]);
 
+                $planillaHasConcepto_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
+                $meta_repo = $em->getRepository("PlanillaBundle:Meta");
+                $metas = $meta_repo->findDistinctMetasEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
+                $tipoConcepto1 = $em->getRepository("PlanillaBundle:TipoConcepto")->findOneBy(["id" => 1]);
+                $tipoConcepto2 = $em->getRepository("PlanillaBundle:TipoConcepto")->findOneBy(["id" => 2]);
+                $conceptos1 = $concepto_repo->findDistinctMetasEspTC($anoEjeForm, $mesEjeForm, $especifica, $tipoConcepto1);
+                $conceptos2 = $concepto_repo->findDistinctMetasEspTC($anoEjeForm, $mesEjeForm, $especifica, $tipoConcepto2);
 
-                  $conceptos = $concepto_repo->findAll();
-                  $arrayConcepto = Array();
-                  foreach ($conceptos as $concepto){
-                  $arrayConcepto[$concepto->getId()]['abreviatura'] = $concepto->getAbreviatura();
-                  $arrayConcepto[$concepto->getId()]['tipo'] = $concepto->getTipoConcepto()->getId();
-                  $arrayConcepto[$concepto->getId()]['monto'] = $planillaHasConcepto_repo->sumaConcepto($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc, $concepto);
-                  } */
+                $arrayMetas1 = Array();
+                $arrayConceptos1 = Array();
+                $totalesMetas1 = Array();
+                $totalesConceptos1 = Array();
+                
+                foreach ($metas as $meta) {
+                    $arrayMetas1[$meta['secfunc']]['secfunc'] = $meta['secfunc'];
+                    $meta2 = $meta_repo->findOneBy(["secFunc" => $meta['secfunc']]);
+                    $arrayMetas1[$meta['secfunc']]['meta'] = $meta['actProy'] . " " . $meta['nombre'];
+                    $suma = 0;
+                    foreach ($conceptos1 as $concepto) {
+                        $arrayConceptos1[$concepto['id']]['id'] = $concepto['id'];
+                        $arrayConceptos1[$concepto['id']]['concepto'] = $concepto['concepto'];
+                        $arrayConceptos1[$concepto['id']]['abreviatura'] = $concepto['abreviatura'];
+                        $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
+                        $arrayConceptos1[$concepto['id']]['monto'] = $planillaHasConcepto_repo->sumaConceptoMetaEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $meta2, $especifica, $conceptoAux);
+                        $arrayMetas1[$meta['secfunc']]['conceptos'] = $arrayConceptos1;
+                        
+                        $suma += $arrayConceptos1[$concepto['id']]['monto'];
+                    }
+                    $totalesMetas1[$meta['secfunc']]['total'] = $suma;
+                }
+                
+                foreach ($conceptos1 as $concepto){
+                    $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
+                    $totalesConceptos1[$concepto['id']]['total'] = $planillaHasConcepto_repo->sumaConceptoEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $especifica, $conceptoAux);
+                }
 
-                //$sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
-                //$sumaRemNoAseg = $planilla_repo->SumaRemNoAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
-                //$sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
-                //$sumaPatronal = $planilla_repo->SumaPatronal($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $arrayMetas2 = Array();
+                $arrayConceptos2 = Array();
+                $totalesMetas2 = Array();
+                $totalesConceptos2 = Array();
+                
+                foreach ($metas as $meta) {
+                    $arrayMetas2[$meta['secfunc']]['secfunc'] = $meta['secfunc'];
+                    $meta2 = $meta_repo->findOneBy(["secFunc" => $meta['secfunc']]);
+                    $arrayMetas2[$meta['secfunc']]['meta'] = $meta['actProy'] . " " . $meta['nombre'];
+                    $suma = 0;
+                    foreach ($conceptos2 as $concepto) {
+                        $arrayConceptos2[$concepto['id']]['id'] = $concepto['id'];
+                        $arrayConceptos2[$concepto['id']]['concepto'] = $concepto['concepto'];
+                        $arrayConceptos2[$concepto['id']]['abreviatura'] = $concepto['abreviatura'];
+                        $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
+                        $arrayConceptos2[$concepto['id']]['monto'] = $planillaHasConcepto_repo->sumaConceptoMetaEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $meta2, $especifica, $conceptoAux);
+                        $arrayMetas2[$meta['secfunc']]['conceptos'] = $arrayConceptos2;
+                        
+                        $suma += $arrayConceptos2[$concepto['id']]['monto'];
+                    }
+                    $totalesMetas2[$meta['secfunc']]['total'] = $suma;
+                }
+                
+                foreach ($conceptos2 as $concepto){
+                    $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
+                    $totalesConceptos2[$concepto['id']]['total'] = $planillaHasConcepto_repo->sumaConceptoEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $especifica, $conceptoAux);
+                }
+
             } else {
-                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
             }
             if (isset($status)) {
                 $this->session->getFlashBag()->add("status", $status);
             }
-            return $this->render("PlanillaBundle:planilla:reporteResumen.html.php", [
-                        "conceptos" => $arrayConcepto,
-                        "sumaRemAseg" => $sumaRemAseg,
-                        "sumaRemNoAseg" => $sumaRemNoAseg,
-                        "sumaTotalEgreso" => $sumaTotalEgreso,
-                        "sumaPatronal" => $sumaPatronal,
+            return $this->render("PlanillaBundle:planilla:reporteMeta.html.php", [
+                        "conceptos1" => $conceptos1,
+                        "conceptos2" => $conceptos2,
+                        "arrayMetas1" => $arrayMetas1,
+                        "arrayMetas2" => $arrayMetas2,
+                        "totalesMetas1" => $totalesMetas1,
+                        "totalesMetas2" => $totalesMetas2,
+                        "totalesConceptos1" => $totalesConceptos1,
+                        "totalesConceptos2" => $totalesConceptos2,
                         "tipoPlanilla" => $tipoPlanilla,
                         "anoEje" => $anoEjeForm,
                         "mesEje" => $mesEjeForm,
-                        "fuente" => $fuenteFinanc
+                        "especifica" => $especifica
             ]);
         }
 
@@ -564,7 +616,7 @@ class PlanillaController extends Controller {
                     $planillas = $planilla_repo->findBy(["id" => $planillaForm]);
                 }
             } else {
-                $status = "La consulta no pudo procesarse, porque el formulario no es válido!!";
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
             }
             if (isset($status)) {
                 $this->session->getFlashBag()->add("status", $status);
