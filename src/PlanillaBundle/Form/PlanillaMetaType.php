@@ -73,15 +73,14 @@ class PlanillaMetaType extends AbstractType {
         $em = $this->entityManager;
         $options = $form->getConfig()->getOptions();
         $especifica = $em->getRepository('PlanillaBundle:Especifica')->findOneBy(["id" => $data['especifica']]);
-        $this->seteandoEspecifica($form, $especifica, $options);
+        $this->seteandoEspecifica($form, $especifica);
     }
     
-    protected function seteandoEspecifica(FormInterface $form, Especifica $especifica, $options) {
-        $form->add('especifica', ChoiceType::class, [
+    protected function seteandoEspecifica(FormInterface $form, Especifica $especifica) {
+        $form->add('especifica', EntityType::class, [
             "label" => "Específica de Gasto",
             "required" => "required",
             "class" => "PlanillaBundle:Especifica",
-            "choices" => $options['especificas'],
             "attr" => ["class" => "form-control form-control-sm"],
             "data" => $especifica
         ]);
