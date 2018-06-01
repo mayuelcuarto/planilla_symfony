@@ -24,7 +24,7 @@ $hora = date("H:i:s");
     <tr>
         <td style="text-align: center;" colspan="2">
             <b>RESUMEN DE PLANILLA <?php echo $tipoPlanilla->getNombre(); ?> <?php echo $anoEje; ?> - <?php echo $mesEje->getNombre(); ?><br>
-                <?php echo $fuente->getNombre(); ?></b>
+<?php echo $fuente->getNombre(); ?></b>
         </td>
     </tr>
     <tr>
