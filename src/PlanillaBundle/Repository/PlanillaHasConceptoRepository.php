@@ -8,6 +8,8 @@ use PlanillaBundle\Entity\Mes;
 use PlanillaBundle\Entity\TipoPlanilla;
 use PlanillaBundle\Entity\FuenteFinanc;
 use PlanillaBundle\Entity\Concepto;
+use PlanillaBundle\Entity\Meta;
+use PlanillaBundle\Entity\Especifica;
 use PDO;
 
 class PlanillaHasConceptoRepository extends EntityRepository {
@@ -110,6 +112,37 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':mesEje', $mesEje->getMesEje());
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':fuente', $fuente->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
+    }
+    
+    public function SumaConceptoMetaEsp($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, Meta $meta, Especifica $especifica, Concepto $concepto) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConceptoMetaEsp(:anoEje, :mesEje, :tipoPlanilla, :meta, :especifica, :concepto)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':meta', $meta->getSecFunc());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
+    }
+    
+    public function SumaConceptoEsp($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, Especifica $especifica, Concepto $concepto) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConceptoEsp(:anoEje, :mesEje, :tipoPlanilla, :especifica, :concepto)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':especifica', $especifica->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->execute();
         while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
