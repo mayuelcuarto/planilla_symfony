@@ -20,6 +20,7 @@
                     <th>Plaza</th>
                     <th>Personal</th>
                     <th>Categoría</th>
+                    <th>Meta</th>
                     <th>Estado</th>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@
                             {% endif %}
                         </td>
                         <td>{{ plaza.categoria.nombre }}</td>
+                        <td>{{ plaza.secfunc.actProy.actProy }} - {{ plaza.secfunc.nombre }}</td>
                         <td>{{ plaza.estado }}</td>
                     </tr>
                 {% endfor %}
@@ -55,8 +57,8 @@
                 "pageLength": 5,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[6, 'desc']],
-                "aoColumnDefs": [{"bVisible": false, "aTargets": [6]}]
+                "order": [[7, 'desc']],
+                "aoColumnDefs": [{"bVisible": false, "aTargets": [7]}]
             });
         });
     </script>
