@@ -1,5 +1,5 @@
 <?php
-//ini_set('memory_limit', '512M');
+
 use Dompdf\Dompdf;
 
 ob_start();
@@ -36,7 +36,7 @@ foreach ($planillas as $p) {
         <tr>
             <td colspan="2" style="text-align: center;">
                 <b>PLANILLA DE OBLIGACIONES PREVISIONALES <?php echo $tipoPlanilla->getNombre(); ?> <?php echo $anoEje; ?> - <?php echo $mesEje->getNombre(); ?><br>
-                    <?php echo $fuente->getNombre(); ?></b>
+    <?php echo $fuente->getNombre(); ?></b>
             </td>
         </tr>
         <tr>
@@ -84,7 +84,7 @@ foreach ($planillas as $p) {
         <tr>
             <td colspan="2">
                 <b>Apellidos y Nombres</b> 
-                <?php echo $p->getPlazaHistorial()->getCodPersonal()->getApellidoPaterno() . " " . $p->getPlazaHistorial()->getCodPersonal()->getApellidoMaterno() . ", " . $p->getPlazaHistorial()->getCodPersonal()->getNombre(); ?>
+    <?php echo $p->getPlazaHistorial()->getCodPersonal()->getApellidoPaterno() . " " . $p->getPlazaHistorial()->getCodPersonal()->getApellidoMaterno() . ", " . $p->getPlazaHistorial()->getCodPersonal()->getNombre(); ?>
             </td>
         </tr>
         <tr>
