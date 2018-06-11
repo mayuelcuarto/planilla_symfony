@@ -5,6 +5,9 @@ namespace PlanillaBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use PlanillaBundle\Entity\Afp;
 use PlanillaBundle\Entity\RegimenPensionario;
+use PlanillaBundle\Entity\Mes;
+use PlanillaBundle\Entity\TipoPlanilla;
+use PlanillaBundle\Entity\FuenteFinanc;
 use PDO;
 
 class AfpRepository extends EntityRepository {
@@ -45,4 +48,23 @@ class AfpRepository extends EntityRepository {
                         ->getArrayResult();
     }
 
+    public function findDistinctByAnoMesTipoFuente($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT DISTINCT(a.id) AS id, a.nombre AS nombre, a.jubilacion AS jubilacion, a.seguros AS seguros, a.ra AS ra, a.raMixta AS raMixta
+                                       FROM PlanillaBundle:Planilla p
+                                       INNER JOIN p.plazaHistorial ph
+                                       INNER JOIN ph.plaza pl
+                                       INNER JOIN ph.afp a
+                                       WHERE 
+                                       p.anoEje = :anoEje AND 
+                                       p.mesEje = :mesEje AND
+                                       p.fuente = :fuente AND 
+                                       pl.tipoPlanilla = :tipoPlanilla
+                                       ORDER BY a.id")
+                        ->setParameter('anoEje', $anoEje)
+                        ->setParameter('mesEje', $mesEje)
+                        ->setParameter('fuente', $fuente)
+                        ->setParameter('tipoPlanilla', $tipoPlanilla)
+                        ->getResult();
+    }
 }
