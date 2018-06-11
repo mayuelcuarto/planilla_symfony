@@ -71,7 +71,6 @@ class PlanillaMetaType extends AbstractType {
         $form = $event->getForm();
         $data = $event->getData();
         $em = $this->entityManager;
-        $options = $form->getConfig()->getOptions();
         $especifica = $em->getRepository('PlanillaBundle:Especifica')->findOneBy(["id" => $data['especifica']]);
         $this->seteandoEspecifica($form, $especifica);
     }
