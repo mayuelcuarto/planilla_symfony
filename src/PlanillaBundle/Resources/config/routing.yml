@@ -416,6 +416,14 @@ planilla_reporte_metas:
     path: /planilla/reporte/metas
     defaults: { _controller: PlanillaBundle:Planilla:metas }
     
+planilla_reporte_patronal:
+    path: /planilla/reporte/patronal
+    defaults: { _controller: PlanillaBundle:Planilla:patronal }
+    
+planilla_reporte_afp:
+    path: /planilla/reporte/afp
+    defaults: { _controller: PlanillaBundle:Planilla:afp }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
