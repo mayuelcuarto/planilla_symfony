@@ -327,16 +327,12 @@ class PlanillaController extends Controller {
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
         $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
-
         $planilla = new Planilla();
-        for ($i = 2008; $i <= $anoEje; $i++) {
-            $anoArray[$i] = $i;
-        }
 
         $form = $this->createForm(PlanillaSearchType::class, $planilla, [
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
-            'anoArray' => $anoArray,
+            'anoArray' => $this->arrayAnios($anoEje),
             'fuentes' => $fuentes,
             'btnSubmit' => "Imprimir"
         ]);
@@ -384,16 +380,12 @@ class PlanillaController extends Controller {
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
         $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
-
         $planilla = new Planilla();
-        for ($i = 2008; $i <= $anoEje; $i++) {
-            $anoArray[$i] = $i;
-        }
 
         $form = $this->createForm(PlanillaSearchType::class, $planilla, [
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
-            'anoArray' => $anoArray,
+            'anoArray' => $this->arrayAnios($anoEje),
             'fuentes' => $fuentes,
             'btnSubmit' => "Imprimir"
         ]);
@@ -456,23 +448,16 @@ class PlanillaController extends Controller {
         $tipoPlanilla = $tipoPlanilla_repo->findOneBy(["id" => 1]);
         $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
         $especificas1 = $especifica_repo->findArrayByAnoMesTP($anoEje, $mesEje, $tipoPlanilla);
-        //var_dump($especificas1);
         $especificas = Array();
         foreach ($especificas1 as $especifica) {
             $especificas[$especifica['especifica'] . " " . $especifica["nombre"]] = $especifica['id'];
         }
-
-        //var_dump($especificas);
-
         $planilla = new Planilla();
-        for ($i = 2008; $i <= $anoEje; $i++) {
-            $anoArray[$i] = $i;
-        }
 
         $form = $this->createForm(PlanillaMetaType::class, $planilla, [
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
-            'anoArray' => $anoArray,
+            'anoArray' => $this->arrayAnios($anoEje),
             'especificas' => $especificas,
             'btnSubmit' => 'Imprimir'
         ]);
@@ -499,7 +484,7 @@ class PlanillaController extends Controller {
                 $arrayConceptos1 = Array();
                 $totalesMetas1 = Array();
                 $totalesConceptos1 = Array();
-                
+
                 foreach ($metas as $meta) {
                     $arrayMetas1[$meta['secfunc']]['secfunc'] = $meta['secfunc'];
                     $meta2 = $meta_repo->findOneBy(["secFunc" => $meta['secfunc']]);
@@ -512,13 +497,13 @@ class PlanillaController extends Controller {
                         $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
                         $arrayConceptos1[$concepto['id']]['monto'] = $planillaHasConcepto_repo->sumaConceptoMetaEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $meta2, $especifica, $conceptoAux);
                         $arrayMetas1[$meta['secfunc']]['conceptos'] = $arrayConceptos1;
-                        
+
                         $suma += $arrayConceptos1[$concepto['id']]['monto'];
                     }
                     $totalesMetas1[$meta['secfunc']]['total'] = $suma;
                 }
-                
-                foreach ($conceptos1 as $concepto){
+
+                foreach ($conceptos1 as $concepto) {
                     $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
                     $totalesConceptos1[$concepto['id']]['total'] = $planillaHasConcepto_repo->sumaConceptoEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $especifica, $conceptoAux);
                 }
@@ -527,7 +512,7 @@ class PlanillaController extends Controller {
                 $arrayConceptos2 = Array();
                 $totalesMetas2 = Array();
                 $totalesConceptos2 = Array();
-                
+
                 foreach ($metas as $meta) {
                     $arrayMetas2[$meta['secfunc']]['secfunc'] = $meta['secfunc'];
                     $meta2 = $meta_repo->findOneBy(["secFunc" => $meta['secfunc']]);
@@ -540,17 +525,16 @@ class PlanillaController extends Controller {
                         $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
                         $arrayConceptos2[$concepto['id']]['monto'] = $planillaHasConcepto_repo->sumaConceptoMetaEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $meta2, $especifica, $conceptoAux);
                         $arrayMetas2[$meta['secfunc']]['conceptos'] = $arrayConceptos2;
-                        
+
                         $suma += $arrayConceptos2[$concepto['id']]['monto'];
                     }
                     $totalesMetas2[$meta['secfunc']]['total'] = $suma;
                 }
-                
-                foreach ($conceptos2 as $concepto){
+
+                foreach ($conceptos2 as $concepto) {
                     $conceptoAux = $concepto_repo->findOneBy(["id" => $concepto['id']]);
                     $totalesConceptos2[$concepto['id']]['total'] = $planillaHasConcepto_repo->sumaConceptoEsp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $especifica, $conceptoAux);
                 }
-
             } else {
                 $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
             }
@@ -585,16 +569,12 @@ class PlanillaController extends Controller {
         $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
         $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
         $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
-
         $planilla = new Planilla();
-        for ($i = 2008; $i <= $anoEje; $i++) {
-            $anoArray[$i] = $i;
-        }
 
         $form = $this->createForm(PlanillaReportType::class, $planilla, [
             'anoEje' => $anoEje,
             'mesEje' => $mesEje,
-            'anoArray' => $anoArray,
+            'anoArray' => $this->arrayAnios($anoEje),
             'fuentes' => $fuentes,
             'btnSubmit' => "Imprimir"
         ]);
@@ -630,6 +610,125 @@ class PlanillaController extends Controller {
             ]);
         }
         return $this->render("@Planilla/planilla/reporte.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
+
+    public function patronalAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+        $planilla = new Planilla();
+        $form = $this->createForm(PlanillaSearchType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $this->arrayAnios($anoEje),
+            'fuentes' => $fuentes,
+            'btnSubmit' => "Imprimir"
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillas = $planilla_repo->findByAnoMesTipoFuente($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaRemAseg = $planilla_repo->SumaRemAseg($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $sumaPatronal = $planilla_repo->SumaPatronal($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                //$sumaTotalEgreso = $planilla_repo->SumaTotalEgreso($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+            } else {
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
+            }
+            if (isset($status)) {
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reportePatronal.html.php", [
+                        "planillas" => $planillas,
+                        "sumaRemAseg" => $sumaRemAseg,
+                        "sumaPatronal" => $sumaPatronal,
+                        "tipoPlanilla" => $tipoPlanilla,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "fuente" => $fuenteFinanc
+            ]);
+        }
+
+        return $this->render("@Planilla/planilla/patronal.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
+
+    public function afpAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+        $planilla = new Planilla();
+        $form = $this->createForm(PlanillaSearchType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $this->arrayAnios($anoEje),
+            'fuentes' => $fuentes,
+            'btnSubmit' => "Imprimir"
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $afp_repo = $em->getRepository("PlanillaBundle:Afp");
+                $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
+                $phc_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
+                $planillas = $planilla_repo->findByAnoMesTipoFuenteOrAfp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+                $afps = $afp_repo->findDistinctByAnoMesTipoFuente($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+
+                $arrayAfp = Array();
+                foreach ($afps as $afp) {
+                    $arrayAfp[$afp['id']]['id'] = $afp['id'];
+                    $afp1 = $afp_repo->findOneBy(["id" => $afp['id']]);
+                    $arrayAfp[$afp['id']]['nombre'] = $afp['nombre'];
+                    $concepto1 = $concepto_repo->findOneBy(["id" => 78]);
+                    $arrayAfp[$afp['id']]['jubilacion'] = $afp['jubilacion'];
+                    $arrayAfp[$afp['id']]['jubMonto'] = $phc_repo->SumaConceptoAfp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc, $afp1, $concepto1);
+                    $concepto2 = $concepto_repo->findOneBy(["id" => 79]);
+                    $arrayAfp[$afp['id']]['seguros'] = $afp['seguros'];
+                    $arrayAfp[$afp['id']]['segMonto'] = $phc_repo->SumaConceptoAfp($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc, $afp1, $concepto2);
+                    $concepto3 = $concepto_repo->findOneBy(["id" => 80]);
+                    $arrayAfp[$afp['id']]['ra'] = $afp['ra'];
+                    $arrayAfp[$afp['id']]['raMonto'] = $phc_repo->SumaConceptoAfpRA($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc, $afp1, $concepto3, 0);
+                    $arrayAfp[$afp['id']]['raMixta'] = $afp['raMixta'];
+                    $arrayAfp[$afp['id']]['raMixMonto'] = $phc_repo->SumaConceptoAfpRA($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc, $afp1, $concepto3, 1);
+                }
+            } else {
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
+            }
+            if (isset($status)) {
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reporteAfp.html.php", [
+                        "planillas" => $planillas,
+                        "arrayAfp" => $arrayAfp,
+                        "tipoPlanilla" => $tipoPlanilla,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "fuente" => $fuenteFinanc
+            ]);
+        }
+        return $this->render("@Planilla/planilla/afp.html.twig", [
                     "form" => $form->createView()
         ]);
     }
@@ -681,6 +780,13 @@ class PlanillaController extends Controller {
             $fuentes = [["id" => 0, "nombre" => "TODOS"]];
         }
         return new JsonResponse($fuentes);
+    }
+
+    public function arrayAnios($anoEje) {
+        for ($i = 2008; $i <= $anoEje; $i++) {
+            $anoArray[$i] = $i;
+        }
+        return $anoArray;
     }
 
 }
