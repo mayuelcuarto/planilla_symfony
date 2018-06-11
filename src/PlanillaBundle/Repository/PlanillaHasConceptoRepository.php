@@ -10,6 +10,7 @@ use PlanillaBundle\Entity\FuenteFinanc;
 use PlanillaBundle\Entity\Concepto;
 use PlanillaBundle\Entity\Meta;
 use PlanillaBundle\Entity\Especifica;
+use PlanillaBundle\Entity\Afp;
 use PDO;
 
 class PlanillaHasConceptoRepository extends EntityRepository {
@@ -144,6 +145,39 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':especifica', $especifica->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
+    }
+    
+    public function SumaConceptoAfp($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente, Afp $afp, Concepto $concepto) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConceptoAfp(:anoEje, :mesEje, :tipoPlanilla, :fuente, :afp, :concepto)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':fuente', $fuente->getId());
+        $sth1->bindValue(':afp', $afp->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
+    }
+    
+    public function SumaConceptoAfpRA($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente, Afp $afp, Concepto $concepto, $raTipo) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConceptoAfpRA(:anoEje, :mesEje, :tipoPlanilla, :fuente, :afp, :concepto, :raTipo)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
+        $sth1->bindValue(':fuente', $fuente->getId());
+        $sth1->bindValue(':afp', $afp->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->bindValue(':raTipo', $raTipo);
         $sth1->execute();
         while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
             $sumaConcepto = $fila[0];
