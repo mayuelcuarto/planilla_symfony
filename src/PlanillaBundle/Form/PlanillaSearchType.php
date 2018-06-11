@@ -73,18 +73,15 @@ class PlanillaSearchType extends AbstractType {
         $form = $event->getForm();
         $data = $event->getData();
         $em = $this->entityManager;
-        $options = $form->getConfig()->getOptions();
         $fuente = $em->getRepository('PlanillaBundle:FuenteFinanc')->findOneBy(["id" => $data['fuente']]);
-        $this->seteandoFuente($form, $fuente, $options);
+        $this->seteandoFuente($form, $fuente);
     }
     
-    protected function seteandoFuente(FormInterface $form, FuenteFinanc $fuente, $options) {
+    protected function seteandoFuente(FormInterface $form, FuenteFinanc $fuente) {
         $form->add('fuente', EntityType::class, [
             "label" => "Fuente de Financiamiento",
             "required" => "required",
             "class" => "PlanillaBundle:FuenteFinanc",
-            "choices" => $options['fuentes'],
-            "choice_label" => "nombre",
             "attr" => ["class" => "form-control form-control-sm"],
             "data" => $fuente
         ]);
