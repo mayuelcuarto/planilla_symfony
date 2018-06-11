@@ -1,0 +1,46 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-4">
+        <h4>Reporte de Afp</h4>
+        {% for message in app.session.flashbag().get('status') %}
+            <hr/>
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <hr/>
+        {{form_start(form)}}
+        {{form_row(form.anoEje, {'id': 'anoEje' }) }}
+        {{form_row(form.mesEje)}}
+        {{form_row(form.tipoPlanilla)}}
+        {{form_row(form.fuente, {'id': 'fuente' }) }}
+        {{form_end(form,{'action':'', 'method':'POST'})}}
+    </div>
+    <script>
+        $('#anoEje').change(function () {
+            var anoEje = $(this);
+            $.ajax({
+                url: "{{ path('planilla_ajax_fuente') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    anoEje: anoEje.val()
+                },
+                success: function (fuentes) {
+                    var fuente = $("#fuente");
+                    fuente.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for (var i = 0; i < fuentes.length; i++) {
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(fuentes[i]); //Escribes en él el nombre de la provincia
+                        $(option).val(fuentes[i].id);
+                        $(option).text(fuentes[i].nombre);
+                        $(option).appendTo("#fuente"); //Lo metes en el select con id provincias
+                    }
+
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ... ");
+                }
+            });
+        });
+    </script>
+{% endblock %}
