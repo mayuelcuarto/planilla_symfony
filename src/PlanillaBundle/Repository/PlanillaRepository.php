@@ -73,6 +73,24 @@ class PlanillaRepository extends EntityRepository {
         $sth->execute();
     }
 
+    public function findByAnoMesTipoFuenteOrAfp($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT p FROM PlanillaBundle:Planilla p
+                                       INNER JOIN p.plazaHistorial ph
+                                       INNER JOIN ph.plaza pl
+                                       WHERE 
+                                       p.anoEje = :anoEje AND 
+                                       p.mesEje = :mesEje AND 
+                                       pl.tipoPlanilla = :tipoPlanilla AND 
+                                       p.fuente = :fuente 
+                                       ORDER BY ph.afp, pl.numPlaza")
+                        ->setParameter('anoEje', $anoEje)
+                        ->setParameter('mesEje', $mesEje)
+                        ->setParameter('tipoPlanilla', $tipoPlanilla)
+                        ->setParameter('fuente', $fuente)
+                        ->getResult();
+    }
+    
     public function findByAnoMesTipoFuente($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente) {
         return $this->getEntityManager()
                         ->createQuery("SELECT p FROM PlanillaBundle:Planilla p
