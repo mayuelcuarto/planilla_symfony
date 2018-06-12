@@ -80,9 +80,10 @@ class PlanillaSearchType extends AbstractType {
     protected function seteandoFuente(FormInterface $form, FuenteFinanc $fuente) {
         $form->add('fuente', EntityType::class, [
             "label" => "Fuente de Financiamiento",
+            "mapped" => false,
             "required" => "required",
             "class" => "PlanillaBundle:FuenteFinanc",
-            "attr" => ["class" => "form-control form-control-sm"],
+            "choice_label" => "nombre",
             "data" => $fuente
         ]);
     }
