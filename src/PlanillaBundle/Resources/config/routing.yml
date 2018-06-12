@@ -424,6 +424,10 @@ planilla_reporte_afp:
     path: /planilla/reporte/afp
     defaults: { _controller: PlanillaBundle:Planilla:afp }
     
+planilla_reporte_concepto:
+    path: /planilla/reporte/concepto
+    defaults: { _controller: PlanillaBundle:Planilla:concepto }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
@@ -462,6 +466,11 @@ planilla_ajax_meta:
 planilla_ajax_planilla:
     path:     /planilla/ajax/planilla
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlanilla" }
+    methods:  GET
+    
+planilla_ajax_concepto:
+    path:     /planilla/ajax/concepto
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyConcepto" }
     methods:  GET
     
 planillaHasConcepto_index:
