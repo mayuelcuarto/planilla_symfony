@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use PlanillaBundle\Entity\Usuario;
 use PlanillaBundle\Form\UsuarioType;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
 class UsuarioController extends Controller {
 
@@ -16,13 +18,25 @@ class UsuarioController extends Controller {
         $this->session = new Session();
     }
 
-    public function loginAction(Request $request) {
+    public function loginAction() {
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        if ($error) {
+            $error_message = $error->getMessage();
+        } else {
+            $error_message = null;
+        }
+        $translator = new Translator('es_ES');
+        $translator->addLoader('array', new ArrayLoader());
+        $translator->addResource('array', [
+            'Bad credentials.' => 'Credenciales incorrectas.',
+            'User account is locked.' => 'La cuenta de usuario se encuentra bloqueada.'
+                ], 'es_ES');
+        $translated = $translator->trans($error_message);
+        
         return $this->render('@Planilla/usuario/login.html.twig', [
-                    "error" => $error,
+                    "error" => $translated,
                     "last_username" => $lastUsername,
         ]);
     }
@@ -86,6 +100,7 @@ class UsuarioController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $usuario_repo = $em->getRepository("PlanillaBundle:Usuario");
         $usuario = $usuario_repo->find($id);
+        $pass = $usuario->getPassword();
 
         $form = $this->createForm(UsuarioType::class, $usuario);
 
@@ -93,18 +108,25 @@ class UsuarioController extends Controller {
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+
                 $usuario->setApellidos($form->get("apellidos")->getData());
                 $usuario->setNombres($form->get("nombres")->getData());
                 $usuario->setDni($form->get("dni")->getData());
                 $usuario->setCargo($form->get("cargo")->getData());
                 $usuario->setNick($form->get("nick")->getData());
+                $passForm = $form->get("password")->getData();
+                if ($passForm != null and $passForm != "") {
+                    $factory = $this->get("security.encoder_factory");
+                    $encoder = $factory->getEncoder($usuario);
+                    $password = $encoder->encodePassword($form->get("password")->getData(), $usuario->getSalt());
+                    $usuario->setPassword($password);
+                    $usuario->setClaveapi($password);
+                } else {
+                    var_dump($pass);
+                    $usuario->setPassword($pass);
+                    $usuario->setClaveapi($pass);
+                }
 
-                $factory = $this->get("security.encoder_factory");
-                $encoder = $factory->getEncoder($usuario);
-                $password = $encoder->encodePassword($form->get("password")->getData(), $usuario->getSalt());
-
-                $usuario->setPassword($password);
-                $usuario->setClaveapi($password);
                 $usuario->setRole($form->get("role")->getData());
                 $usuario->setEstado($form->get("estado")->getData());
 
