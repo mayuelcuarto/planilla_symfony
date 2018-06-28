@@ -13,6 +13,11 @@ $contador_d = 0;
 foreach ($planillas as $p) {
     $contador_d++;
     $conceptos = $p->getPlanillaHasConcepto();
+    if($tipoPlanilla->getId() == 1 or $tipoPlanilla->getId() == 4){
+        $titulo = "PLANILLA DE PAGOS";
+    }else{
+        $titulo = "PLANILLA DE OBLIGACIONES PREVISIONALES";
+    }
     ?>
     <table border="1" style="font-size: 10pt;" width="100%">
         <tr>
@@ -35,7 +40,7 @@ foreach ($planillas as $p) {
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;">
-                <b>PLANILLA DE OBLIGACIONES PREVISIONALES <?php echo $tipoPlanilla->getNombre(); ?> <?php echo $anoEje; ?> - <?php echo $mesEje->getNombre(); ?><br>
+                <b><?php echo $titulo." ".$tipoPlanilla->getNombre(); ?> <?php echo $anoEje; ?> - <?php echo $mesEje->getNombre(); ?><br>
     <?php echo $fuente->getNombre(); ?></b>
             </td>
         </tr>
