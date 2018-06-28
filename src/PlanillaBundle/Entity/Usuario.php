@@ -1,11 +1,11 @@
 <?php
 namespace PlanillaBundle\Entity;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Usuario
  */
-class Usuario implements UserInterface
+class Usuario implements AdvancedUserInterface
 {
     /**
      * @var string
@@ -319,4 +319,37 @@ class Usuario implements UserInterface
     {
         return $this->planilla;
     }
+
+    public function isAccountNonExpired() {
+        if($this->estado == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isAccountNonLocked() {
+        if($this->estado == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isCredentialsNonExpired() {
+        if($this->estado == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isEnabled() {
+        if($this->estado == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }
