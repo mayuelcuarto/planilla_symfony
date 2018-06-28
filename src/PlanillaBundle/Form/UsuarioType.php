@@ -46,7 +46,7 @@ class UsuarioType extends AbstractType {
                 ])
                 ->add('password', PasswordType::class, [
                     "label" => "Contraseña",
-                    "required" => "required",
+                    "required" => false,
                     "attr" => ["class" => "form-control form-control-sm"]
                 ])
                 ->add('role', ChoiceType::class, [
