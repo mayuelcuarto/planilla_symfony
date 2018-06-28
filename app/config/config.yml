@@ -11,6 +11,7 @@ parameters:
 
 framework:
     #esi: ~
+    default_locale: '%locale%'
     #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
@@ -22,7 +23,6 @@ framework:
     #serializer: { enable_annotations: true }
     templating:
         engines: ['twig', 'php']
-    default_locale: '%locale%'
     trusted_hosts: ~
     session:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
