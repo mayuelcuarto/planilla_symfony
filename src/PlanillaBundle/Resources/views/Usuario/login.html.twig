@@ -1,6 +1,9 @@
 {% extends "@Planilla/login_layout.html.twig" %}
 {% block content %}    
     <div class="col-auto">
+        {% if error != null%}
+        <div class="alert alert-danger">{{error}}</div>
+        {% endif %}
         <form action="{{ path("login") }}" class="form-signin" method="post">
             <img class="mb-4 img-fluid" src="{{ asset('image/login.png') }}" alt="">
             <h1 class="h3 mb-3 font-weight-normal">Por favor, valídese</h1>
@@ -8,11 +11,6 @@
             <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="Usuario" required autofocus>
             <label for="inputPassword" class="sr-only">Contraseña</label>
             <input type="password" id="password" name="_password" class="form-control" placeholder="Contraseña" required>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Recordarme
-                </label>
-            </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
             <input type="hidden" name="_target_path" value="/" />
             <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>

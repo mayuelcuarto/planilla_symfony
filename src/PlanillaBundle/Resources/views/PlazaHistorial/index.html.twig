@@ -17,7 +17,7 @@
         {% for message in app.session.flashbag().get('status') %}
             <div class="alert alert-success">{{message}}</div>
         {% endfor %}
-        <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
+        <table height="328px;" id="myTable" class="table-sm table-bordered table-responsive table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -53,7 +53,16 @@
                 "pageLength": 6,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "searching": false
+                "searching": false,
+                "language": {
+                    "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 al 0 de 0 registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
             });
         });
     </script>
