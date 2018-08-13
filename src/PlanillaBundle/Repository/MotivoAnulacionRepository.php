@@ -12,7 +12,7 @@ class MotivoAnulacionRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $sth1 = $em->getConnection()->prepare("SELECT SugerirMotivoAnulacion()");
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $motivo_id = $fila[0];
         }
         return $motivo_id;

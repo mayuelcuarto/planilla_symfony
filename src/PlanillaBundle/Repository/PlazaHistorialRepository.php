@@ -55,7 +55,7 @@ class PlazaHistorialRepository extends EntityRepository {
         $sth1 = $em->getConnection()->prepare("SELECT GenerarSecPlazaHistorial(:plazaId)");
         $sth1->bindValue(':plazaId', $plazaId);
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $secPersonal = $fila[0];
         }
         return $secPersonal;

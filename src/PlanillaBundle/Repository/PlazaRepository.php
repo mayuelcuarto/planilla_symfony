@@ -12,7 +12,7 @@ class PlazaRepository extends EntityRepository {
         $sth1 = $em->getConnection()->prepare("SELECT SugerirPlaza(:tipoPlanilla)");
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla);
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $numPlaza = $fila[0];
         }
         return $numPlaza;

@@ -23,7 +23,7 @@ class GrupoOcupacionalRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $sth1 = $em->getConnection()->prepare("SELECT SugerirGrupoOcupacional()");
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $grupoId = $fila[0];
         }
         return $grupoId;

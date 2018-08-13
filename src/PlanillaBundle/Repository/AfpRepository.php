@@ -16,7 +16,7 @@ class AfpRepository extends EntityRepository {
         $em = $this->getEntityManager();
         $sth1 = $em->getConnection()->prepare("SELECT SugerirAfp()");
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $afp_id = $fila[0];
         }
         return $afp_id;
