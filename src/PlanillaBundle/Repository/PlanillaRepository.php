@@ -9,6 +9,7 @@ use PlanillaBundle\Entity\Planilla;
 use PlanillaBundle\Entity\PlanillaHasConcepto;
 use PlanillaBundle\Entity\TipoPlanilla;
 use PlanillaBundle\Entity\FuenteFinanc;
+use PlanillaBundle\Entity\Especifica;
 use PDO;
 
 class PlanillaRepository extends EntityRepository {
@@ -137,7 +138,20 @@ class PlanillaRepository extends EntityRepository {
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':fuente', $fuente->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
+            $sumaRemAseg = $fila[0];
+        }
+        return $sumaRemAseg;
+    }
+    
+    public function SumaRemAsegEsp($anoEje, Mes $mesEje, Especifica $especifica) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaRemAsegEsp(:anoEje, :mesEje, :especifica)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaRemAseg = $fila[0];
         }
         return $sumaRemAseg;
@@ -151,7 +165,20 @@ class PlanillaRepository extends EntityRepository {
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':fuente', $fuente->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
+            $sumaRemNoAseg = $fila[0];
+        }
+        return $sumaRemNoAseg;
+    }
+    
+    public function SumaRemNoAsegEsp($anoEje, Mes $mesEje, Especifica $especifica) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaRemNoAsegEsp(:anoEje, :mesEje, :especifica)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaRemNoAseg = $fila[0];
         }
         return $sumaRemNoAseg;
@@ -165,7 +192,20 @@ class PlanillaRepository extends EntityRepository {
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':fuente', $fuente->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
+            $sumaTotalEgreso = $fila[0];
+        }
+        return $sumaTotalEgreso;
+    }
+    
+    public function SumaTotalEgresoEsp($anoEje, Mes $mesEje, Especifica $especifica) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaTotalEgresoEsp(:anoEje, :mesEje, :especifica)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaTotalEgreso = $fila[0];
         }
         return $sumaTotalEgreso;
@@ -179,7 +219,20 @@ class PlanillaRepository extends EntityRepository {
         $sth1->bindValue(':tipoPlanilla', $tipoPlanilla->getId());
         $sth1->bindValue(':fuente', $fuente->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
+            $sumaPatronal = $fila[0];
+        }
+        return $sumaPatronal;
+    }
+    
+    public function SumaPatronalEsp($anoEje, Mes $mesEje, Especifica $especifica) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaPatronalEsp(:anoEje, :mesEje, :especifica)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaPatronal = $fila[0];
         }
         return $sumaPatronal;
