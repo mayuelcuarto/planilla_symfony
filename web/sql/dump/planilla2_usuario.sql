@@ -45,7 +45,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('44385495','Mayuri Quiroz','Cristhian Daniel','Desarrollador de Software','cmayuri','$2y$04$yhqKTbPQRLFqYxb4ol6f..W2qT/Be.r/mO48e9Jsmuo8ScLsgsmAC',1,'ROLE_ADMIN','$2y$04$yhqKTbPQRLFqYxb4ol6f..W2qT/Be.r/mO48e9Jsmuo8ScLsgsmAC',1),('42094392','admin','admin','admin','admin','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',1,'ROLE_ADMIN','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',2),('08344761','Dominguez','Danielli Noira','Vilchez','ddominguez','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',1,'ROLE_USER','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',3),('11111111','Usuario','Sistema Fox','Usuario de Sistema Fox','pla','$2y$04$/eZu2IA0g4crECnmPOypaeC1FUph41v/JdP5n/dtDqKH.xgb9P/P2',0,'ROLE_USER','$2y$04$/eZu2IA0g4crECnmPOypaeC1FUph41v/JdP5n/dtDqKH.xgb9P/P2',4);
+INSERT INTO `usuario` VALUES ('44385495','Mayuri Quiroz','Cristhian Daniel','Desarrollador de Software','cmayuri','$2y$04$yhqKTbPQRLFqYxb4ol6f..W2qT/Be.r/mO48e9Jsmuo8ScLsgsmAC',1,'ROLE_ADMIN','$2y$04$yhqKTbPQRLFqYxb4ol6f..W2qT/Be.r/mO48e9Jsmuo8ScLsgsmAC',1),('42094392','admin','admin','admin','admin','$2y$04$xLNVZ.sJZh3QlO4h1M4B7uRcyGJhh5MztEsdji3F7xfJtdiex3BAa',0,'ROLE_ADMIN','$2y$04$xLNVZ.sJZh3QlO4h1M4B7uRcyGJhh5MztEsdji3F7xfJtdiex3BAa',2),('08344761','Dominguez','Danielli Noira','Vilchez','ddominguez','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',1,'ROLE_USER','$2a$04$GnX.zrv5gwPTWKsEA0jqkeogRPRxRQd/QxFOS0zVKqtwKTOw7qRfq',3),('11111111','Usuario','Sistema Fox','Usuario de Sistema Fox','pla','$2y$04$/eZu2IA0g4crECnmPOypaeC1FUph41v/JdP5n/dtDqKH.xgb9P/P2',0,'ROLE_USER','$2y$04$/eZu2IA0g4crECnmPOypaeC1FUph41v/JdP5n/dtDqKH.xgb9P/P2',4);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-31 15:24:02
+-- Dump completed on 2018-08-13  2:18:24
