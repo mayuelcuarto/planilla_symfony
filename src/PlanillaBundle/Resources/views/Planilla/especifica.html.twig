@@ -1,7 +1,7 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-4">
-        <h4>Resumen de Metas por Específica</h4>
+        <h4>Resumen de Planillas</h4>
         {% for message in app.session.flashbag().get('status') %}
             <hr/>
             <div class="alert alert-success">{{message}}</div>
@@ -10,34 +10,31 @@
         {{form_start(form)}}
         {{form_row(form.anoEje, {'id': 'anoEje' }) }}
         {{form_row(form.mesEje, {'id': 'mesEje' })}}
-        {{form_row(form.tipoPlanilla, {'id': 'tipoPlanilla' })}}
         {{form_row(form.especifica, {'id': 'especifica' }) }}
         {{form_end(form,{'action':'', 'method':'POST'})}}
     </div>
     <script>
-        function ActualizarEspecifica() {
+        function ActualizarEspecifica(){
             var anoEje = $("#anoEje");
             var mesEje = $("#mesEje");
-            var tipoPlanilla = $("#tipoPlanilla");
             $.ajax({
-                url: "{{ path('planilla_ajax_meta') }}",
+                url: "{{ path('planilla_ajax_especifica') }}",
                 type: "GET",
                 dataType: "JSON",
                 data: {
                     anoEje: anoEje.val(),
-                    mesEje: mesEje.val(),
-                    tipoPlanilla: tipoPlanilla.val()
+                    mesEje: mesEje.val()
                 },
                 success: function (especificas) {
                     var especifica = $("#especifica");
-                    especifica.find('option').remove().end(); 
+                    especifica.find('option').remove().end(); //Borramos todos los items del select
                     var option = document.createElement("option");
                     for (var i = 0; i < especificas.length; i++) {
-                        var option = document.createElement("option"); 
-                        $(option).html(especificas[i]); 
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(especificas[i]); //Escribes en él el nombre de la provincia
                         $(option).val(especificas[i].id);
                         $(option).text(especificas[i].anoEje + " - " +especificas[i].especifica + " " + especificas[i].nombre);
-                        $(option).appendTo("#especifica"); 
+                        $(option).appendTo("#especifica"); //Lo metes en el select con id provincias
                     }
 
                 },
@@ -49,6 +46,5 @@
         
         $('#anoEje').change(ActualizarEspecifica);
         $('#mesEje').change(ActualizarEspecifica);
-        $('#tipoPlanilla').change(ActualizarEspecifica);
     </script>
 {% endblock %}
