@@ -115,7 +115,7 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':fuente', $fuente->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaConcepto = $fila[0];
         }
         return $sumaConcepto;
@@ -131,7 +131,7 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':especifica', $especifica->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaConcepto = $fila[0];
         }
         return $sumaConcepto;
@@ -146,7 +146,21 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':especifica', $especifica->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
+            $sumaConcepto = $fila[0];
+        }
+        return $sumaConcepto;
+    }
+    
+    public function SumaConceptoEspSimple($anoEje, Mes $mesEje, Especifica $especifica, Concepto $concepto) {
+        $em = $this->getEntityManager();
+        $sth1 = $em->getConnection()->prepare("SELECT SumaConceptoEspSimple(:anoEje, :mesEje, :especifica, :concepto)");
+        $sth1->bindValue(':anoEje', $anoEje);
+        $sth1->bindValue(':mesEje', $mesEje->getMesEje());
+        $sth1->bindValue(':especifica', $especifica->getId());
+        $sth1->bindValue(':concepto', $concepto->getId());
+        $sth1->execute();
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaConcepto = $fila[0];
         }
         return $sumaConcepto;
@@ -162,7 +176,7 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':afp', $afp->getId());
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaConcepto = $fila[0];
         }
         return $sumaConcepto;
@@ -179,7 +193,7 @@ class PlanillaHasConceptoRepository extends EntityRepository {
         $sth1->bindValue(':concepto', $concepto->getId());
         $sth1->bindValue(':raTipo', $raTipo);
         $sth1->execute();
-        while ($fila = $sth1->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+        while ($fila = $sth1->fetch(PDO::FETCH_NUM)) {
             $sumaConcepto = $fila[0];
         }
         return $sumaConcepto;
