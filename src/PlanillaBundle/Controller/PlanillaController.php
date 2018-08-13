@@ -13,6 +13,7 @@ use PlanillaBundle\Form\PlanillaFechasType;
 use PlanillaBundle\Form\PlanillaReportType;
 use PlanillaBundle\Form\PlanillaMetaType;
 use PlanillaBundle\Form\PlanillaConceptoType;
+use PlanillaBundle\Form\PlanillaEspecificaType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlanillaController extends Controller {
@@ -36,6 +37,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método usado para las consultas
     public function consultaAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -96,6 +98,8 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método usado para invocar el formulario para AGREGAR nuevas planillas y también para controlar
+    //y también para controlar la acción de AGREGAR en el ORM
     public function addAction(Request $request) {
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
@@ -165,6 +169,8 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método usado para invocar el formulario para EDITAR planillas y también para controlar
+    //y también para controlar la acción de EDITAR en el ORM
     public function editAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = \date("Y");
@@ -213,6 +219,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla la acción de borrar una planilla
     public function deleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
@@ -230,6 +237,7 @@ class PlanillaController extends Controller {
         return $this->redirectToRoute("planilla_index");
     }
 
+    //Método que controla el proceso de generación de una planilla de un mes a otro
     public function generacionAction(Request $request) {
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
@@ -282,6 +290,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método para generar las fechas en la planilla que se está procesando actualmente
     public function fechasAction(Request $request) {
         $planilla = new Planilla();
         $em = $this->getDoctrine()->getManager();
@@ -321,6 +330,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de totales de planillas
     public function totalesAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -375,6 +385,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de resumen de planillas
     public function resumenAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -442,6 +453,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de metas de planillas
     public function metasAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -453,7 +465,7 @@ class PlanillaController extends Controller {
         $especificas1 = $especifica_repo->findArrayByAnoMesTP($anoEje, $mesEje, $tipoPlanilla);
         $especificas = Array();
         foreach ($especificas1 as $especifica) {
-            $especificas[$especifica['especifica'] . " " . $especifica["nombre"]] = $especifica['id'];
+            $especificas[$especifica['anoEje'] . " - " . $especifica['especifica'] . " " . $especifica["nombre"]] = $especifica['id'];
         }
         $planilla = new Planilla();
 
@@ -566,6 +578,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de impresión de las planillas (EL MÁS IMPORTANTE)
     public function reporteAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -619,6 +632,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de cuotas patronales de planillas
     public function patronalAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -671,6 +685,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte por afps de las planillas
     public function afpAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -740,6 +755,7 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte por conceptos de planillas
     public function conceptoAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $anoEje = date("Y");
@@ -803,6 +819,71 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
+    
+    //Método que controla el reporte por específica de planillas
+    public function especificaAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
+        $especificas = $especifica_repo->findBy(["anoEje" => $anoEje]);
+        $planilla = new Planilla();
+
+        $form = $this->createForm(PlanillaEspecificaType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $this->arrayAnios($anoEje),
+            'especificas' => $especificas,
+            'btnSubmit' => "Imprimir",
+            'attr' => ['target' => '_blank']
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $especifica = $form->get("especifica")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillaHasConcepto_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
+                $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
+                $conceptos = $concepto_repo->findAll();
+                
+                $arrayConcepto = Array();
+                foreach ($conceptos as $concepto) {
+                    $arrayConcepto[$concepto->getId()]['abreviatura'] = $concepto->getAbreviatura();
+                    $arrayConcepto[$concepto->getId()]['tipo'] = $concepto->getTipoConcepto()->getId();
+                    $arrayConcepto[$concepto->getId()]['monto'] = $planillaHasConcepto_repo->sumaConceptoEspSimple($anoEjeForm, $mesEjeForm, $especifica, $concepto);
+                }
+
+                $sumaRemAseg = $planilla_repo->SumaRemAsegEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaRemNoAseg = $planilla_repo->SumaRemNoAsegEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaTotalEgreso = $planilla_repo->SumaTotalEgresoEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaPatronal = $planilla_repo->SumaPatronalEsp($anoEjeForm, $mesEjeForm, $especifica);
+            } else {
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
+            }
+            if (isset($status)) {
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reporteEspecifica.html.php", [
+                        "conceptos" => $arrayConcepto,
+                        "sumaRemAseg" => $sumaRemAseg,
+                        "sumaRemNoAseg" => $sumaRemNoAseg,
+                        "sumaTotalEgreso" => $sumaTotalEgreso,
+                        "sumaPatronal" => $sumaPatronal,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "especifica" => $especifica
+            ]);
+        }
+
+        return $this->render("@Planilla/planilla/especifica.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
 
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
@@ -831,6 +912,15 @@ class PlanillaController extends Controller {
         $mesEje = $em->getRepository('PlanillaBundle:Mes')->findOneBy(["mesEje" => $mesEjeId]);
         $tipoPlanilla = $em->getRepository("PlanillaBundle:TipoPlanilla")->findOneBy(["id" => $tipoPlanillaId]);
         $especificas = $em->getRepository('PlanillaBundle:Especifica')->findArrayByAnoMesTP($anoEje, $mesEje, $tipoPlanilla);
+        return new JsonResponse($especificas);
+    }
+    
+    public function modifyEspecificaAction(Request $request) {
+        $anoEje = $request->query->get("anoEje");
+        $mesEjeId = $request->query->get("mesEje");
+        $em = $this->getDoctrine()->getManager();
+        $mesEje = $em->getRepository('PlanillaBundle:Mes')->findOneBy(["mesEje" => $mesEjeId]);
+        $especificas = $em->getRepository('PlanillaBundle:Especifica')->findArrayByAnoMes($anoEje, $mesEje);
         return new JsonResponse($especificas);
     }
 
