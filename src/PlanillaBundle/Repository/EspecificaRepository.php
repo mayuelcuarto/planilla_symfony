@@ -21,7 +21,7 @@ class EspecificaRepository extends EntityRepository {
 
     public function findArrayByAnoMesTP($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla) {
         return $this->getEntityManager()
-                        ->createQuery("SELECT DISTINCT(e.especifica) AS especifica, e.nombre AS nombre, e.id AS id FROM PlanillaBundle:Planilla p
+                        ->createQuery("SELECT DISTINCT(e.especifica) AS especifica, e.nombre AS nombre, e.anoEje AS anoEje, e.id AS id FROM PlanillaBundle:Planilla p
                                        INNER JOIN p.plazaHistorial ph
                                        INNER JOIN ph.plaza pl
                                        INNER JOIN p.especifica e
@@ -32,6 +32,20 @@ class EspecificaRepository extends EntityRepository {
                         ->setParameter('anoEje', $anoEje)
                         ->setParameter('mesEje', $mesEje)
                         ->setParameter('tipoPlanilla', $tipoPlanilla)
+                        ->getArrayResult();
+    }
+    
+    public function findArrayByAnoMes($anoEje, Mes $mesEje) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT DISTINCT(e.especifica) AS especifica, e.nombre AS nombre, e.anoEje AS anoEje, e.id AS id FROM PlanillaBundle:Planilla p
+                                       INNER JOIN p.plazaHistorial ph
+                                       INNER JOIN ph.plaza pl
+                                       INNER JOIN p.especifica e
+                                       WHERE 
+                                       p.anoEje = :anoEje AND 
+                                       p.mesEje = :mesEje")
+                        ->setParameter('anoEje', $anoEje)
+                        ->setParameter('mesEje', $mesEje)
                         ->getArrayResult();
     }
 }
