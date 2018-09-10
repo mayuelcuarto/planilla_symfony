@@ -5,6 +5,7 @@ use Dompdf\Dompdf;
 ob_start();
 $fecha = date("d/m/Y");
 $hora = date("H:i:s");
+$fechadoc = date("dmYHis");
 $suma1 = 0;
 $suma2 = 0;
 ?>
@@ -129,6 +130,6 @@ $dompdf = new DOMPDF(); //if you use namespaces you may use new \DOMPDF()
 $dompdf->loadHtml(ob_get_clean());
 $dompdf->set_paper("A4", "landscape");
 $dompdf->render();
-$dompdf->stream("metas.pdf", array("Attachment" => 0));
+$dompdf->stream("resumenMetas".$fechadoc.".pdf", array("Attachment" => 0));
 ?>
 

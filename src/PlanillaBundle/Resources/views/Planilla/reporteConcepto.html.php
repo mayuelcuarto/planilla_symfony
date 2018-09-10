@@ -5,6 +5,7 @@ use Dompdf\Dompdf;
 ob_start();
 $fecha = date("d/m/Y");
 $hora = date("H:i:s");
+$fechadoc = date("dmYHis");
 ?>
 <table border="1" style="font-size: 10pt;" width="100%">
     <tr>
@@ -58,6 +59,6 @@ $dompdf = new DOMPDF(); //if you use namespaces you may use new \DOMPDF()
 $dompdf->loadHtml(ob_get_clean());
 $dompdf->set_paper("A4", "portrait");
 $dompdf->render();
-$dompdf->stream("conceptos.pdf", array("Attachment" => 0));
+$dompdf->stream("reporteConcepto".$fechadoc.".pdf", array("Attachment" => 0));
 ?>
 
