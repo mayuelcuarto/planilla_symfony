@@ -3,11 +3,14 @@
     <div>
         <div class="row mx-auto">
             <h4>CONCEPTOS DE PLANILLA {{ planilla.mesEje.nombre }} {{ planilla.anoEje }} - {{ planilla.plazaHistorial.codPersonal.cadena }}</h4>
+            <a class="btn" onclick="history.back();" role="button" >
+                <img id="imgBack" src="{{ asset('image/reply.svg') }}" style="width:30px;height:30px;border:0;">
+            </a>
         </div>
         <hr/>
         <div class="row mx-auto">
             <div class="col">
-                <table id="myTable" class="table-sm table-bordered table-responsive table-hover">
+                <table height="270px;" id="myTable" class="table-sm table-bordered table-responsive table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -91,7 +94,16 @@
                 "pageLength": 4,
                 "bLengthChange": false,
                 "autoWidth": false,
-                "order": [[1, 'desc'], [0, 'asc']]
+                "order": [[1, 'desc'], [0, 'asc']],
+                "language": {
+                    "info": "Mostrando _START_ al _END_ de _TOTAL_ registros",
+                    "infoEmpty": "Mostrando 0 al 0 de 0 registros",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
             });
         });
     </script>
