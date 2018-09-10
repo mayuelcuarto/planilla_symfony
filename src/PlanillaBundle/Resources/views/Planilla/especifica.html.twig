@@ -1,7 +1,7 @@
 {% extends "@Planilla/general_layout.html.twig" %}
 {% block content %}
     <div class="col-lg-4">
-        <h4>Resumen de Planillas</h4>
+        <h4>Resumen de Planillas por Específica</h4>
         {% for message in app.session.flashbag().get('status') %}
             <hr/>
             <div class="alert alert-success">{{message}}</div>
