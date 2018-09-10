@@ -129,6 +129,22 @@ class PlanillaRepository extends EntityRepository {
                         ->setParameter('fuente', $fuente)
                         ->getArrayResult();
     }
+    
+    public function findByAnoMesEspecifica($anoEje, Mes $mesEje, Especifica $especifica) {
+        return $this->getEntityManager()
+                        ->createQuery("SELECT p FROM PlanillaBundle:Planilla p
+                                       INNER JOIN p.plazaHistorial ph
+                                       INNER JOIN ph.plaza pl
+                                       WHERE 
+                                       p.anoEje = :anoEje AND 
+                                       p.mesEje = :mesEje AND 
+                                       p.especifica = :especifica
+                                       ORDER BY pl.numPlaza")
+                        ->setParameter('anoEje', $anoEje)
+                        ->setParameter('mesEje', $mesEje)
+                        ->setParameter('especifica', $especifica)
+                        ->getResult();
+    }
 
     public function SumaRemAseg($anoEje, Mes $mesEje, TipoPlanilla $tipoPlanilla, FuenteFinanc $fuente) {
         $em = $this->getEntityManager();
