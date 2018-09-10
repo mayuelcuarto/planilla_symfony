@@ -884,6 +884,59 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
+    
+    //Método que controla el reporte de totales por específica de planillas
+    public function totalesEspecificaAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $especifica_repo = $em->getRepository("PlanillaBundle:Especifica");
+        $especificas = $especifica_repo->findBy(["anoEje" => $anoEje]);
+        $planilla = new Planilla();
+
+        $form = $this->createForm(PlanillaEspecificaType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $this->arrayAnios($anoEje),
+            'especificas' => $especificas,
+            'btnSubmit' => "Imprimir",
+            'attr' => ['target' => '_blank']
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $especifica = $form->get("especifica")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillas = $planilla_repo->findByAnoMesEspecifica($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaRemAseg = $planilla_repo->SumaRemAsegEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaRemNoAseg = $planilla_repo->SumaRemNoAsegEsp($anoEjeForm, $mesEjeForm, $especifica);
+                $sumaTotalEgreso = $planilla_repo->SumaTotalEgresoEsp($anoEjeForm, $mesEjeForm, $especifica);
+            } else {
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
+            }
+            if (isset($status)) {
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reporteTotalesEspecifica.html.php", [
+                        "planillas" => $planillas,
+                        "sumaRemAseg" => $sumaRemAseg,
+                        "sumaRemNoAseg" => $sumaRemNoAseg,
+                        "sumaTotalEgreso" => $sumaTotalEgreso,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "especifica" => $especifica
+            ]);
+        }
+
+        return $this->render("@Planilla/planilla/totalesEspecifica.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
 
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
