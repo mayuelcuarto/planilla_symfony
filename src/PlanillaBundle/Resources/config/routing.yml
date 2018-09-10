@@ -432,6 +432,10 @@ planilla_reporte_especifica:
     path: /planilla/reporte/especifica
     defaults: { _controller: PlanillaBundle:Planilla:especifica }
     
+planilla_reporte_totales_especifica:
+    path: /planilla/reporte/totalesEspecifica
+    defaults: { _controller: PlanillaBundle:Planilla:totalesEspecifica }
+    
 planilla_add:
     path: /planilla/add/
     defaults: { _controller: PlanillaBundle:Planilla:add }
