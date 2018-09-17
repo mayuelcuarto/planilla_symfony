@@ -10,6 +10,7 @@ use PlanillaBundle\Form\PlanillaType;
 use PlanillaBundle\Form\PlanillaSearchType;
 use PlanillaBundle\Form\PlanillaGeneracionType;
 use PlanillaBundle\Form\PlanillaFechasType;
+use PlanillaBundle\Form\PlanillaMcppType;
 use PlanillaBundle\Form\PlanillaReportType;
 use PlanillaBundle\Form\PlanillaMetaType;
 use PlanillaBundle\Form\PlanillaConceptoType;
@@ -819,7 +820,7 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
-    
+
     //Método que controla el reporte por específica de planillas
     public function especificaAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -850,7 +851,7 @@ class PlanillaController extends Controller {
                 $planillaHasConcepto_repo = $em->getRepository("PlanillaBundle:PlanillaHasConcepto");
                 $concepto_repo = $em->getRepository("PlanillaBundle:Concepto");
                 $conceptos = $concepto_repo->findAll();
-                
+
                 $arrayConcepto = Array();
                 foreach ($conceptos as $concepto) {
                     $arrayConcepto[$concepto->getId()]['abreviatura'] = $concepto->getAbreviatura();
@@ -884,7 +885,7 @@ class PlanillaController extends Controller {
                     "form" => $form->createView()
         ]);
     }
-    
+
     //Método que controla el reporte de totales por específica de planillas
     public function totalesEspecificaAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
@@ -938,6 +939,55 @@ class PlanillaController extends Controller {
         ]);
     }
 
+    //Método que controla el reporte de MCPP
+    public function mcppVpAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $anoEje = date("Y");
+        $mes_repo = $em->getRepository("PlanillaBundle:Mes");
+        $mesEje = $mes_repo->findOneBy(["mesEje" => \date("m")]);
+        $fuente_repo = $em->getRepository("PlanillaBundle:FuenteFinanc");
+        $fuentes = $fuente_repo->findBy(["anoEje" => $anoEje]);
+        $planilla = new Planilla();
+
+        $form = $this->createForm(PlanillaSearchType::class, $planilla, [
+            'anoEje' => $anoEje,
+            'mesEje' => $mesEje,
+            'anoArray' => $this->arrayAnios($anoEje),
+            'fuentes' => $fuentes,
+            'btnSubmit' => "Imprimir",
+            'attr' => ['target' => '_blank']
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $tipoPlanilla = $form->get("tipoPlanilla")->getData();
+                $anoEjeForm = $form->get("anoEje")->getData();
+                $mesEjeForm = $form->get("mesEje")->getData();
+                $fuenteFinanc = $form->get("fuente")->getData();
+
+                $planilla_repo = $em->getRepository("PlanillaBundle:Planilla");
+                $planillas = $planilla_repo->findByAnoMesTipoFuenteOrNombres($anoEjeForm, $mesEjeForm, $tipoPlanilla, $fuenteFinanc);
+            } else {
+                $status = "El reporte no pudo generarse, porque el formulario no es válido!!";
+            }
+            if (isset($status)) {
+                $this->session->getFlashBag()->add("status", $status);
+            }
+            return $this->render("PlanillaBundle:planilla:reporteVpMcpp.html.php", [
+                        "tipoPlanilla" => $tipoPlanilla,
+                        "anoEje" => $anoEjeForm,
+                        "mesEje" => $mesEjeForm,
+                        "fuente" => $fuenteFinanc,
+                        "planillas" => $planillas
+            ]);
+        }
+
+        return $this->render("@Planilla/planilla/mcppvp.html.twig", [
+                    "form" => $form->createView()
+        ]);
+    }
+
     public function modifyPlazaHistorialAction(Request $request) {
         $tipoPlanilla_id = $request->query->get("tipoPlanilla");
         $em = $this->getDoctrine()->getManager();
@@ -967,7 +1017,7 @@ class PlanillaController extends Controller {
         $especificas = $em->getRepository('PlanillaBundle:Especifica')->findArrayByAnoMesTP($anoEje, $mesEje, $tipoPlanilla);
         return new JsonResponse($especificas);
     }
-    
+
     public function modifyEspecificaAction(Request $request) {
         $anoEje = $request->query->get("anoEje");
         $mesEjeId = $request->query->get("mesEje");
@@ -1008,6 +1058,51 @@ class PlanillaController extends Controller {
         $tipoConcepto = $em->getRepository('PlanillaBundle:TipoConcepto')->findOneBy(["id" => $tipoId]);
         $conceptos = $em->getRepository('PlanillaBundle:Concepto')->findArrayDistinctAnoMesTPFuente($anoEje, $mesEje, $tipoPlanilla, $fuente, $tipoConcepto);
         return new JsonResponse($conceptos);
+    }
+
+    public function modifyClaseMcppAction(Request $request) {
+        $tpMcpp = $request->query->get("tpMcpp");
+        switch ($tpMcpp) {
+            case '01':
+                $clasesMcpp = [
+                    ["id" => '01', "nombre" => "HABERES"],
+                    ["id" => '02', "nombre" => "CAFAE"],
+                    ["id" => '03', "nombre" => "CAS"],
+                    ["id" => '04', "nombre" => "FAG"],
+                    ["id" => '05', "nombre" => "CESIGRA"],
+                    ["id" => '06', "nombre" => "PRACTICAS PROFESIONALES"]
+                ];
+                break;
+            case '02':
+                $clasesMcpp = [
+                    ["id" => '07', "nombre" => "PENSIONISTAS"]
+                ];
+                break;
+            case '03':
+                $clasesMcpp = [
+                    ["id" => '08', "nombre" => "VIUDEZ"],
+                    ["id" => '09', "nombre" => "ORFANDAD"],
+                    ["id" => '10', "nombre" => "DEPENDENCIA"],
+                    ["id" => '11', "nombre" => "MONTEPIO"]
+                ];
+                break;
+            case '04':
+                $clasesMcpp = [
+                    ["id" => '12', "nombre" => "ALIMENTOS"]
+                ];
+                break;
+            case '05':
+                $clasesMcpp = [
+                    ["id" => '13', "nombre" => "DEVENGADOS"]
+                ];
+                break;
+            case '99':
+                $clasesMcpp = [
+                    ["id" => '99', "nombre" => "OTROS"]
+                ];
+                break;
+        }
+        return new JsonResponse($clasesMcpp);
     }
 
     public function arrayAnios($anoEje) {
