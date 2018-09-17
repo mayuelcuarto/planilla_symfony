@@ -1,0 +1,52 @@
+{% extends "@Planilla/general_layout.html.twig" %}
+{% block content %}
+    <div class="col-lg-8">
+        <h4>Generar Archivo MCPP</h4>
+        {% for message in app.session.flashbag().get('status') %}
+            <hr/>
+            <div class="alert alert-success">{{message}}</div>
+        {% endfor %}
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            {{form_start(form)}}
+            {{form_row(form.anoEje, {'id': 'anoEje' }) }}
+            {{form_row(form.mesEje)}}
+            {{form_row(form.tipoPlanilla)}}
+            {{form_row(form.fuente, {'id': 'fuente' }) }}
+        </div>
+        <div class="col-lg-4">
+            {{form_row(form.tpMcpp, {'id': 'tpMcpp' })}}
+            {{form_row(form.claseMcpp, {'id': 'claseMcpp' })}}
+            {{form_end(form,{'action':'', 'method':'POST'})}}
+        </div>
+    </div>
+    <script>
+        $('#tpMcpp').change(function () {
+            var tpMcpp = $(this);
+            $.ajax({
+                url: "{{ path('planilla_ajax_clase_mcpp') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    tpMcpp: tpMcpp.val()
+                },
+                success: function (clases) {
+                    var clase = $("#claseMcpp");
+                    clase.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for (var i = 0; i < clases.length; i++) {
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).val(clases[i].id);
+                        $(option).text(clases[i].nombre);
+                        $(option).appendTo("#claseMcpp"); //Lo metes en el select con id provincias
+                    }
+                },
+                error: function (err) {
+                    alert("Ocurrió un error mientras se cargaban los datos ... ");
+                }
+            });
+        });
+    </script>
+{% endblock %}
