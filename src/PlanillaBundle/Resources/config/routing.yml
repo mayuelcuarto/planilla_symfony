@@ -456,6 +456,10 @@ planilla_fechas:
     path: /planilla/fechas
     defaults: { _controller: PlanillaBundle:Planilla:fechas }
     
+planilla_mcpp_vp:
+    path: /planilla/mcppVp
+    defaults: { _controller: PlanillaBundle:Planilla:mcppVp }
+    
 planilla_ajax_plazaHistorial:
     path:     /planilla/ajax/plazaHistorial
     defaults: { _controller: "PlanillaBundle:Planilla:modifyPlazaHistorial" }
@@ -484,6 +488,11 @@ planilla_ajax_especifica:
 planilla_ajax_concepto:
     path:     /planilla/ajax/concepto
     defaults: { _controller: "PlanillaBundle:Planilla:modifyConcepto" }
+    methods:  GET
+    
+planilla_ajax_clase_mcpp:
+    path:     /planilla/ajax/claseMcpp
+    defaults: { _controller: "PlanillaBundle:Planilla:modifyClaseMcpp" }
     methods:  GET
     
 planillaHasConcepto_index:
