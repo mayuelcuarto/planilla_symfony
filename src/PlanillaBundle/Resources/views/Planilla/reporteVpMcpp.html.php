@@ -26,9 +26,9 @@ header("Expires: 0");
             if ($c->getConcepto()->getTipoConcepto()->getId() == 1) {
                 ?>
                 <tr>
-                    <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getNumeroDocumento(); ?></td>
+                    <td><?php echo "'".$p->getPlazaHistorial()->getCodPersonal()->getNumeroDocumento(); ?></td>
                     <td><?php echo $razon; ?></td>
-                    <td><?php echo $c->getConcepto()->getMcppConcepto(); ?></td>
+                    <td><?php echo "'".$c->getConcepto()->getMcppConcepto(); ?></td>
                     <td><?php echo $c->getConcepto()->getConcepto(); ?></td>
                     <td><?php echo $c->getConcepto()->getTipoConcepto()->getId(); ?></td>
                     <td style="text-align: right;"><?php echo number_format($c->getMonto(), 2); ?></td>
@@ -43,9 +43,9 @@ header("Expires: 0");
             if ($c->getConcepto()->getTipoConcepto()->getId() == 2) {
                 ?>
                 <tr>
-                    <td><?php echo $p->getPlazaHistorial()->getCodPersonal()->getNumeroDocumento(); ?></td>
+                    <td><?php echo "'".$p->getPlazaHistorial()->getCodPersonal()->getNumeroDocumento(); ?></td>
                     <td><?php echo $razon; ?></td>
-                    <td><?php echo $c->getConcepto()->getMcppConcepto(); ?></td>
+                    <td><?php echo "'".$c->getConcepto()->getMcppConcepto(); ?></td>
                     <td><?php echo $c->getConcepto()->getConcepto(); ?></td>
                     <td><?php echo $c->getConcepto()->getTipoConcepto()->getId(); ?></td>
                     <td style="text-align: right;"><?php echo number_format($c->getMonto(), 2); ?></td>
