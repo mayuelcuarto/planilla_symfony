@@ -40,5 +40,33 @@
                 }
             });
         });
+        
+        $('#anoEje').change(function () {
+            var anoEje = $(this);
+            $.ajax({
+                url: "{{ path('planilla_ajax_fuente') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    anoEje: anoEje.val()
+                },
+                success: function (fuentes) {
+                    var fuente = $("#fuente");
+                    fuente.find('option').remove().end(); //Borramos todos los items del select
+                    var option = document.createElement("option");
+                    for (var i = 0; i < fuentes.length; i++) {
+                        var option = document.createElement("option"); //Creas el elemento opción
+                        $(option).html(fuentes[i]); //Escribes en él el nombre de la provincia
+                        $(option).val(fuentes[i].id);
+                        $(option).text(fuentes[i].nombre);
+                        $(option).appendTo("#fuente"); //Lo metes en el select con id provincias
+                    }
+
+                },
+                error: function (err) {
+                    alert("Ocurrió un error mientras se cargaban los datos ... ");
+                }
+            });
+        });
     </script>
 {% endblock %}
